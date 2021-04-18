@@ -6,6 +6,7 @@ var pac_color;
 var start_time;
 var time_elapsed;
 var interval;
+var users_passes = {"k":"k"};
 
 $(document).ready(function() {
 	context = canvas.getContext("2d");
@@ -195,4 +196,27 @@ function openPage(pageName, elmnt, color) {
   
   // Get the element with id="defaultOpen" and click on it
 //   document.getElementById("defaultOpen").click();
+
+function Login(element){
+	let username = document.getElementById("user").value;
+	let password = document.getElementById("psw").value;
+	let flag = 0;
+	for(var user in users_passes){
+		if (user==username){
+			flag=1;
+		}
+	}
+	if(flag==0){
+		window.alert("no such username. please Sign up");
+		openPage('Register', element, 'green');
+	}
+	else if(users_passes[username]!=password){
+		window.alert("wrong password. Please try again");
+		openPage('Login', element, 'blue');
+	}
+	else{
+		openPage('Game', element, 'grey');
+	}
+	return false;
+}
 

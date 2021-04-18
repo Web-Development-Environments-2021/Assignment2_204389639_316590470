@@ -7,40 +7,54 @@
 	</head>
 
 	<body>
-		<button class="tablink" onclick="openPage('Home', this, 'red')">Welcome</button>
-		<button class="tablink" onclick="openPage('News', this, 'green')" id="defaultOpen">Register</button>
-		<button class="tablink" onclick="openPage('Contact', this, 'blue')">Login</button>
-		<button class="tablink" onclick="openPage('About', this, 'orange')">About</button>
+		<div class="tabmenu">
+			<button class="tablink" onclick="openPage('Welcome', this, 'red')">Welcome</button>
+			<button class="tablink" onclick="openPage('Register', this, 'green')" >Register</button>
+			<button class="tablink" onclick="openPage('Login', this, 'blue')">Login</button>
+			<button class="tablink" onclick="openPage('About', this, 'orange')">About</button>
+			<button class="tablink" onclick="openPage('Settings', this, 'pink')">Settings</button>
+			<button class="tablink" onclick="openPage('Game', this, 'grey')">Game</button>
+		</div>
 
 		<div id="Welcome" class="tabcontent">
-		<h3>Welcome</h3>
-		<p>Home is where the heart is..</p>
 		</div>
 
 		<div id="Register" class="tabcontent">
-		<h3>Register</h3>
-		<p>Some news this fine day!</p>
 		</div>
 
 		<div id="Login" class="tabcontent">
-		<h3>Login</h3>
-		<p>Get in touch, or swing by for a cup of coffee.</p>
+			<div class="container">
+				<label for="uname"><b>Username</b></label>
+				<input type="text" placeholder="Enter Username" name="uname" required>
+		  
+				<label for="psw"><b>Password</b></label>
+				<input type="password" placeholder="Enter Password" name="psw" required>
+		  
+				<button type="submit">Login</button>
+				<label>
+				  <input type="checkbox" checked="checked" name="remember"> Remember me
+				</label>
+			  </div>		  
 		</div>
 
 		<div id="About" class="tabcontent">
-		<h3>About</h3>
-		<p>Who we are and what we do.</p>
 		</div>
-		<div id="score">
-			<label for="lblScore">SCORE:</label>
-			<input id="lblScore" type="text" />
+		
+		<div id="Settings" class="tabcontent">
 		</div>
-		<div id="time">
-			<label for="lblTime">TIME:</label>
-			<input id="lblTime" type="text" />
-		</div>
-		<div id="game">
-			<canvas id="canvas" height="600" width="600"></canvas>
+
+		<div id="Game" class="tabcontent">
+			<div id="score">
+				<label for="lblScore">SCORE:</label>
+				<input id="lblScore" type="text" />
+			</div>
+			<div id="time">
+				<label for="lblTime">TIME:</label>
+				<input id="lblTime" type="text" />
+			</div>
+			<div id="game">
+				<canvas id="canvas" height="600" width="600"></canvas>
+			</div>
 		</div>
 	</body>
 </html>

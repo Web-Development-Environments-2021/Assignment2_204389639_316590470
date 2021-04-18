@@ -13,6 +13,7 @@ $(document).ready(function() {
 	Start();
 });
 
+
 function Start() {
 	board = new Array();
 	score = 0;
@@ -125,7 +126,7 @@ function Draw() {
 			} else if (board[i][j] == 4) {
 				context.beginPath();
 				context.rect(center.x - 30, center.y - 30, 60, 60);
-				context.fillStyle = "grey"; //color
+				context.fillStyle = "yellow"; //color
 				context.fill();
 			}
 		}
@@ -220,3 +221,9 @@ function Login(element){
 	return false;
 }
 
+function login_button(element){
+	 document.getElementById("login_button").style.backgroundColor = "white";
+		document.getElementById("login_tab").style.backgroundColor = "blue";
+	 openPage('Login', element, '#4CAF50');
+		return false;
+}

@@ -7,59 +7,60 @@
 	</head>
 
 	<body>
-		<div class="tabmenu">
-
-			<button class="tablink" onclick="openPage('Welcome', this, 'red')">Welcome</button>
+		<div class="header">
+			<h3 id="logo">PACMAN</h3>
+		</div>
+			<button class="tablink" onclick="openPage('Welcome', this, 'red')" id="defaultOpen">Welcome</button>
 			<button class="tablink" onclick="openPage('Register', this, '#008CBA')" >Register</button>
 			<button id="login_tab" class="tablink" onclick="openPage('Login', this, '#4CAF50')">Login</button>
 			<button class="tablink" onclick="openPage('About', this, 'orange')">About</button>
 			<button class="tablink" onclick="openPage('Settings', this, 'pink')">Settings</button>
 			<button class="tablink" onclick="openPage('Game', this, 'grey')">Game</button>
-		</div>
 
-		<div id="Welcome" class="tabcontent">
-		<h3>Welcome</h3>
-		<p>Home is where the heart is..</p>
-		<button id="login_button" class="button loginButton" onclick="return login_button(this)"> Login </button>
-		<button class="button registerButton" onclick="openPage('Register', this, '#008CBA')">Register</button>
-		</div>
+				<div id="Welcome" class="tabcontent">
+				<button id="login_button" class="button loginButton" onclick="return login_button(this)"> Login </button>
+				<button class="button registerButton" onclick="openPage('Register', this, '#008CBA')">Register</button>
+				</div>
 
-		<div id="Register" class="tabcontent">
-		</div>
+				<div id="Register" class="tabcontent">
+				</div>
 
-		<div id="Login" class="tabcontent">
-			<form>  
-				<div class="container">   
-					<label>Username : </label>   
-					<input id="user" type="text" placeholder="Enter Username" name="username" required>  
-					<label>Password : </label>   
-					<input id="psw" type="password" placeholder="Enter Password" name="password" required>  
-					<button type="submit" onclick="return Login(this)">Login</button>   
-					<!-- <input type="checkbox" checked="checked"> Remember me    -->
-					<!-- <button type="button" class="cancelbtn"> Cancel</button>    -->
-					<!-- Forgot <a href="#"> password? </a>    -->
-				</div>   
-			</form>   		  
-		</div>
+				<div id="Login" class="tabcontent">
+					<form>  
+						<div class="container">   
+							<label>Username : </label>   
+							<input id="user" type="text" placeholder="Enter Username" name="username" required>  
+							<label>Password : </label>   
+							<input id="psw" type="password" placeholder="Enter Password" name="password" required>  
+							<button type="submit" onclick="return Login(this)">Login</button>   
+							<!-- <input type="checkbox" checked="checked"> Remember me    -->
+							<!-- <button type="button" class="cancelbtn"> Cancel</button>    -->
+							<!-- Forgot <a href="#"> password? </a>    -->
+						</div>   
+					</form>   		  
+				</div>
 
-		<div id="About" class="tabcontent">
-		</div>
-		
-		<div id="Settings" class="tabcontent">
-		</div>
+				<div id="About" class="tabcontent">
+				</div>
+				
+				<div id="Settings" class="tabcontent">
+				</div>
 
-		<div id="Game" class="tabcontent">
-			<div id="score">
-				<label for="lblScore">SCORE:</label>
-				<input id="lblScore" type="text" />
-			</div>
-			<div id="time">
-				<label for="lblTime">TIME:</label>
-				<input id="lblTime" type="text" />
-			</div>
-			<div id="game">
-				<canvas id="canvas" height="600" width="600"></canvas>
-			</div>
+				<div id="Game" class="tabcontent">
+					<div id="score">
+						<label for="lblScore">SCORE:</label>
+						<input id="lblScore" type="text" />
+					</div>
+					<div id="time">
+						<label for="lblTime">TIME:</label>
+						<input id="lblTime" type="text" />
+					</div>
+					<div id="game">
+						<canvas id="canvas" height="600" width="600"></canvas>
+					</div>
+				</div>
+		<div class="footer">
+			<p> contact us</p>
 		</div>
 	</body>
 

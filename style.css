@@ -4,7 +4,7 @@ body, html {
     font-family: Arial;
   }
   
-  .tabmenu{
+  .menu{
       width:100%;
       margin: 0 auto;
   }
@@ -113,6 +113,16 @@ body, html {
   .registerButton:hover {
     background-color: #008CBA;
     color: white;
+  }
+
+  .footer{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: red;
+    color: white;
+    text-align: center;
   }
 
 

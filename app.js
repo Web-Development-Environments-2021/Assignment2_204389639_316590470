@@ -9,6 +9,7 @@ var interval;
 var users_passes = {"k":"k"};
 
 $(document).ready(function() {
+	openPage('Welcome', this, 'red');
 	context = canvas.getContext("2d");
 	Start();
 });

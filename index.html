@@ -13,9 +13,8 @@
 			<button class="tablink" onclick="openPage('Welcome', this, 'red')" id="defaultOpen">Welcome</button>
 			<button class="tablink" onclick="openPage('Register', this, '#008CBA')" >Register</button>
 			<button id="login_tab" class="tablink" onclick="openPage('Login', this, '#4CAF50')">Login</button>
-			<button class="tablink" onclick="openPage('About', this, 'orange')">About</button>
-			<button class="tablink" onclick="openPage('Settings', this, 'pink')">Settings</button>
 			<button class="tablink" onclick="openPage('Game', this, 'grey')">Game</button>
+			<button id="about" class="tablink" onclick="modalAbout('#myModal')">About</button>
 
 				<div id="Welcome" class="tabcontent">
 				<button id="login_button" class="button loginButton" onclick="return login_button(this)"> Login </button>
@@ -40,12 +39,6 @@
 					</form>   		  
 				</div>
 
-				<div id="About" class="tabcontent">
-				</div>
-				
-				<div id="Settings" class="tabcontent">
-				</div>
-
 				<div id="Game" class="tabcontent">
 					<div id="score">
 						<label for="lblScore">SCORE:</label>
@@ -59,8 +52,71 @@
 						<canvas id="canvas" height="600" width="600"></canvas>
 					</div>
 				</div>
+
+				<div id="myModal" class="modal">
+
+					<!-- Modal content -->
+					<div class="modal-content">
+					  <span class="close" onclick="modalClose('#myModal')">&times;</span>
+					  <p>Hand in Guy Globus and Shiri Tabach</p>
+					  <p>Some text in the Modal..</p>
+					</div>
+				  
+				</div>
+
+				<div id="SettingModal" class="modal">
+
+					<!-- Modal content -->
+					<div class="modal-content">
+					  <span class="close" onclick="modalClose('SettingModal')">&times;</span>
+					  <input id="up" type="text" placeholder="W" name="Up" required>
+					  <input id="down" type="text" placeholder="X" name="Down" required>
+					  <input id="right" type="text" placeholder="D" name="Right" required> 
+					  <input id="left" type="text" placeholder="A" name="Left" required>
+					  <input id="circleNum" type="text" placeholder="50" name="Number of balls" required>
+					  <form action="" method="post">
+						<p>5 points</p>
+						<input type="radio" name="joke" value="bed" />red
+						<input type="radio" name="joke" value="clock" />black
+						<input type="radio" name="joke" value="clock" />Random
+					  </form>
+					  <form action="" method="post">
+						<p>15 points</p>
+						<input type="radio" name="joke" value="bed" />blue
+						<input type="radio" name="joke" value="clock" />green
+						<input type="radio" name="joke" value="clock" />Random
+					  </form>
+					  <form action="" method="post">
+						<p>25 points</p>
+						<input type="radio" name="joke" value="bed" />gold
+						<input type="radio" name="joke" value="clock" />silver
+						<input type="radio" name="joke" value="clock" />Random
+					  </form>
+					  <form action="" method="post">
+						<p>Timer</p>
+						<input type="radio" name="joke" value="bed" />1 minute
+						<input type="radio" name="joke" value="clock" />2 minutes
+						<input type="radio" name="joke" value="clock" />3 minutes
+						<input type="radio" name="joke" value="clock" />Random
+
+					  </form>
+					  <form action="" method="post">
+						<p>Number of attackers</p>
+						<input type="radio" name="joke" value="bed" />1
+						<input type="radio" name="joke" value="clock" />2
+						<input type="radio" name="joke" value="clock" />3
+						<input type="radio" name="joke" value="clock" />4
+						<input type="radio" name="joke" value="clock" />Random
+					  </form>
+					  <p>Some text in the Modal..</p>
+					</div>
+				  
+				</div>
+			
 		<div class="footer">
-			<p> contact us</p>
+			<p style="text-decoration: underline; font-size: 13px;">Contact us</p>
+			<p><a class="contact_links" href="shirit@post.bgu.ac.il">shirit@post.bgu.ac.il</a></p>
+			<p><a class="contact_links" href="guyglo@post.bgu.ac.il">guyglo@post.bgu.ac.il</a></p>
 		</div>
 	</body>
 

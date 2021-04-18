@@ -193,7 +193,7 @@ function openPage(pageName, elmnt, color) {
 	document.getElementById(pageName).style.display = "block";
   
 	// Add the specific color to the button used to open the tab content
-	elmnt.style.backgroundColor = color;
+	elmnt.style.backgroundColor = color; 
   }
   
   // Get the element with id="defaultOpen" and click on it
@@ -217,6 +217,7 @@ function Login(element){
 		openPage('Login', element, 'blue');
 	}
 	else{
+		modalSettingGame();
 		openPage('Game', element, 'grey');
 	}
 	return false;
@@ -227,4 +228,32 @@ function login_button(element){
 		document.getElementById("login_tab").style.backgroundColor = "blue";
 	 openPage('Login', element, '#4CAF50');
 		return false;
+}
+
+function modalAbout(modal_name){
+	document.getElementById("modal_name").style.display="block";
+}
+
+function modalClose(){
+	document.getElementById("modal_name").style.display="none";
+}
+
+window.onclick = function(event) {
+	if (event.target == document.getElementById("myModal")) {
+		modalClose("myModal");
+	}
+	else if(event.target == document.getElementById("SettingModal")){
+		modalClose("SettingModal");
+	}
+}
+
+$(document).keyup(function(e) {
+	if (e.key === "Escape") {
+		modalClose("myModal");
+		modalClose("SettingModal")
+   }
+});
+
+function modalSettingGame(){
+	modalAbout("SettingModal");
 }

@@ -8,7 +8,7 @@
 
 	<body>
 		<div class="tabmenu">
-			<button class="tablink" onclick="openPage('Welcome', this, 'red')">Welcome</button>
+			<button class="tablink" onclick="openPage('Welcome', this, 'red')" id="default">Welcome</button>
 			<button class="tablink" onclick="openPage('Register', this, 'green')" >Register</button>
 			<button class="tablink" onclick="openPage('Login', this, 'blue')">Login</button>
 			<button class="tablink" onclick="openPage('About', this, 'orange')">About</button>
@@ -23,18 +23,18 @@
 		</div>
 
 		<div id="Login" class="tabcontent">
-			<div class="container">
-				<label for="uname"><b>Username</b></label>
-				<input type="text" placeholder="Enter Username" name="uname" required>
-		  
-				<label for="psw"><b>Password</b></label>
-				<input type="password" placeholder="Enter Password" name="psw" required>
-		  
-				<button type="submit">Login</button>
-				<label>
-				  <input type="checkbox" checked="checked" name="remember"> Remember me
-				</label>
-			  </div>		  
+			<form>  
+				<div class="container">   
+					<label>Username : </label>   
+					<input id="user" type="text" placeholder="Enter Username" name="username" required>  
+					<label>Password : </label>   
+					<input id="psw" type="password" placeholder="Enter Password" name="password" required>  
+					<button type="submit" onclick="return Login(this)">Login</button>   
+					<!-- <input type="checkbox" checked="checked"> Remember me    -->
+					<!-- <button type="button" class="cancelbtn"> Cancel</button>    -->
+					<!-- Forgot <a href="#"> password? </a>    -->
+				</div>   
+			</form>   		  
 		</div>
 
 		<div id="About" class="tabcontent">

@@ -9,14 +9,18 @@
 	<body>
 		<div class="tabmenu">
 			<button class="tablink" onclick="openPage('Welcome', this, 'red')">Welcome</button>
-			<button class="tablink" onclick="openPage('Register', this, 'green')" >Register</button>
-			<button class="tablink" onclick="openPage('Login', this, 'blue')">Login</button>
+			<button class="tablink" onclick="openPage('Register', this, '#008CBA')" >Register</button>
+			<button class="tablink" onclick="openPage('Login', this, '#4CAF50')">Login</button>
 			<button class="tablink" onclick="openPage('About', this, 'orange')">About</button>
 			<button class="tablink" onclick="openPage('Settings', this, 'pink')">Settings</button>
 			<button class="tablink" onclick="openPage('Game', this, 'grey')">Game</button>
 		</div>
 
 		<div id="Welcome" class="tabcontent">
+		<h3>Welcome</h3>
+		<p>Home is where the heart is..</p>
+		<button class="button loginButton" onclick="openPage('Login', this, '#4CAF50')"> Login </button>
+		<button class="button registerButton" onclick="openPage('Register', this, '#008CBA')">Register</button>
 		</div>
 
 		<div id="Register" class="tabcontent">

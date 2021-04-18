@@ -34,8 +34,45 @@ body, html {
   }
   
   #Welcome {background-color: red;}
-  #Register {background-color: green;}
-  #Login {background-color: blue;}
+  #Register {background-color: #008CBA;}
+  #Login {background-color: #4CAF50;}
   #About {background-color: orange;}
   #Settings {background-color: pink;}
   #Game {background-color: grey;}
+
+  .button {
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+  }
+  
+  .loginButton {
+    background-color: white;
+    color: black;
+    border: 2px solid #4CAF50;
+  }
+  
+  .loginButton:hover {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .registerButton {
+    background-color: white;
+    color: black;
+    border: 2px solid #008CBA;
+  }
+  
+  .registerButton:hover {
+    background-color: #008CBA;
+    color: white;
+  }
+
+

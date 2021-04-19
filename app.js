@@ -237,18 +237,23 @@ function isNumeric(n) {
 // 	return re.test(String(email).toLowerCase());
 // }
 
+
 $(function(){
  $(".registerbtn").click(function(e){
-		let fullName = $("#fullName").value;
-		let username = $("#userName").value;
-		var email = $("#email").value;
+		
+		 let fullName = $("#rfullName").value;
+			//let fullName = $(this).closest('div').find('.rfullName').text().value;
+		 let username = $("#ruserName").value;
+		let email = $("#remail").value;
 		let password = $("#rpsw").value;
 		let confirm = $("#rpsw-repeat").value;
 		let flag = 0;
 		
 		
 		//check for numeric values in the username
-		//if(isNumeric(username)){alert("username cannot include numeric values")}
+		if(isNumeric(username)){
+			alert("username cannot include numeric values");
+		}
 		
 		// check that username isnt already in use
 		for(var user in users_passes){
@@ -264,9 +269,9 @@ $(function(){
 		//if(validateEmail(email)==false){alert("invalid email")}
 		
 		if(password != confirm){
-			alert("password confirmation dosent match")
+			alert("password confirmation dosent match");
 		}
 		return false;
-	})
+	});
 return false;
-})
+});

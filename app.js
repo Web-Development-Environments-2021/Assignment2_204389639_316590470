@@ -263,11 +263,12 @@ function start_game(){
 	right_btn = document.getElementById("right").value;
 	left_btn = document.getElementById("left").value;
 	number_of_balls = document.getElementById("circleNum").value;
-	five_p_color = get_checked("five_p");
-	fifteen_p_color = get_checked("fifteen_p");
-	twentyf_p_color = get_checked("twentyf_p");
-	timer = get_checked("timer");
-	num_attack = get_checked("num_attack");
+	five_p_color = randomize("five_p");
+	fifteen_p_color = randomize("fifteen_p");
+	twentyf_p_color = randomize("twentyf_p");
+	timer = randomize("timer");
+	num_attack = randomize("num_attack");
+	
 	modalClose("SettingModal");
 	buildMiniSetting(up_btn, down_btn, right_btn, left_btn, number_of_balls, five_p_color, fifteen_p_color, twentyf_p_color, timer, num_attack);
 	context = canvas.getContext("2d");
@@ -297,5 +298,17 @@ function get_checked(tag_name){
 			if(input_ele[i].checked)
 				return input_ele[i].value;
 		}
+	}
+}
+
+function randomize(element_name){
+	let picked_opt = get_checked(element_name);
+	if(picked_opt!="random"){
+		return picked_opt;
+	}
+	else{
+		let inputs = document.getElementById(element_name).getElementsByTagName("input");
+		let random_index = Math.floor(Math.random() * (inputs.length-1));
+		return inputs[random_index].value;
 	}
 }

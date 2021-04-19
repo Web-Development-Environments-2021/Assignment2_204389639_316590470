@@ -10,8 +10,6 @@ var users_passes = {"k":"k"};
 
 $(document).ready(function() {
 	openPage('Welcome', this, 'red');
-	context = canvas.getContext("2d");
-	Start();
 });
 
 
@@ -231,11 +229,11 @@ function login_button(element){
 }
 
 function modalAbout(modal_name){
-	document.getElementById("modal_name").style.display="block";
+	document.getElementById(modal_name).style.display="block";
 }
 
-function modalClose(){
-	document.getElementById("modal_name").style.display="none";
+function modalClose(modal_name){
+	document.getElementById(modal_name).style.display="none";
 }
 
 window.onclick = function(event) {
@@ -250,10 +248,16 @@ window.onclick = function(event) {
 $(document).keyup(function(e) {
 	if (e.key === "Escape") {
 		modalClose("myModal");
-		modalClose("SettingModal")
+		modalClose("SettingModal");
    }
 });
 
 function modalSettingGame(){
 	modalAbout("SettingModal");
+}
+
+function start_game(){
+	modalClose("SettingModal");
+	context = canvas.getContext("2d");
+	Start();
 }

@@ -175,3 +175,14 @@ body, html {
   .modal-content p{
     color: red;
   }
+
+  #mini_settings{
+    float: right;
+    color: white;
+    width: 25%;
+    border:2px wheat dotted;
+  }
+
+  #canvas{
+    margin: 0 auto;
+  }

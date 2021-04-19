@@ -40,18 +40,33 @@
 				</div>
 
 				<div id="Game" class="tabcontent">
-					<div id="score">
-						<label for="lblScore">SCORE:</label>
-						<input id="lblScore" type="text" />
-					</div>
-					<div id="time">
-						<label for="lblTime">TIME:</label>
-						<input id="lblTime" type="text" />
-					</div>
-					<div id="game">
-						<canvas id="canvas" height="600" width="600"></canvas>
+					<div>
+						<div id="score">
+							<label for="lblScore">SCORE:</label>
+							<input id="lblScore" type="text" />
+						</div>
+						<div id="time">
+							<label for="lblTime">TIME:</label>
+							<input id="lblTime" type="text" />
+						</div>
+						<div id="game">
+							<canvas id="canvas" height="600" width="600"></canvas>
+							<div id="mini_settings">
+								<p>Up: </p>
+								<p>Down: </p>
+								<p>Right: </p>
+								<p>Left: </p>
+								<p>Number of balls: </p>
+								<p>5 points color: </p>
+								<p>15 points color: </p>
+								<p>25 points color: </p>
+								<p>Timer: </p>
+								<p>Number of attackers: </p>
+							</div>
+						</div>
 					</div>
 				</div>
+				
 
 				<div id="myModal" class="modal">
 
@@ -81,41 +96,41 @@
 					  	<input id="left" type="text" placeholder="A" name="Left">
 					  </label>
 					  <label>Number of balls
-					  	<input id="circleNum" type="text" placeholder="50" name="Number of balls" required>
+					  	<input id="circleNum" type="text" placeholder="50" name="Number of balls" min="50" max="90" required>
 					  </label>
-					  <form action="" method="post">
+					  <form action="" method="post" id="five_p">
 						<p>5 points</p>
-						<input type="radio" name="joke" value="bed" />red
-						<input type="radio" name="joke" value="clock" />black
-						<input type="radio" name="joke" value="clock" />Random
+						<input type="radio" name="joke" value="red" />red
+						<input type="radio" name="joke" value="black" />black
+						<input type="radio" name="joke" value="random" />Random
 					  </form>
-					  <form action="" method="post">
+					  <form action="" method="post" id="fifteen_p">
 						<p>15 points</p>
-						<input type="radio" name="joke" value="bed" />blue
-						<input type="radio" name="joke" value="clock" />green
-						<input type="radio" name="joke" value="clock" />Random
+						<input type="radio" name="joke" value="blue" />blue
+						<input type="radio" name="joke" value="green" />green
+						<input type="radio" name="joke" value="random" />Random
 					  </form>
-					  <form action="" method="post">
+					  <form action="" method="post" id="twentyf_p">
 						<p>25 points</p>
-						<input type="radio" name="joke" value="bed" />gold
-						<input type="radio" name="joke" value="clock" />silver
-						<input type="radio" name="joke" value="clock" />Random
+						<input type="radio" name="joke" value="gold" />gold
+						<input type="radio" name="joke" value="silver" />silver
+						<input type="radio" name="joke" value="random" />Random
 					  </form>
-					  <form action="" method="post">
+					  <form action="" method="post" id="timer">
 						<p>Timer</p>
-						<input type="radio" name="joke" value="bed" />1 minute
-						<input type="radio" name="joke" value="clock" />2 minutes
-						<input type="radio" name="joke" value="clock" />3 minutes
-						<input type="radio" name="joke" value="clock" />Random
+						<input type="radio" name="joke" value="1" />1 minute
+						<input type="radio" name="joke" value="2" />2 minutes
+						<input type="radio" name="joke" value="2" />3 minutes
+						<input type="radio" name="joke" value="random" />Random
 
 					  </form>
-					  <form action="" method="post">
+					  <form action="" method="post" id="num_attack">
 						<p>Number of attackers</p>
-						<input type="radio" name="joke" value="bed" />1
-						<input type="radio" name="joke" value="clock" />2
-						<input type="radio" name="joke" value="clock" />3
-						<input type="radio" name="joke" value="clock" />4
-						<input type="radio" name="joke" value="clock" />Random
+						<input type="radio" name="joke" value="1" />1
+						<input type="radio" name="joke" value="2" />2
+						<input type="radio" name="joke" value="3" />3
+						<input type="radio" name="joke" value="4" />4
+						<input type="radio" name="joke" value="random" />Random
 					  </form>
 					  <button onclick="start_game()">Play game</button>
 					</div>

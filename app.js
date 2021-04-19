@@ -7,6 +7,7 @@ var start_time;
 var time_elapsed;
 var interval;
 var users_passes = {"k":"k"};
+var up_btn, down_btn, right_btn, left_btn, number_of_balls, five_p_color, fifteen_p_color, twentyf_p_color, timer, num_attack;
 
 $(document).ready(function() {
 	openPage('Welcome', this, 'red');
@@ -257,7 +258,44 @@ function modalSettingGame(){
 }
 
 function start_game(){
+	up_btn = document.getElementById("up").value;
+	down_btn = document.getElementById("down").value;
+	right_btn = document.getElementById("right").value;
+	left_btn = document.getElementById("left").value;
+	number_of_balls = document.getElementById("circleNum").value;
+	five_p_color = get_checked("five_p");
+	fifteen_p_color = get_checked("fifteen_p");
+	twentyf_p_color = get_checked("twentyf_p");
+	timer = get_checked("timer");
+	num_attack = get_checked("num_attack");
 	modalClose("SettingModal");
+	buildMiniSetting(up_btn, down_btn, right_btn, left_btn, number_of_balls, five_p_color, fifteen_p_color, twentyf_p_color, timer, num_attack);
 	context = canvas.getContext("2d");
 	Start();
+}
+
+function buildMiniSetting(up_btn, down_btn, right_btn, left_btn, number_of_balls, five_p_color, fifteen_p_color, twentyf_p_color, timer, num_attack){
+	let mini_settings_list = document.getElementById("mini_settings").getElementsByTagName("p");
+	mini_settings_list[0].innerHTML+= up_btn;
+	mini_settings_list[1].innerHTML+= down_btn;
+	mini_settings_list[2].innerHTML+= right_btn;
+	mini_settings_list[3].innerHTML+= left_btn;
+	mini_settings_list[4].innerHTML+= number_of_balls;
+	mini_settings_list[5].innerHTML+= five_p_color;
+	mini_settings_list[6].innerHTML+= fifteen_p_color;
+	mini_settings_list[7].innerHTML+= twentyf_p_color;
+	mini_settings_list[8].innerHTML+= timer;
+	mini_settings_list[9].innerHTML+= num_attack;
+}
+
+function get_checked(tag_name){
+	let input_ele = document.getElementById(tag_name).getElementsByTagName("input");
+	for(i = 0; i < input_ele.length; i++) {
+                  
+		if(input_ele[i].type="radio") {
+		  
+			if(input_ele[i].checked)
+				return input_ele[i].value;
+		}
+	}
 }

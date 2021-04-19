@@ -7,10 +7,10 @@ var start_time;
 var time_elapsed;
 var interval;
 var users_passes = {"k":"k"};
+var up_btn, down_btn, right_btn, left_btn, number_of_balls, five_p_color, fifteen_p_color, twentyf_p_color, timer, num_attack;
 
 $(document).ready(function() {
-	context = canvas.getContext("2d");
-	Start();
+	openPage('Welcome', this, 'red');
 });
 
 
@@ -195,7 +195,7 @@ function openPage(pageName, elmnt, color) {
 	document.getElementById(pageName).style.display = "block";
   
 	// Add the specific color to the button used to open the tab content
-	elmnt.style.backgroundColor = color;
+	elmnt.style.backgroundColor = color; 
   }
   
   // Get the element with id="defaultOpen" and click on it
@@ -219,6 +219,7 @@ function Login(element){
 		openPage('Login', element, 'blue');
 	}
 	else{
+		modalSettingGame();
 		openPage('Game', element, 'grey');
 	}
 	return false;
@@ -278,3 +279,86 @@ $(function(){
 	});
 return false;
 });
+function modalAbout(modal_name){
+	document.getElementById(modal_name).style.display="block";
+}
+
+function modalClose(modal_name){
+	document.getElementById(modal_name).style.display="none";
+}
+
+window.onclick = function(event) {
+	if (event.target == document.getElementById("myModal")) {
+		modalClose("myModal");
+	}
+	else if(event.target == document.getElementById("SettingModal")){
+		modalClose("SettingModal");
+	}
+}
+
+$(document).keyup(function(e) {
+	if (e.key === "Escape") {
+		modalClose("myModal");
+		modalClose("SettingModal");
+   }
+});
+
+function modalSettingGame(){
+	modalAbout("SettingModal");
+}
+
+function start_game(){
+	up_btn = document.getElementById("up").value;
+	down_btn = document.getElementById("down").value;
+	right_btn = document.getElementById("right").value;
+	left_btn = document.getElementById("left").value;
+	number_of_balls = document.getElementById("circleNum").value;
+	five_p_color = randomize("five_p");
+	fifteen_p_color = randomize("fifteen_p");
+	twentyf_p_color = randomize("twentyf_p");
+	timer = randomize("timer");
+	num_attack = randomize("num_attack");
+	
+	modalClose("SettingModal");
+	buildMiniSetting(up_btn, down_btn, right_btn, left_btn, number_of_balls, five_p_color, fifteen_p_color, twentyf_p_color, timer, num_attack);
+	context = canvas.getContext("2d");
+	Start();
+}
+
+function buildMiniSetting(up_btn, down_btn, right_btn, left_btn, number_of_balls, five_p_color, fifteen_p_color, twentyf_p_color, timer, num_attack){
+	let mini_settings_list = document.getElementById("mini_settings").getElementsByTagName("p");
+	mini_settings_list[0].innerHTML+= up_btn;
+	mini_settings_list[1].innerHTML+= down_btn;
+	mini_settings_list[2].innerHTML+= right_btn;
+	mini_settings_list[3].innerHTML+= left_btn;
+	mini_settings_list[4].innerHTML+= number_of_balls;
+	mini_settings_list[5].innerHTML+= five_p_color;
+	mini_settings_list[6].innerHTML+= fifteen_p_color;
+	mini_settings_list[7].innerHTML+= twentyf_p_color;
+	mini_settings_list[8].innerHTML+= timer;
+	mini_settings_list[9].innerHTML+= num_attack;
+}
+
+function get_checked(tag_name){
+	let input_ele = document.getElementById(tag_name).getElementsByTagName("input");
+	for(i = 0; i < input_ele.length; i++) {
+                  
+		if(input_ele[i].type="radio") {
+		  
+			if(input_ele[i].checked)
+				return input_ele[i].value;
+		}
+	}
+}
+
+function randomize(element_name){
+	let picked_opt = get_checked(element_name);
+	if(picked_opt!="random"){
+		return picked_opt;
+	}
+	else{
+		let inputs = document.getElementById(element_name).getElementsByTagName("input");
+		let random_index = Math.floor(Math.random() * (inputs.length-1));
+		return inputs[random_index].value;
+	}
+}

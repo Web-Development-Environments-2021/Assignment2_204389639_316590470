@@ -163,7 +163,8 @@ function GetKeyPressed() {
 
 function Draw() {
 	canvas.width = canvas.width; //clean board
-   canvas.style.backgroundColor = "blue";
+   canvas.style.backgroundColor = "#008CBA";
+	// canvas.style.border = "yellow"
 	lblScore.value = score;
 	lblTime.value = time_elapsed;
 	for (var i = 0; i < 10; i++) {
@@ -184,7 +185,7 @@ function Draw() {
 			} else if (board[i][j] == 1) {
 				context.beginPath();
 				context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
-				context.fillStyle = "black"; //disk color
+				context.fillStyle = five_p_color; //regular disk color
 				context.fill();
 			} else if (board[i][j] == 4) {
 				context.beginPath();
@@ -194,13 +195,13 @@ function Draw() {
 			} else if (board[i][j] == 5) {
 				context.beginPath();
 				context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
-				context.fillStyle = "red"; //disk color
+				context.fillStyle = fifteen_p_color; //disk color
 				context.fill();
 			}
 			else if (board[i][j] == 6) {
 				context.beginPath();
 				context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
-				context.fillStyle = "green"; //disk color
+				context.fillStyle = twentyf_p_color; //disk color
 				context.fill();
 			}
 

@@ -314,3 +314,45 @@ function randomize(element_name){
 		return inputs[random_index].value;
 	}
 }
+function isNumeric(n) {
+	return !isNaN(parseFloat(n));
+}
+
+// function validateEmail(email) {
+// 	const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+// 	return re.test(String(email).toLowerCase());
+// }
+
+$(function(){
+ $(".registerbtn").click(function(e){
+		let fullName = $("#fullName").value;
+		let username = $("#userName").value;
+		var email = $("#email").value;
+		let password = $("#rpsw").value;
+		let confirm = $("#rpsw-repeat").value;
+		let flag = 0;
+		
+		
+		//check for numeric values in the username
+		//if(isNumeric(username)){alert("username cannot include numeric values")}
+		
+		// check that username isnt already in use
+		for(var user in users_passes){
+			if (user==username){
+				flag=1;
+			}
+		}
+		if(flag==1){
+			alert("usermane already taken - please choose a different one");
+		}
+
+		//check email
+		//if(validateEmail(email)==false){alert("invalid email")}
+		
+		if(password != confirm){
+			alert("password confirmation dosent match")
+		}
+		return false;
+	})
+return false;
+})

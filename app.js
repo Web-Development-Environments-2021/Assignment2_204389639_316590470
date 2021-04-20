@@ -212,7 +212,7 @@ function Login(element){
 		window.alert("no such username. please Sign up");
 		openPage('Register', element, 'green');
 	}
-	else if(users_passes[username]!=password){
+	else if(users_passes[username][0]!=password){
 		window.alert("wrong password. Please try again");
 		openPage('Login', element, 'blue');
 	}
@@ -353,7 +353,8 @@ $(function(){
 			alert("password confirmation dosent match")
 		}
 		else{
-			users_passes[username]=password;
+			//add new user to saved users
+			users_passes[username]=[password, fullName, email];
 		}
 		return false;
 	})

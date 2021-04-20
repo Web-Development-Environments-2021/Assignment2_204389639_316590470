@@ -27,7 +27,7 @@ function Start() {
 	let total = food_remain;
 	let foodCounter = 0;
 	
-
+//////////////////////   ///////////////////////   ////////////////////   //////////////////   ////////  
 	var pacman_remain = 1;
 	start_time = new Date();
 	for (var i = 0; i < 10; i++) {
@@ -61,44 +61,63 @@ function Start() {
 				(i == 9 && j == 4)
 			) {
 				board[i][j] = 4; //4 is a wall
-			} else {
-				var randomNum = Math.random();
-				if (randomNum <= (1.0 * food_remain) / cnt) {
-					food_remain--;
-					//let randomFoodLevel = Math.random();
-					if(foodCounter <= 0.1*total){
-						board[i][j] = 6; // 6 is best food (green)
-						maxScore += 25;
-						foodCounter++;
-					}
-					else if(foodCounter > 0.1*total && foodCounter <= 0.4*total){
-						board[i][j] = 5; // 5 is good food (red)
-						maxScore += 15; 
-						foodCounter++
-					}
-					else{
-						board[i][j] = 1; // 1 is regular food (black)
-						maxScore +=5;
-					}
-				} 
-				else if (randomNum < (1.0 * (pacman_remain + food_remain)) / cnt) {
-					shape.i = i;
-					shape.j = j;
-					pacman_remain--;
-					board[i][j] = 2; // 2 is for the PACMAN
-				} else {
-					board[i][j] = 0; // 0 is notin
-				}
-				cnt--;
+			}else{
+				board[i][j] = 0; // nothing
 			}
+			//  else {
+			// 	var randomNum = Math.random();
+			// 	if (randomNum <= (1.0 * food_remain) / cnt) {
+			// 		food_remain--;
+			// 		//let randomFoodLevel = Math.random();
+			// 		if(foodCounter <= 0.1*total){
+			// 			board[i][j] = 6; // 6 is best food (green)
+			// 			maxScore += 25;
+			// 			foodCounter++;
+			// 		}
+			// 		else if(foodCounter > 0.1*total && foodCounter <= 0.4*total){
+			// 			board[i][j] = 5; // 5 is good food (red)
+			// 			maxScore += 15; 
+			// 			foodCounter++
+			// 		}
+			// 		else{
+			// 			board[i][j] = 1; // 1 is regular food (black)
+			// 			maxScore +=5;
+			// 		}
+			// 	} 
+			// 	else if (randomNum < (1.0 * (pacman_remain + food_remain)) / cnt) {
+			// 		shape.i = i;
+			// 		shape.j = j;
+			// 		pacman_remain--;
+			// 		board[i][j] = 2; // 2 is for the PACMAN
+			// 	} else {
+			// 		board[i][j] = 0; // 0 is notin
+			// 	}
+			// 	cnt--;
+			// }
 		}
 	}
 	while (food_remain > 0) {
 		var emptyCell = findRandomEmptyCell(board);
-		board[emptyCell[0]][emptyCell[1]] = 1;
-		maxScore += 5;
-		food_remain--;
+		if(foodCounter <= 0.1*total){
+				board[emptyCell[0]][emptyCell[1]] = 6; // 6 is best food (green)
+				maxScore += 25;
+				foodCounter++;
+			}
+			else if(foodCounter > 0.1*total && foodCounter <= 0.4*total){
+				board[emptyCell[0]][emptyCell[1]] = 5; // 5 is good food (red)
+				maxScore += 15; 
+				foodCounter++
+			}
+			else{
+				board[emptyCell[0]][emptyCell[1]] = 1; // 1 is regular food (black)
+				maxScore +=5;
+			}
+		food_remain--;		
 	}
+	var pacLocation = findRandomEmptyCell(board);
+	board[pacLocation[0]][pacLocation[1]] = 2;
+	shape.i = pacLocation[0];
+	shape.j = pacLocation[1];
 	keysDown = {};
 	addEventListener(
 		"keydown",
@@ -144,7 +163,7 @@ function GetKeyPressed() {
 
 function Draw() {
 	canvas.width = canvas.width; //clean board
- canvas.style.backgroundColor = "blue";
+   canvas.style.backgroundColor = "blue";
 	lblScore.value = score;
 	lblTime.value = time_elapsed;
 	for (var i = 0; i < 10; i++) {

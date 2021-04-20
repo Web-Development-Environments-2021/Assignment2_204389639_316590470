@@ -11,6 +11,8 @@ var up_btn, down_btn, right_btn, left_btn, number_of_balls, five_p_color, fiftee
 
 $(document).ready(function() {
 	openPage('Welcome', this, 'red');
+
+
 });
 
 
@@ -27,11 +29,30 @@ function Start() {
 		//put obstacles in (i=3,j=3) and (i=3,j=4) and (i=3,j=5), (i=6,j=1) and (i=6,j=2)
 		for (var j = 0; j < 10; j++) {
 			if (
-				(i == 3 && j == 3) ||
-				(i == 3 && j == 4) ||
-				(i == 3 && j == 5) ||
-				(i == 6 && j == 1) ||
-				(i == 6 && j == 2)
+				(i == 0 && j == 7)||
+				(i == 1 && j == 2)||
+				(i == 1 && j == 3)||
+				(i == 1 && j == 4)||
+				(i == 3 && j == 0)||
+				(i == 3 && j == 3)||
+				(i == 3 && j == 4)||
+				(i == 3 && j == 8)||
+				(i == 3 && j == 9)||
+				(i == 4 && j == 4)||
+				(i == 5 && j == 2)||
+				(i == 5 && j == 3)||
+				(i == 5 && j == 4)||
+				(i == 5 && j == 5)||
+				(i == 5 && j == 6)||
+				(i == 6 && j == 2)||
+				(i == 6 && j == 8)||
+				(i == 7 && j == 8)||
+				(i == 8 && j == 0)||
+				(i == 8 && j == 1)||
+				(i == 8 && j == 4)||
+				(i == 8 && j == 7)||
+				(i == 8 && j == 8)||
+				(i == 9 && j == 4)
 			) {
 				board[i][j] = 4; //4 is a wall
 			} else {
@@ -232,53 +253,7 @@ function login_button(element){
 		return false;
 }
 
-function isNumeric(n) {
-	return !isNaN(parseFloat(n));
-}
 
-// function validateEmail(email) {
-// 	const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-// 	return re.test(String(email).toLowerCase());
-// }
-
-
-$(function(){
- $(".registerbtn").click(function(e){
-		
-		 let fullName = $("#rfullName").value;
-			//let fullName = $(this).closest('div').find('.rfullName').text().value;
-		 let username = $("#ruserName").value;
-		let email = $("#remail").value;
-		let password = $("#rpsw").value;
-		let confirm = $("#rpsw-repeat").value;
-		let flag = 0;
-		
-		
-		//check for numeric values in the username
-		if(isNumeric(username)){
-			alert("username cannot include numeric values");
-		}
-		
-		// check that username isnt already in use
-		for(var user in users_passes){
-			if (user==username){
-				flag=1;
-			}
-		}
-		if(flag==1){
-			alert("usermane already taken - please choose a different one");
-		}
-
-		//check email
-		//if(validateEmail(email)==false){alert("invalid email")}
-		
-		if(password != confirm){
-			alert("password confirmation dosent match");
-		}
-		return false;
-	});
-return false;
-});
 function modalAbout(modal_name){
 	document.getElementById(modal_name).style.display="block";
 }
@@ -362,3 +337,59 @@ function randomize(element_name){
 		return inputs[random_index].value;
 	}
 }
+
+
+
+function isNumeric(n) {
+	return !isNaN(parseFloat(n));
+}
+
+function validateEmail(email) {
+	const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	return re.test(String(email).toLowerCase());
+}
+
+
+// this function manages the registration process, validated all inputs and adds to the users dictionary.
+$(function(){
+ $(".registerbtn").click(function(e){
+		
+		 let fullName = $("#rfullName").val();
+			//let fullName = $(this).closest('div').find('.rfullName').text().value;
+		 let username = $("#ruserName").val();
+		let email = $("#remail").val();
+		let password = $("#rpsw").val();
+		let confirm = $("#rpsw-repeat").val();
+		let flag = 0;
+		
+		
+		//check for numeric values in the username
+		if(isNumeric(username)){
+			alert("username cannot include numeric values");
+		}
+		// check that username isnt already in use
+		for(var user in users_passes){
+			if (user==username){
+				flag=1;
+			}
+		}
+		if(flag==1){
+			alert("usermane already taken - please choose a different one");
+			return false;
+		}
+		// check email
+		if(validateEmail(email)==false){
+			alert("invalid email");
+			return false;
+		}
+		//check that password and confirmation is equal
+		if(password != confirm){
+			alert("password confirmation dosent match");
+			return false;
+		}
+		users_passes[username] = password;
+		console.log(users_passes);
+		
+	});
+return false;
+});

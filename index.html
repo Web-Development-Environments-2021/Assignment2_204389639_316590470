@@ -1,175 +1,178 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<script src="./jquery-3.4.1.slim.min.js"></script>
-		<script type="text/javascript" src="./app.js"></script>
-		<link rel="stylesheet" href="style.css">
-	</head>
 
-	<body>
-		<div class="header">
-			<h3 id="logo">PACMAN</h3>
-		</div>
-			<button class="tablink" onclick="openPage('Welcome', this, 'red')" id="defaultOpen">Welcome</button>
-			<button class="tablink" onclick="openPage('Register', this, '#008CBA')" >Register</button>
-			<button id="login_tab" class="tablink" onclick="openPage('Login', this, '#4CAF50')">Login</button>
-			<button class="tablink" onclick="openPage('Game', this, 'grey')">Game</button>
-			<button id="about" class="tablink" onclick="modalAbout('myModal')">About</button>
+<head>
+	<script src="./jquery-3.4.1.slim.min.js"></script>
+	<script type="text/javascript" src="./app.js"></script>
+	<link rel="stylesheet" href="style.css">
+</head>
 
-				<div id="Welcome" class="tabcontent">
-				<button id="login_button" class="button loginButton" onclick="return login_button(this)"> Login </button>
-				<button class="button registerButton" onclick="openPage('Register', this, '#008CBA')">Register</button>
-				</div>
+<body>
+	<div class="header">
+		<h3 id="logo">PACMAN</h3>
+	</div>
+	<button class="tablink" onclick="openPage('Welcome', this, 'red')" id="defaultOpen">Welcome</button>
+	<button class="tablink" onclick="openPage('Register', this, '#008CBA')">Register</button>
+	<button id="login_tab" class="tablink" onclick="openPage('Login', this, '#4CAF50')">Login</button>
+	<button class="tablink" onclick="openPage('Game', this, 'grey')">Game</button>
+	<button id="about" class="tablink" onclick="modalAbout('myModal')">About</button>
 
-		<div id="Register" class="tabcontent">
-			<form>
-				<div class="container">
-						<h1>Register</h1>
-						<p>Please fill in this form to create an account.</p>
-						<hr>
-						<label for="rfullName"><b>Name</b></label>
-						<input type="text" placeholder="Enter Full Name" name="rfullName" id="rfullName" required>
+	<div id="Welcome" class="tabcontent">
+		<button id="login_button" class="button loginButton" onclick="return login_button(this)"> Login </button>
+		<button class="button registerButton" onclick="openPage('Register', this, '#008CBA')">Register</button>
+	</div>
 
-						<label for="Username"><b>Username</b></label>
-						<input type="text" placeholder="Enter Username" name="ruserName" id="ruserName" required>
+	<div id="Register" class="tabcontent">
+		<form>
+			<div class="container">
+				<h1>Register</h1>
+				<p>Please fill in this form to create an account.</p>
+				<hr>
+				<label for="rfullName"><b>Name</b></label>
+				<input type="text" placeholder="Enter Full Name" name="rfullName" id="rfullName">
 
-						<label for="email"><b>Email</b></label>
-						<input type="text" placeholder="Enter Email" name="email" id="remail" required>
-		
-						<label for="psw"><b>Password</b></label>
-						<input type="password" placeholder="Enter Password" name="psw" id="rpsw" required>
-		
-						<label for="psw-repeat"><b>Repeat Password</b></label>
-						<input type="password" placeholder="Repeat Password" name="psw-repeat" id="rpsw-repeat" required>
-						<hr>
-						<button type="submit" class="registerbtn">Register</button>
-				</div>
-		
-				
+				<label for="Username"><b>Username</b></label>
+				<input type="text" placeholder="Enter Username" name="ruserName" id="ruserName">
+
+				<label for="email"><b>Email</b></label>
+				<input type="text" placeholder="Enter Email" name="email" id="remail">
+
+				<label for="psw"><b>Password</b></label>
+				<input type="password" placeholder="Enter Password" name="psw" id="rpsw">
+
+				<label for="psw-repeat"><b>Repeat Password</b></label>
+				<input type="password" placeholder="Repeat Password" name="psw-repeat" id="rpsw-repeat">
+				<hr>
+				<button type="submit" class="registerbtn " >Register</button>
+			</div>
+
 		</form>
+	</div>
+	<div id="Register" class="tabcontent">
+	</div>
+
+	<div id="Login" class="tabcontent">
+		<form>
+			<div class="container">
+				<label>Username : </label>
+				<input id="user" type="text" placeholder="Enter Username" name="username" required>
+				<label>Password : </label>
+				<input id="psw" type="password" placeholder="Enter Password" name="password" required>
+				<button type="submit" onclick="return Login(this)">Login</button>
+				<!-- <input type="checkbox" checked="checked"> Remember me    -->
+				<!-- <button type="button" class="cancelbtn"> Cancel</button>    -->
+				<!-- Forgot <a href="#"> password? </a>    -->
+			</div>
+		</form>
+	</div>
+
+	<div id="Game" class="tabcontent">
+		<div>
+			<div id="score">
+				<label for="lblScore">SCORE:</label>
+				<input id="lblScore" type="text" />
+			</div>
+			<div id="time">
+				<label for="lblTime">TIME:</label>
+				<input id="lblTime" type="text" />
+			</div>
+			<div id="game">
+				<div id ="gameCanvas">
+					<canvas id="canvas" height="600" width="600"></canvas>
+				</div>
+
+				<div id="mini_settings">
+					<p>Up: </p>
+					<p>Down: </p>
+					<p>Right: </p>
+					<p>Left: </p>
+					<p>Number of balls: </p>
+					<p>5 points color: </p>
+					<p>15 points color: </p>
+					<p>25 points color: </p>
+					<p>Timer: </p>
+					<p>Number of attackers: </p>
+				</div>
+			</div>
 		</div>
-				<div id="Register" class="tabcontent">
-				</div>
+	</div>
 
-				<div id="Login" class="tabcontent">
-					<form>  
-						<div class="container">   
-							<label>Username : </label>   
-							<input id="user" type="text" placeholder="Enter Username" name="username" required>  
-							<label>Password : </label>   
-							<input id="psw" type="password" placeholder="Enter Password" name="password" required>  
-							<button type="submit" onclick="return Login(this)">Login</button>   
-							<!-- <input type="checkbox" checked="checked"> Remember me    -->
-							<!-- <button type="button" class="cancelbtn"> Cancel</button>    -->
-							<!-- Forgot <a href="#"> password? </a>    -->
-						</div>   
-					</form>   		  
-				</div>
 
-				<div id="Game" class="tabcontent">
-					<div>
-						<div id="score">
-							<label for="lblScore">SCORE:</label>
-							<input id="lblScore" type="text" />
-						</div>
-						<div id="time">
-							<label for="lblTime">TIME:</label>
-							<input id="lblTime" type="text" />
-						</div>
-						<div id="game">
-							<canvas id="canvas" height="600" width="600"></canvas>
-							<div id="mini_settings">
-								<p>Up: </p>
-								<p>Down: </p>
-								<p>Right: </p>
-								<p>Left: </p>
-								<p>Number of balls: </p>
-								<p>5 points color: </p>
-								<p>15 points color: </p>
-								<p>25 points color: </p>
-								<p>Timer: </p>
-								<p>Number of attackers: </p>
-							</div>
-						</div>
-					</div>
-				</div>
-				
+	<div id="myModal" class="modal">
 
-				<div id="myModal" class="modal">
-
-					<!-- Modal content -->
-					<div class="modal-content">
-					  <span class="close" onclick="modalClose('myModal')">&times;</span>
-					  <p>Hand in Guy Globus and Shiri Tabach</p>
-					  <p>Some text in the Modal..</p>
-					</div>
-				  
-				</div>
-
-				<div id="SettingModal" class="modal">
-
-					<div class="modal-content">
-					  <span class="close" onclick="modalClose('SettingModal')">&times;</span>
-					  <label>Up
-					  	<input id="up" type="text" placeholder="W" value="up" name="Up">
-					  </label>
-					  <label>Down
-						<input id="down" type="text" placeholder="X" value="down" name="Down">
-					  </label>
-					  <label>Right
-					  	<input id="right" type="text" placeholder="D" value="right" name="Right"> 
-					  </label>
-					  <label>Left
-					  	<input id="left" type="text" placeholder="A" value="left" name="Left">
-					  </label>
-					  <label>Number of balls
-					  	<input id="circleNum" type="text" placeholder="50" name="Number of balls" min="50" max="90" required>
-					  </label>
-					  <form action="" method="post" id="five_p">
-						<p>5 points</p>
-						<input type="radio" name="joke" value="red" />red
-						<input type="radio" name="joke" value="black" />black
-						<input type="radio" name="joke" value="random" />Random
-					  </form>
-					  <form action="" method="post" id="fifteen_p">
-						<p>15 points</p>
-						<input type="radio" name="joke" value="blue" />blue
-						<input type="radio" name="joke" value="green" />green
-						<input type="radio" name="joke" value="random" />Random
-					  </form>
-					  <form action="" method="post" id="twentyf_p">
-						<p>25 points</p>
-						<input type="radio" name="joke" value="gold" />gold
-						<input type="radio" name="joke" value="silver" />silver
-						<input type="radio" name="joke" value="random" />Random
-					  </form>
-					  <form action="" method="post" id="timer">
-						<p>Timer</p>
-						<input type="radio" name="joke" value="1" />1 minute
-						<input type="radio" name="joke" value="2" />2 minutes
-						<input type="radio" name="joke" value="2" />3 minutes
-						<input type="radio" name="joke" value="random" />Random
-
-					  </form>
-					  <form action="" method="post" id="num_attack">
-						<p>Number of attackers</p>
-						<input type="radio" name="joke" value="1" />1
-						<input type="radio" name="joke" value="2" />2
-						<input type="radio" name="joke" value="3" />3
-						<input type="radio" name="joke" value="4" />4
-						<input type="radio" name="joke" value="random" />Random
-					  </form>
-					  <button onclick="start_game()">Play game</button>
-					</div>
-				  
-				</div>
-			
-		<div class="footer">
-			<p style="text-decoration: underline; font-size: 13px;">Contact us</p>
-			<p><a class="contact_links" href="mailto:shirit@post.bgu.ac.il">shirit@post.bgu.ac.il</a></p>
-			<p><a class="contact_links" href="mailto:guyglo@post.bgu.ac.il">guyglo@post.bgu.ac.il</a></p>
+		<!-- Modal content -->
+		<div class="modal-content">
+			<span class="close" onclick="modalClose('myModal')">&times;</span>
+			<p>Hand in Guy Globus and Shiri Tabach</p>
+			<p>Some text in the Modal..</p>
 		</div>
-	</body>
+
+	</div>
+
+	<div id="SettingModal" class="modal">
+
+		<div class="modal-content">
+			<span class="close" onclick="modalClose('SettingModal')">&times;</span>
+			<label>Up
+				<input id="up" type="text" placeholder="W" value="up" name="Up">
+			</label>
+			<label>Down
+				<input id="down" type="text" placeholder="X" value="down" name="Down">
+			</label>
+			<label>Right
+				<input id="right" type="text" placeholder="D" value="right" name="Right">
+			</label>
+			<label>Left
+				<input id="left" type="text" placeholder="A" value="left" name="Left">
+			</label>
+			<label>Number of balls
+				<input id="circleNum" type="text" placeholder="50" name="Number of balls" min="50" max="90" required>
+			</label>
+			<form action="" method="post" id="five_p">
+				<p>5 points</p>
+				<input type="radio" name="joke" value="red" />red
+				<input type="radio" name="joke" value="black" />black
+				<input type="radio" name="joke" value="random" />Random
+			</form>
+			<form action="" method="post" id="fifteen_p">
+				<p>15 points</p>
+				<input type="radio" name="joke" value="blue" />blue
+				<input type="radio" name="joke" value="green" />green
+				<input type="radio" name="joke" value="random" />Random
+			</form>
+			<form action="" method="post" id="twentyf_p">
+				<p>25 points</p>
+				<input type="radio" name="joke" value="gold" />gold
+				<input type="radio" name="joke" value="silver" />silver
+				<input type="radio" name="joke" value="random" />Random
+			</form>
+			<form action="" method="post" id="timer">
+				<p>Timer</p>
+				<input type="radio" name="joke" value="1" />1 minute
+				<input type="radio" name="joke" value="2" />2 minutes
+				<input type="radio" name="joke" value="2" />3 minutes
+				<input type="radio" name="joke" value="random" />Random
+
+			</form>
+			<form action="" method="post" id="num_attack">
+				<p>Number of attackers</p>
+				<input type="radio" name="joke" value="1" />1
+				<input type="radio" name="joke" value="2" />2
+				<input type="radio" name="joke" value="3" />3
+				<input type="radio" name="joke" value="4" />4
+				<input type="radio" name="joke" value="random" />Random
+			</form>
+			<button onclick="start_game()">Play game</button>
+		</div>
+
+	</div>
+
+	<div class="footer">
+		<p style="text-decoration: underline; font-size: 13px;">Contact us</p>
+		<p><a class="contact_links" href="mailto:shirit@post.bgu.ac.il">shirit@post.bgu.ac.il</a></p>
+		<p><a class="contact_links" href="mailto:guyglo@post.bgu.ac.il">guyglo@post.bgu.ac.il</a></p>
+	</div>
+</body>
 
 
 </html>

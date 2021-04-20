@@ -7,6 +7,7 @@ var start_time;
 var time_elapsed;
 var interval;
 var users_passes = {"k":"k"};
+var logged_in_users = []
 var up_btn, down_btn, right_btn, left_btn, number_of_balls, five_p_color, fifteen_p_color, twentyf_p_color, timer, num_attack;
 
 $(document).ready(function() {
@@ -218,6 +219,7 @@ function Login(element){
 	else{
 		modalSettingGame();
 		openPage('Game', element, 'grey');
+		logged_in_users.push(username);
 	}
 	return false;
 }

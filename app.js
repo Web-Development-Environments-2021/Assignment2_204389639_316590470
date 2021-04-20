@@ -1,7 +1,8 @@
 var context;
-var shape = new Object();
+var shape = new Object();  // location of the pacman on the board
 var board;
 var score;
+var maxScore;
 var pac_color;
 var start_time;
 var time_elapsed;
@@ -19,9 +20,14 @@ $(document).ready(function() {
 function Start() {
 	board = new Array();
 	score = 0;
+	maxScore = 0;
 	pac_color = "yellow";
 	var cnt = 100;
 	var food_remain = 50;
+	let total = food_remain;
+	let foodCounter = 0;
+	
+
 	var pacman_remain = 1;
 	start_time = new Date();
 	for (var i = 0; i < 10; i++) {
@@ -59,14 +65,29 @@ function Start() {
 				var randomNum = Math.random();
 				if (randomNum <= (1.0 * food_remain) / cnt) {
 					food_remain--;
-					board[i][j] = 1;
-				} else if (randomNum < (1.0 * (pacman_remain + food_remain)) / cnt) {
+					//let randomFoodLevel = Math.random();
+					if(foodCounter <= 0.1*total){
+						board[i][j] = 6; // 6 is best food (green)
+						maxScore += 25;
+						foodCounter++;
+					}
+					else if(foodCounter > 0.1*total && foodCounter <= 0.4*total){
+						board[i][j] = 5; // 5 is good food (red)
+						maxScore += 15; 
+						foodCounter++
+					}
+					else{
+						board[i][j] = 1; // 1 is regular food (black)
+						maxScore +=5;
+					}
+				} 
+				else if (randomNum < (1.0 * (pacman_remain + food_remain)) / cnt) {
 					shape.i = i;
 					shape.j = j;
 					pacman_remain--;
-					board[i][j] = 2;
+					board[i][j] = 2; // 2 is for the PACMAN
 				} else {
-					board[i][j] = 0;
+					board[i][j] = 0; // 0 is notin
 				}
 				cnt--;
 			}
@@ -75,6 +96,7 @@ function Start() {
 	while (food_remain > 0) {
 		var emptyCell = findRandomEmptyCell(board);
 		board[emptyCell[0]][emptyCell[1]] = 1;
+		maxScore += 5;
 		food_remain--;
 	}
 	keysDown = {};
@@ -150,7 +172,19 @@ function Draw() {
 				context.rect(center.x - 30, center.y - 30, 60, 60);
 				context.fillStyle = "yellow"; //wall color
 				context.fill();
+			} else if (board[i][j] == 5) {
+				context.beginPath();
+				context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
+				context.fillStyle = "red"; //disk color
+				context.fill();
 			}
+			else if (board[i][j] == 6) {
+				context.beginPath();
+				context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
+				context.fillStyle = "green"; //disk color
+				context.fill();
+			}
+
 		}
 	}
 }
@@ -179,7 +213,13 @@ function UpdatePosition() {
 		}
 	}
 	if (board[shape.i][shape.j] == 1) {
-		score++;
+		score= score +5;
+	}
+	else if (board[shape.i][shape.j] == 5) {
+		score= score+15;
+	}
+	else if (board[shape.i][shape.j] == 6) {
+		score= score+25;
 	}
 	board[shape.i][shape.j] = 2;
 
@@ -189,9 +229,11 @@ function UpdatePosition() {
 	if (score >= 20 && time_elapsed <= 10) {
 		pac_color = "green";
 	}
-	if (score == 50) {
+	if (score == maxScore) {
 		window.clearInterval(interval);
 		window.alert("Game completed");
+		
+		return false;
 	} else {
 		Draw();
 	}

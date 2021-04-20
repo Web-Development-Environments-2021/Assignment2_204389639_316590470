@@ -4,6 +4,18 @@ body, html {
     font-family: Arial;
   }
   
+  #logo{
+    margin: 0 auto;
+    display: block;
+    width:10%;
+    height: 7%;
+    border: 2px wheat dotted;
+  }
+
+  .header{
+    background-color: #555;
+  }
+
   .menu{
       width:100%;
       margin: 0 auto;
@@ -99,11 +111,6 @@ body, html {
   
   .loginButton:hover {
     background-color: #4CAF50;
-    color: white;
-  }
-
-  #about:hover{
-    background-color: pink;
     color: white;
   }
   

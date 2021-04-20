@@ -349,8 +349,11 @@ $(function(){
 		//check email
 		//if(validateEmail(email)==false){alert("invalid email")}
 		
-		if(password != confirm){
+		else if(password != confirm){
 			alert("password confirmation dosent match")
+		}
+		else{
+			users_passes[username]=password;
 		}
 		return false;
 	})

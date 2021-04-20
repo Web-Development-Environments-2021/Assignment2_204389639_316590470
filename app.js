@@ -12,6 +12,8 @@ var up_btn, down_btn, right_btn, left_btn, number_of_balls, five_p_color, fiftee
 
 $(document).ready(function() {
 	openPage('Welcome', this, 'red');
+
+
 });
 
 
@@ -28,13 +30,32 @@ function Start() {
 		//put obstacles in (i=3,j=3) and (i=3,j=4) and (i=3,j=5), (i=6,j=1) and (i=6,j=2)
 		for (var j = 0; j < 10; j++) {
 			if (
-				(i == 3 && j == 3) ||
-				(i == 3 && j == 4) ||
-				(i == 3 && j == 5) ||
-				(i == 6 && j == 1) ||
-				(i == 6 && j == 2)
+				(i == 0 && j == 7)||
+				(i == 1 && j == 2)||
+				(i == 1 && j == 3)||
+				(i == 1 && j == 4)||
+				(i == 3 && j == 0)||
+				(i == 3 && j == 3)||
+				(i == 3 && j == 4)||
+				(i == 3 && j == 8)||
+				(i == 3 && j == 9)||
+				(i == 4 && j == 4)||
+				(i == 5 && j == 2)||
+				(i == 5 && j == 3)||
+				(i == 5 && j == 4)||
+				(i == 5 && j == 5)||
+				(i == 5 && j == 6)||
+				(i == 6 && j == 2)||
+				(i == 6 && j == 8)||
+				(i == 7 && j == 8)||
+				(i == 8 && j == 0)||
+				(i == 8 && j == 1)||
+				(i == 8 && j == 4)||
+				(i == 8 && j == 7)||
+				(i == 8 && j == 8)||
+				(i == 9 && j == 4)
 			) {
-				board[i][j] = 4;
+				board[i][j] = 4; //4 is a wall
 			} else {
 				var randomNum = Math.random();
 				if (randomNum <= (1.0 * food_remain) / cnt) {
@@ -102,6 +123,7 @@ function GetKeyPressed() {
 
 function Draw() {
 	canvas.width = canvas.width; //clean board
+ canvas.style.backgroundColor = "blue";
 	lblScore.value = score;
 	lblTime.value = time_elapsed;
 	for (var i = 0; i < 10; i++) {
@@ -113,21 +135,21 @@ function Draw() {
 				context.beginPath();
 				context.arc(center.x, center.y, 30, 0.15 * Math.PI, 1.85 * Math.PI); // half circle
 				context.lineTo(center.x, center.y);
-				context.fillStyle = pac_color; //color
+				context.fillStyle = pac_color; //pacman body color
 				context.fill();
 				context.beginPath();
 				context.arc(center.x + 5, center.y - 15, 5, 0, 2 * Math.PI); // circle
-				context.fillStyle = "black"; //color
+				context.fillStyle = "black"; //pacman eye color
 				context.fill();
 			} else if (board[i][j] == 1) {
 				context.beginPath();
 				context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
-				context.fillStyle = "black"; //color
+				context.fillStyle = "black"; //disk color
 				context.fill();
 			} else if (board[i][j] == 4) {
 				context.beginPath();
 				context.rect(center.x - 30, center.y - 30, 60, 60);
-				context.fillStyle = "yellow"; //color
+				context.fillStyle = "yellow"; //wall color
 				context.fill();
 			}
 		}
@@ -161,8 +183,10 @@ function UpdatePosition() {
 		score++;
 	}
 	board[shape.i][shape.j] = 2;
+
 	var currentTime = new Date();
 	time_elapsed = (currentTime - start_time) / 1000;
+
 	if (score >= 20 && time_elapsed <= 10) {
 		pac_color = "green";
 	}
@@ -318,24 +342,29 @@ function isNumeric(n) {
 	return !isNaN(parseFloat(n));
 }
 
-// function validateEmail(email) {
-// 	const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-// 	return re.test(String(email).toLowerCase());
-// }
+function validateEmail(email) {
+	const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	return re.test(String(email).toLowerCase());
+}
 
+
+// this function manages the registration process, validated all inputs and adds to the users dictionary.
 $(function(){
  $(".registerbtn").click(function(e){
-		let fullName = $("#fullName").value;
-		let username = $("#userName").value;
-		var email = $("#email").value;
-		let password = $("#rpsw").value;
-		let confirm = $("#rpsw-repeat").value;
+		
+		 let fullName = $("#rfullName").val();
+			//let fullName = $(this).closest('div').find('.rfullName').text().value;
+		 let username = $("#ruserName").val();
+		let email = $("#remail").val();
+		let password = $("#rpsw").val();
+		let confirm = $("#rpsw-repeat").val();
 		let flag = 0;
 		
 		
 		//check for numeric values in the username
-		//if(isNumeric(username)){alert("username cannot include numeric values")}
-		
+		if(isNumeric(username)){
+			alert("username cannot include numeric values");
+		}
 		// check that username isnt already in use
 		for(var user in users_passes){
 			if (user==username){
@@ -344,19 +373,21 @@ $(function(){
 		}
 		if(flag==1){
 			alert("usermane already taken - please choose a different one");
+			return false;
 		}
-
-		//check email
-		//if(validateEmail(email)==false){alert("invalid email")}
+		// check email
+		if(validateEmail(email)==false){
+			alert("invalid email");
+			return false;
+		}
+		//check that password and confirmation is equal
+		if(password != confirm){
+			alert("password confirmation dosent match");
+			return false;
+		}
+		users_passes[username] = password;
+		console.log(users_passes);
 		
-		else if(password != confirm){
-			alert("password confirmation dosent match")
-		}
-		else{
-			//add new user to saved users
-			users_passes[username]=[password, fullName, email];
-		}
-		return false;
-	})
+	});
 return false;
-})
+});

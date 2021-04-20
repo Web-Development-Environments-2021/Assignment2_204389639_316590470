@@ -125,6 +125,18 @@ body, html {
     color: white;
   }
 
+  .gameStart {
+    background-color: white;
+    color: black;
+    /* border: 2px solid #008CBA; */
+  }
+  
+  .gameStart:hover {
+    background-color: yellow;
+    color: black;
+  }
+
+
   .footer{
     position: fixed;
     left: 0;
@@ -185,12 +197,41 @@ body, html {
 
   #mini_settings{
     float: right;
-    color: white;
+    color: black;
     width: 18%;
     border:2px wheat dotted;
   }
 
+  #gameCanvas{
+    float: left;
+    width: 75%;
+  }
+
   #canvas{
-    margin: 0 auto;
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    
+  }
+
+  #time{
+    width: 30%;
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+  }
+
+
+  #score{
+    width: 30%;
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
   }
 

@@ -4,6 +4,7 @@
 <head>
 	<script src="./jquery-3.4.1.slim.min.js"></script>
 	<script type="text/javascript" src="./app.js"></script>
+	<script type="text/javascript" src="./gameHandler.js"></script>
 	<link rel="stylesheet" href="style.css">
 </head>
 
@@ -21,6 +22,7 @@
 		<button id="login_button" class="button loginButton" onclick="return login_button(this)"> Login </button>
 		<button class="button registerButton" onclick="openPage('Register', this, '#008CBA')">Register</button>
 	</div>
+
 
 	<div id="Register" class="tabcontent">
 		<form>
@@ -123,7 +125,7 @@
 				<label for="psw-repeat"><b>Repeat Password</b></label>
 				<input type="password" placeholder="Repeat Password" name="psw-repeat" id="rpsw-repeat">
 				<hr>
-				<button type="submit" class="registerbtn " >Register</button>
+				<button type="submit" class="registerbtn ">Register</button>
 			</div>
 
 		</form>
@@ -155,7 +157,7 @@
 				<input id="lblTime" type="text" />
 			</div>
 			<div id="game">
-				<div id ="gameCanvas">
+				<div id="gameCanvas">
 					<canvas id="canvas" height="600" width="600"></canvas>
 				</div>
 
@@ -172,6 +174,7 @@
 					<p>Number of attackers: </p>
 				</div>
 			</div>
+			<button onclick="Start()">Start new game</button>
 		</div>
 	</div>
 

@@ -1,7 +1,8 @@
 var context;
-var shape = new Object();
+var shape = new Object();  // location of the pacman on the board
 var board;
 var score;
+var maxScore;
 var pac_color;
 var start_time;
 var time_elapsed;
@@ -11,15 +12,22 @@ var up_btn, down_btn, right_btn, left_btn, number_of_balls, five_p_color, fiftee
 
 $(document).ready(function() {
 	openPage('Welcome', this, 'red');
+
+
 });
 
 
 function Start() {
 	board = new Array();
 	score = 0;
+	maxScore = 0;
 	pac_color = "yellow";
 	var cnt = 100;
 	var food_remain = 50;
+	let total = food_remain;
+	let foodCounter = 0;
+	
+//////////////////////   ///////////////////////   ////////////////////   //////////////////   ////////  
 	var pacman_remain = 1;
 	start_time = new Date();
 	for (var i = 0; i < 10; i++) {
@@ -27,35 +35,89 @@ function Start() {
 		//put obstacles in (i=3,j=3) and (i=3,j=4) and (i=3,j=5), (i=6,j=1) and (i=6,j=2)
 		for (var j = 0; j < 10; j++) {
 			if (
-				(i == 3 && j == 3) ||
-				(i == 3 && j == 4) ||
-				(i == 3 && j == 5) ||
-				(i == 6 && j == 1) ||
-				(i == 6 && j == 2)
+				(i == 0 && j == 7)||
+				(i == 1 && j == 2)||
+				(i == 1 && j == 3)||
+				(i == 1 && j == 4)||
+				(i == 3 && j == 0)||
+				(i == 3 && j == 3)||
+				(i == 3 && j == 4)||
+				(i == 3 && j == 8)||
+				(i == 3 && j == 9)||
+				(i == 4 && j == 4)||
+				(i == 5 && j == 2)||
+				(i == 5 && j == 3)||
+				(i == 5 && j == 4)||
+				(i == 5 && j == 5)||
+				(i == 5 && j == 6)||
+				(i == 6 && j == 2)||
+				(i == 6 && j == 8)||
+				(i == 7 && j == 8)||
+				(i == 8 && j == 0)||
+				(i == 8 && j == 1)||
+				(i == 8 && j == 4)||
+				(i == 8 && j == 7)||
+				(i == 8 && j == 8)||
+				(i == 9 && j == 4)
 			) {
-				board[i][j] = 4;
-			} else {
-				var randomNum = Math.random();
-				if (randomNum <= (1.0 * food_remain) / cnt) {
-					food_remain--;
-					board[i][j] = 1;
-				} else if (randomNum < (1.0 * (pacman_remain + food_remain)) / cnt) {
-					shape.i = i;
-					shape.j = j;
-					pacman_remain--;
-					board[i][j] = 2;
-				} else {
-					board[i][j] = 0;
-				}
-				cnt--;
+				board[i][j] = 4; //4 is a wall
+			}else{
+				board[i][j] = 0; // nothing
 			}
+			//  else {
+			// 	var randomNum = Math.random();
+			// 	if (randomNum <= (1.0 * food_remain) / cnt) {
+			// 		food_remain--;
+			// 		//let randomFoodLevel = Math.random();
+			// 		if(foodCounter <= 0.1*total){
+			// 			board[i][j] = 6; // 6 is best food (green)
+			// 			maxScore += 25;
+			// 			foodCounter++;
+			// 		}
+			// 		else if(foodCounter > 0.1*total && foodCounter <= 0.4*total){
+			// 			board[i][j] = 5; // 5 is good food (red)
+			// 			maxScore += 15; 
+			// 			foodCounter++
+			// 		}
+			// 		else{
+			// 			board[i][j] = 1; // 1 is regular food (black)
+			// 			maxScore +=5;
+			// 		}
+			// 	} 
+			// 	else if (randomNum < (1.0 * (pacman_remain + food_remain)) / cnt) {
+			// 		shape.i = i;
+			// 		shape.j = j;
+			// 		pacman_remain--;
+			// 		board[i][j] = 2; // 2 is for the PACMAN
+			// 	} else {
+			// 		board[i][j] = 0; // 0 is notin
+			// 	}
+			// 	cnt--;
+			// }
 		}
 	}
 	while (food_remain > 0) {
 		var emptyCell = findRandomEmptyCell(board);
-		board[emptyCell[0]][emptyCell[1]] = 1;
-		food_remain--;
+		if(foodCounter <= 0.1*total){
+				board[emptyCell[0]][emptyCell[1]] = 6; // 6 is best food (green)
+				maxScore += 25;
+				foodCounter++;
+			}
+			else if(foodCounter > 0.1*total && foodCounter <= 0.4*total){
+				board[emptyCell[0]][emptyCell[1]] = 5; // 5 is good food (red)
+				maxScore += 15; 
+				foodCounter++
+			}
+			else{
+				board[emptyCell[0]][emptyCell[1]] = 1; // 1 is regular food (black)
+				maxScore +=5;
+			}
+		food_remain--;		
 	}
+	var pacLocation = findRandomEmptyCell(board);
+	board[pacLocation[0]][pacLocation[1]] = 2;
+	shape.i = pacLocation[0];
+	shape.j = pacLocation[1];
 	keysDown = {};
 	addEventListener(
 		"keydown",
@@ -101,6 +163,8 @@ function GetKeyPressed() {
 
 function Draw() {
 	canvas.width = canvas.width; //clean board
+   canvas.style.backgroundColor = "#008CBA";
+	// canvas.style.border = "yellow"
 	lblScore.value = score;
 	lblTime.value = time_elapsed;
 	for (var i = 0; i < 10; i++) {
@@ -112,23 +176,35 @@ function Draw() {
 				context.beginPath();
 				context.arc(center.x, center.y, 30, 0.15 * Math.PI, 1.85 * Math.PI); // half circle
 				context.lineTo(center.x, center.y);
-				context.fillStyle = pac_color; //color
+				context.fillStyle = pac_color; //pacman body color
 				context.fill();
 				context.beginPath();
 				context.arc(center.x + 5, center.y - 15, 5, 0, 2 * Math.PI); // circle
-				context.fillStyle = "black"; //color
+				context.fillStyle = "black"; //pacman eye color
 				context.fill();
 			} else if (board[i][j] == 1) {
 				context.beginPath();
 				context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
-				context.fillStyle = "black"; //color
+				context.fillStyle = five_p_color; //regular disk color
 				context.fill();
 			} else if (board[i][j] == 4) {
 				context.beginPath();
 				context.rect(center.x - 30, center.y - 30, 60, 60);
-				context.fillStyle = "yellow"; //color
+				context.fillStyle = "yellow"; //wall color
+				context.fill();
+			} else if (board[i][j] == 5) {
+				context.beginPath();
+				context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
+				context.fillStyle = fifteen_p_color; //disk color
 				context.fill();
 			}
+			else if (board[i][j] == 6) {
+				context.beginPath();
+				context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
+				context.fillStyle = twentyf_p_color; //disk color
+				context.fill();
+			}
+
 		}
 	}
 }
@@ -157,17 +233,27 @@ function UpdatePosition() {
 		}
 	}
 	if (board[shape.i][shape.j] == 1) {
-		score++;
+		score= score +5;
+	}
+	else if (board[shape.i][shape.j] == 5) {
+		score= score+15;
+	}
+	else if (board[shape.i][shape.j] == 6) {
+		score= score+25;
 	}
 	board[shape.i][shape.j] = 2;
+
 	var currentTime = new Date();
 	time_elapsed = (currentTime - start_time) / 1000;
+
 	if (score >= 20 && time_elapsed <= 10) {
 		pac_color = "green";
 	}
-	if (score == 50) {
+	if (score == maxScore) {
 		window.clearInterval(interval);
 		window.alert("Game completed");
+		
+		return false;
 	} else {
 		Draw();
 	}
@@ -228,6 +314,7 @@ function login_button(element){
 	 openPage('Login', element, '#4CAF50');
 		return false;
 }
+
 
 function modalAbout(modal_name){
 	document.getElementById(modal_name).style.display="block";
@@ -312,3 +399,59 @@ function randomize(element_name){
 		return inputs[random_index].value;
 	}
 }
+
+
+
+function isNumeric(n) {
+	return !isNaN(parseFloat(n));
+}
+
+function validateEmail(email) {
+	const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	return re.test(String(email).toLowerCase());
+}
+
+
+// this function manages the registration process, validated all inputs and adds to the users dictionary.
+$(function(){
+ $(".registerbtn").click(function(e){
+		
+		 let fullName = $("#rfullName").val();
+			//let fullName = $(this).closest('div').find('.rfullName').text().value;
+		 let username = $("#ruserName").val();
+		let email = $("#remail").val();
+		let password = $("#rpsw").val();
+		let confirm = $("#rpsw-repeat").val();
+		let flag = 0;
+		
+		
+		//check for numeric values in the username
+		if(isNumeric(username)){
+			alert("username cannot include numeric values");
+		}
+		// check that username isnt already in use
+		for(var user in users_passes){
+			if (user==username){
+				flag=1;
+			}
+		}
+		if(flag==1){
+			alert("usermane already taken - please choose a different one");
+			return false;
+		}
+		// check email
+		if(validateEmail(email)==false){
+			alert("invalid email");
+			return false;
+		}
+		//check that password and confirmation is equal
+		if(password != confirm){
+			alert("password confirmation dosent match");
+			return false;
+		}
+		users_passes[username] = password;
+		console.log(users_passes);
+		
+	});
+return false;
+});

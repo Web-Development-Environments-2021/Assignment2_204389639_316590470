@@ -235,3 +235,13 @@ body, html {
     display: block;
   }
 
+  .container{
+    padding: 15px;
+  }
+  SELECT{
+    padding: 5px;
+  }
+  input.date{
+    width:50px;
+    padding: 5px;
+  }

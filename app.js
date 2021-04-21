@@ -7,13 +7,11 @@ var start_time;
 var time_elapsed;
 var interval;
 var users_passes = {"k":"k"};
-var logged_in_users = []
+var logged_in = false;
 var up_btn, down_btn, right_btn, left_btn, number_of_balls, five_p_color, fifteen_p_color, twentyf_p_color, timer, num_attack;
 
 $(document).ready(function() {
 	openPage('Welcome', this, 'red');
-
-
 });
 
 
@@ -233,20 +231,39 @@ function Login(element){
 		}
 	}
 	if(flag==0){
-		window.alert("no such username. please Sign up");
+		window.alert("No such username. Please Sign up");
 		openPage('Register', element, 'green');
 	}
 	else if(users_passes[username][0]!=password){
-		window.alert("wrong password. Please try again");
+		window.alert("Wrong password. Please try again");
 		openPage('Login', element, 'blue');
 	}
 	else{
-		modalSettingGame();
+		// let inputs = document.getElementsByClassName("container").getElementsByTagName("input");
+		// for(var input_i in inputs){
+		// 	input_i.value="";
+		// }
 		openPage('Game', element, 'grey');
-		logged_in_users.push(username);
+		modalSettingGame();
+		logged_in = true;
 	}
 	return false;
 }
+
+$(function(){
+	$("#game_btn").click(function(e){
+		if(logged_in==false){
+			alert("You must login first. Please register or login.")
+			openPage('Welcome', this, 'red');
+			}
+		else{
+			modalSettingGame();
+			openPage('Game', this, 'grey');
+		}
+		return false;
+	})
+	return false;
+})
 
 function login_button(element){
 	 document.getElementById("login_button").style.backgroundColor = "white";
@@ -294,11 +311,17 @@ function start_game(){
 	twentyf_p_color = randomize("twentyf_p");
 	timer = randomize("timer");
 	num_attack = randomize("num_attack");
-	
-	modalClose("SettingModal");
-	buildMiniSetting(up_btn, down_btn, right_btn, left_btn, number_of_balls, five_p_color, fifteen_p_color, twentyf_p_color, timer, num_attack);
-	context = canvas.getContext("2d");
-	Start();
+	//if some havent been picked up then dont start game
+	if(typeof number_of_balls=="undefined" || typeof five_p_color=="undefined" ||typeof fifteen_p_color=="undefined" ||typeof twentyf_p_color=="undefined" ||typeof timer=="undefined" ||typeof num_attack=="undefined"){
+		alert("You must fill all fields.")
+	}
+
+	else{
+		modalClose("SettingModal");
+		buildMiniSetting(up_btn, down_btn, right_btn, left_btn, number_of_balls, five_p_color, fifteen_p_color, twentyf_p_color, timer, num_attack);
+		context = canvas.getContext("2d");
+		Start();
+	}
 }
 
 function buildMiniSetting(up_btn, down_btn, right_btn, left_btn, number_of_balls, five_p_color, fifteen_p_color, twentyf_p_color, timer, num_attack){
@@ -351,43 +374,60 @@ function validateEmail(email) {
 // this function manages the registration process, validated all inputs and adds to the users dictionary.
 $(function(){
  $(".registerbtn").click(function(e){
-		
-		 let fullName = $("#rfullName").val();
-			//let fullName = $(this).closest('div').find('.rfullName').text().value;
-		 let username = $("#ruserName").val();
+		let fullName = $("#rfullName").val();
+		let username = $("#ruserName").val();
 		let email = $("#remail").val();
 		let password = $("#rpsw").val();
 		let confirm = $("#rpsw-repeat").val();
-		let flag = 0;
+		let day_birth = $("#day_birth").val();
+		let month_birth = $("#month_birth").val();
+		let year_birth = $("#year_birth").val();
 		
-		
+		//if one of fields isnt filled, then alert.
+		if(typeof fullName=="undefined" || typeof username=="undefined" || typeof email=="undefined" || typeof password=="undefined" || typeof confirm=="undefined" || day_birth==null || month_birth==null || year_birth==null){
+			alert("You must fill all fields");
+			return false;
+		}
 		//check for numeric values in the username
 		if(isNumeric(username)){
-			alert("username cannot include numeric values");
+			alert("Username cannot include numbers");
 		}
 		// check that username isnt already in use
 		for(var user in users_passes){
 			if (user==username){
-				flag=1;
+				alert("Username already taken. Please choose a different one");
+				return false;
 			}
-		}
-		if(flag==1){
-			alert("usermane already taken - please choose a different one");
-			return false;
 		}
 		// check email
 		if(validateEmail(email)==false){
-			alert("invalid email");
+			alert("Invalid email");
+			return false;
+		}
+		//validity of password
+		if(password.length<6 || !isNaN(parseInt(password))){
+			alert("Password must contain at least 6 letters and not all numbers.");
 			return false;
 		}
 		//check that password and confirmation is equal
 		if(password != confirm){
-			alert("password confirmation dosent match");
+			alert("Password confirmation doesn't match");
 			return false;
 		}
-		users_passes[username] = password;
+		users_passes[username] = [password, fullName, email];
 		console.log(users_passes);
-		
+		openPage('Login', this, '#4CAF50');
+		return false;
 	});
 return false;
 });
+
+
+//after game is done, play again is pressed by client.
+function play_again(){
+	modalSettingGame();
+	openPage('Game', this, 'grey');
+}
+
+//date of birth
+

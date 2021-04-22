@@ -76,9 +76,6 @@ $(function(){
 			date_of_birth_year:{
 				required: true
 			}
-			// date_form:{
-			// 	required: true
-			// }
 		}
 	});   
     $("#register-form").on('submit', function(e) {

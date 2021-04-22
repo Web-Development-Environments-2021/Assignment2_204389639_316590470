@@ -66,6 +66,15 @@ $(function(){
 				required: true,
 				minlength: 6,
 				equalTo: "#rpsw"
+			},
+			date_of_birth_day:{
+				required: true
+			},
+			date_of_birth_mon:{
+				required: true
+			},
+			date_of_birth_year:{
+				required: true
 			}
 			// date_form:{
 			// 	required: true

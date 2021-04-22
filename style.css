@@ -16,6 +16,19 @@ body, html {
     background-color: #555;
   }
 
+  .registerbtn{
+    margin: 0 auto;
+    display: block;
+    background-color: white;
+    color: black;
+    border: 2px solid #4CAF50;
+  }
+
+  .registerbtn:hover{
+    background-color: #4CAF50;
+    color: white;
+  }
+
   .menu{
       width:100%;
       margin: 0 auto;
@@ -33,7 +46,8 @@ body, html {
     form {   
         border: 3px solid #f1f1f1; 
         width: 40%;
-        margin: 0 auto;  
+        margin: 0 auto;
+        background-color: lightblue;  
     }   
     input[type=text],input[type=email], input[type=password] {   
         width: 100%;   
@@ -42,7 +56,13 @@ body, html {
         display: inline-block;   
         border: 2px solid green;   
         box-sizing: border-box;   
-    }  
+    }
+    
+    select{
+      border: 2px solid green;   
+        box-sizing: border-box;  
+    }
+    
     .container button:hover {   
         opacity: 0.7;   
     }   

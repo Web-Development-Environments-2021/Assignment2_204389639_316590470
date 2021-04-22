@@ -148,6 +148,7 @@ function Login(element){
 		openPage('Game', element, 'grey');
 		modalSettingGame();
 		logged_in = true;
+		document.getElementById("loggedIn").style.display="block";
 	}
 	return false;
 }

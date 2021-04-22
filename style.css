@@ -16,6 +16,15 @@ body, html {
     background-color: #555;
   }
 
+  #loggedIn{
+    text-decoration: underline;
+    color: wheat; 
+    float: right; 
+    top: 5px; 
+    left: 10px; 
+    display: none;
+  }
+
   .registerbtn{
     margin: 0 auto;
     display: block;

@@ -15,8 +15,83 @@ $(document).ready(function() {
 	openPage('Welcome', this, 'red');
 });
 
+function noSuchUser(name){
+	for(var user in users_passes){
+		if(name==user){
+			return false;
+		}
+	}
+	return true;
+}
 
+$(function(){
 
+	$.validator.addMethod('noDigitInName', function(value, element){
+		return this.optional(element)
+		|| /^[a-z\s]+$/i.test(value);
+	}, 'Full name must not contain numbers\.')
+
+	$.validator.addMethod('existUser', function(value, element){
+		return noSuchUser(value);
+	},'Username is already taken, please choose another one\.')
+
+	//checks password validity
+	$.validator.addMethod('strongPassword', function(value, element){
+		return this.optional(element)
+		|| value.length>=6
+		&& /\d/.test(value)
+		&& /[a-z]/i.test(value);
+	},'Password must contain at least 6 characters, both numbers and letters\.')
+
+	$("#register-form").validate({
+		rules:{
+			rfullName:{
+				required: true,
+				noDigitInName: true
+			},
+			ruserName:{
+				required: true,
+				existUser: true
+			},
+			email:{
+				required: true,
+				email: true
+			},
+			psw:{
+				required: true,
+				strongPassword: true,
+				minlength: 6
+			},
+			psw_repeat:{
+				required: true,
+				minlength: 6,
+				equalTo: "#rpsw"
+			}
+			// date_form:{
+			// 	required: true
+			// }
+		}
+	});   
+    $("#register-form").on('submit', function(e) {
+        var isvalid = $("#register-form").valid();
+        if (isvalid) {
+            e.preventDefault();
+			var form=$("#register-form");
+			var username='';
+			var password = '';
+			$("input:not('input:submit')", form).each(function(i){
+				if($(this).prop('name')=="ruserName"){
+					username = $(this).val();
+				}
+				else if($(this).prop('name')=="psw"){
+					password = $(this).val();
+				}
+			});
+            users_passes[username]=password;
+			openPage('Login', this, '#4CAF50');
+		}
+	})
+})
 
 function openPage(pageName, elmnt, color) {
 	// Hide all elements with class="tabcontent" by default */
@@ -55,7 +130,7 @@ function Login(element){
 		window.alert("No such username. Please Sign up");
 		openPage('Register', element, 'green');
 	}
-	else if(users_passes[username][0]!=password){
+	else if(users_passes[username]!=password){
 		window.alert("Wrong password. Please try again");
 		openPage('Login', element, 'blue');
 	}
@@ -132,55 +207,25 @@ function validateEmail(email) {
 
 
 // this function manages the registration process, validated all inputs and adds to the users dictionary.
-$(function(){
- $(".registerbtn").click(function(e){
-		let fullName = $("#rfullName").val();
-		let username = $("#ruserName").val();
-		let email = $("#remail").val();
-		let password = $("#rpsw").val();
-		let confirm = $("#rpsw-repeat").val();
-		let day_birth = $("#day_birth").val();
-		let month_birth = $("#month_birth").val();
-		let year_birth = $("#year_birth").val();
+// $(function(){
+//  $(".registerbtn").click(function(e){
+// 	 	$("#register-form").validate();
+// 		let fullName = $("#rfullName").val();
+// 		let username = $("#ruserName").val();
+// 		let email = $("#remail").val();
+// 		let password = $("#rpsw").val();
+// 		// let confirm = $("#rpsw-repeat").val();
+// 		// let day_birth = $("#day_birth").val();
+// 		// let month_birth = $("#month_birth").val();
+// 		// let year_birth = $("#year_birth").val();
 		
-		//if one of fields isnt filled, then alert.
-		if(typeof fullName=="undefined" || typeof username=="undefined" || typeof email=="undefined" || typeof password=="undefined" || typeof confirm=="undefined" || day_birth==null || month_birth==null || year_birth==null){
-			alert("You must fill all fields");
-			return false;
-		}
-		//check for numeric values in the username
-		if(isNumeric(username)){
-			alert("Username cannot include numbers");
-		}
-		// check that username isnt already in use
-		for(var user in users_passes){
-			if (user==username){
-				alert("Username already taken. Please choose a different one");
-				return false;
-			}
-		}
-		// check email
-		if(validateEmail(email)==false){
-			alert("Invalid email");
-			return false;
-		}
-		//validity of password
-		if(password.length<6 || !isNaN(parseInt(password))){
-			alert("Password must contain at least 6 letters and not all numbers.");
-			return false;
-		}
-		//check that password and confirmation is equal
-		if(password != confirm){
-			alert("Password confirmation doesn't match");
-			return false;
-		}
-		users_passes[username] = [password, fullName, email];
-		console.log(users_passes);
-		openPage('Login', this, '#4CAF50');
-		return false;
-	});
-return false;
-});
+// 		users_passes[username] = [password, fullName, email];
+// 		console.log(users_passes);
+// 		openPage('Login', this, '#4CAF50');
+// 		return false;
+// 	});
+// return false;
+// });
 
 
 //after game is done, play again is pressed by client.

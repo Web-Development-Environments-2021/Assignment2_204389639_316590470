@@ -5,6 +5,8 @@
 	<script src="./jquery-3.4.1.slim.min.js"></script>
 	<script type="text/javascript" src="./app.js"></script>
 	<script type="text/javascript" src="./gameHandler.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/additional-methods.js"></script>
 	<link rel="stylesheet" href="style.css">
 </head>
 
@@ -25,21 +27,23 @@
 
 
 	<div id="Register" class="tabcontent">
-		<form>
-			<div class="container">
+		<form id="register-form">
+			<!-- <div class="container"> -->
 				<h1>Register</h1>
 				<p>Please fill in this form to create an account.</p>
 				<hr>
 				<label for="rfullName"><b>Name</b></label>
 				<input type="text" placeholder="Enter Full Name" name="rfullName" id="rfullName">
 
+				</br>
 				<label for="Username"><b>Username</b></label>
 				<input type="text" placeholder="Enter Username" name="ruserName" id="ruserName">
 
+				</br>
 				<label for="email"><b>Email</b></label>
-				<input type="text" placeholder="Enter Email" name="email" id="remail">
+				<input type="email" placeholder="Enter email" name="email" id="remail">
 
-				<form>
+				<!-- <form name="date_form">
 					<label ><b>Date of birth</b></label>
 					<select id="day_birth" name="date_of_birth:day" tabindex="7">
                         <option disabled selected>Day</option>
@@ -115,19 +119,18 @@
 						<option value="2000">2010</option>
                     </select>
 					</SELECT>
-				</form>
+				</form> -->
 
 				</br>
 				</br>
 				<label for="psw"><b>Password</b></label>
-				<input type="password" placeholder="Enter Password" name="psw" id="rpsw">
+				<input type="password" placeholder="Enter password" name="psw" id="rpsw">
 
-				<label for="psw-repeat"><b>Repeat Password</b></label>
-				<input type="password" placeholder="Repeat Password" name="psw-repeat" id="rpsw-repeat">
+				<label for="psw-repeat"><b>Confirm password</b></label>
+				<input type="password" placeholder="Confirm password" name="psw_repeat" id="rpsw-repeat">
 				<hr>
 				<button type="submit" class="registerbtn ">Register</button>
-			</div>
-
+			<!-- </div> -->
 		</form>
 	</div>
 

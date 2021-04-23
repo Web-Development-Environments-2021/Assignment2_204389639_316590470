@@ -234,13 +234,22 @@ body, html {
   }
 
   #mini_settings{
-    float: right;
+    /* float: right; */
     color: black;
-    width: 18%;
+    /* width: fit-content; */
+    width: 20%;
     border:2px wheat dotted;
   }
 
-  #gameCanvas{
+  #game{
+    flex-direction: row;
+    display: flex;
+    list-style: none;
+    margin: 0 auto;
+    width: fit-content;
+  }
+
+  /* #gameCanvas{
     float: left;
     width: 80%;
   }
@@ -251,26 +260,21 @@ body, html {
     margin-left: auto;
     margin-right: auto;
     display: block;
-    
-  }
-
-  #time{
-    width: 30%;
-    padding-left: 0;
-    padding-right: 0;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-  }
-
+  } */
 
   #score{
-    width: 30%;
-    padding-left: 0;
-    padding-right: 0;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
+    width: 20%;
+    margin: 0 auto;
+    text-align: center;
+    flex-direction: row;
+    display: flex;
+    list-style: none;
+  }
+
+  .display_result, .game_details{
+    display: inline-block;
+    margin-bottom: unset;
+    margin: 0 5px 0 5px
   }
 
   .container{

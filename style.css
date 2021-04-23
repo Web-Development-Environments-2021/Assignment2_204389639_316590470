@@ -283,3 +283,18 @@ body, html {
     width:50px;
     padding: 5px;
   }
+
+  /* play again modal */
+  h3{
+    text-align: center;
+  }
+
+  #play_again{
+    background-color: white;
+    color: black;
+    border: 2px solid lightblue;
+  }
+
+  #play_again:hover{
+    background-color: lightblue;
+  }

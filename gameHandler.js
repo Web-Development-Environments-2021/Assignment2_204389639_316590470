@@ -16,7 +16,7 @@ var begin = true;
 var eatable = false;
 var lifeCount;
 var monColor = "black";
-
+var flag ;
 
 
 // setting of the initial board' place food, ghosts and pacman
@@ -30,6 +30,7 @@ function Start() {
 	var food_remain = number_of_balls;
 	let total = food_remain;
 	let foodCounter = 0;
+	flag = 0;
 	
 	var pacman_remain = 1;
 	start_time = new Date();
@@ -175,6 +176,7 @@ function Draw(dir) {
 			center.y = j * 60 + 30;
 			if (board[i][j] == 2) {
             var d1,d2,e1,e2;
+				
             if(dir==1){
                d1= -0.5*(Math.PI); d2=-0.5*(Math.PI); e1=-15; e2=-5;
             }else if(dir==2){
@@ -185,7 +187,13 @@ function Draw(dir) {
                d1= 0; d2=0; e1=5; e2=-15;
             }
 				context.beginPath();
-				context.arc(center.x, center.y, 30, 0.15 * Math.PI + d1 , 1.85 * Math.PI+d2); // half circle
+				if (flag = 0){
+					context.arc(center.x, center.y, 30, 2 * Math.PI  , 0 * Math.PI); // half circle
+					flag=1;
+				}else{
+					context.arc(center.x, center.y, 30, 0.15 * Math.PI + d1 , 1.85 * Math.PI+d2); // half circle
+					flag=0;
+				}
 				context.lineTo(center.x, center.y);
 				context.fillStyle = pac_color; //pacman body color
 				context.fill();
@@ -307,7 +315,7 @@ function UpdatePosition() {
 		// return false;
    }
 
-	if (lifeCount < 2 ) {
+	if (lifeCount <= 2 ) {
 		pac_color = "green";
 		if(lifeCount == 0){
 			window.clearInterval(interval);

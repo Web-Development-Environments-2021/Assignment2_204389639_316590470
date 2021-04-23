@@ -15,7 +15,7 @@
 		<label id="loggedIn">Logged in</label>
 	</div>
 	<div class="header">
-		<img id="logo" src="images/logo.png" width="500" height="600">
+		<img id="logo" src="images/logo.png">
 	</div>
 	<button class="tablink" onclick="openPage('Welcome', this, 'red')" id="defaultOpen">Welcome</button>
 	<button class="tablink" onclick="openPage('Register', this, '#008CBA')">Register</button>
@@ -240,9 +240,9 @@
 			</form>
 			<form action="" method="post" id="timer" required>
 				<p>Countup timer</p>
-				<input type="radio" name="joke" value="1" checked="checked"/>1 minute
-				<input type="radio" name="joke" value="2" />2 minutes
-				<input type="radio" name="joke" value="2" />3 minutes
+				<input type="radio" name="joke" value="60" checked="checked"/>1 minute
+				<input type="radio" name="joke" value="120" />2 minutes
+				<input type="radio" name="joke" value="180" />3 minutes
 				<input type="radio" name="joke" value="random" />Random
 
 			</form>

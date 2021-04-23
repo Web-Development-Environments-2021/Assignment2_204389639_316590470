@@ -277,6 +277,8 @@ function UpdatePosition() {
 			document.getElementById("result_case").innerHTML = "Winner!!!";
 			document.getElementById("result_case").style.display="block";
 		}
+		let song = document.getElementById("game_song");
+		song.pause();
 		modalAbout("finished_game");
 		// window.alert("Out Of Time");
 		// return false;
@@ -400,6 +402,8 @@ function start_game(){
 	modalClose("SettingModal");
 	buildMiniSetting(up_btn, down_btn, right_btn, left_btn, number_of_balls, five_p_color, fifteen_p_color, twentyf_p_color, timer, num_attack);
 	context = canvas.getContext("2d");
+	let song = document.getElementById("game_song");
+	song.play();
 	Start();
 }
 

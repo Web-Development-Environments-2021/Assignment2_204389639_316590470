@@ -12,6 +12,8 @@ var up_btn, down_btn, right_btn, left_btn, number_of_balls, five_p_color,
 var prevPress;
 // keep trac of gosts 
 var ghostArray = new Array();
+var begin = true;
+var eatable = true;
 
 
 
@@ -60,7 +62,7 @@ function Start() {
 			) {
 				board[i][j] = 4; //4 is a wall
 			}else{
-				board[i][j] = 0; // nothing
+				board[i][j] = 1; // nothing
 			}
 			
 		}
@@ -70,17 +72,17 @@ function Start() {
 	while (food_remain > 0) {
 		var emptyCell = findRandomEmptyCell(board);
 		if(foodCounter <= 0.1*total){
-				board[emptyCell[0]][emptyCell[1]] = 6; // 6 is best food (green)
+				board[emptyCell[0]][emptyCell[1]] = 6; // 6 is best food )
 				maxScore += 25;
 				foodCounter++;
 			}
 			else if(foodCounter > 0.1*total && foodCounter <= 0.4*total){
-				board[emptyCell[0]][emptyCell[1]] = 5; // 5 is good food (red)
-				maxScore += 15; 
+				board[emptyCell[0]][emptyCell[1]] = 5; // 5 is good food 
+            maxScore += 15;
 				foodCounter++
 			}
 			else{
-				board[emptyCell[0]][emptyCell[1]] = 8; // 1 is regular food (black)
+				board[emptyCell[0]][emptyCell[1]] = 8; // 8 is regular food 
 				maxScore +=5;
 			}
 		food_remain--;		
@@ -99,7 +101,7 @@ function Start() {
       ghostArray[ghostCount].x = ghostLocation[0];
       ghostArray[ghostCount].y = ghostLocation[1];
       ghostArray[ghostCount].isAlive = true;
-      board[ghostLocation[0]][ghostLocation[1]] = 7;
+      board[ghostLocation[0]][ghostLocation[1]] = 7; // ghost
       ghostCount ++;
    }
 
@@ -118,14 +120,14 @@ function Start() {
 		},
 		false
 	);
-	intervalUser = setInterval(UpdatePosition, 150);
-   intervalGhost = setInterval(moveAttackers, 250);
+	interval = setInterval(UpdatePosition, 250);
+   //intervalGhost = setInterval(moveAttackers, 250);
 }
 
 function findRandomEmptyCell(board) {
 	var i = Math.floor(Math.random() * 9 + 1);
 	var j = Math.floor(Math.random() * 9 + 1);
-	while (board[i][j] != 0) {
+	while (board[i][j] != 1) {
 		i = Math.floor(Math.random() * 9 + 1);
 		j = Math.floor(Math.random() * 9 + 1);
 	}
@@ -210,10 +212,15 @@ function Draw(dir) {
 	}
 }
 
+
 function UpdatePosition() {
-	board[shape.i][shape.j] = 0;
-	var x = GetKeyPressed();
+	board[shape.i][shape.j] = 1;
    
+	var x = GetKeyPressed();
+   if(begin == true){
+      begin = false;
+      x= 4;
+   }
 	if (x == 1) {
 		if (shape.j > 0 && board[shape.i][shape.j - 1] != 4) {
 			shape.j--;
@@ -234,6 +241,7 @@ function UpdatePosition() {
 			shape.i++;
 		}
 	}
+   // check if ther is an attacker or food in new position
 	if (board[shape.i][shape.j] == 8) {
 		score= score +5;
 	}
@@ -243,16 +251,21 @@ function UpdatePosition() {
 	else if (board[shape.i][shape.j] == 6) {
 		score= score+25;
 	}
-	board[shape.i][shape.j] = 2;
+	else if ( board[shape.i][shape.j] == 7 || board[shape.i][shape.j] > 20 ){
+      score -= 10;
+      if(eatable == false){
+         randomizeNewLocation(shape);
+      }
+   }  
+   board[shape.i][shape.j] = 2;
 
-   //moveAttackers();
+   moveAttackers();
 
 	var currentTime = new Date();
 	time_elapsed = (currentTime - start_time) / 1000;
 
    if(time_elapsed >= timer){
-      //window.clearInterval(interval);
-      time_elapsed = 0;
+      window.clearInterval(interval);
 		window.alert("Out Of Time");
       return false;
    }
@@ -262,7 +275,7 @@ function UpdatePosition() {
       
 	// }
 	else if (score == maxScore) {
-		//window.clearInterval(interval);
+		window.clearInterval(interval);
 		window.alert("Game completed");
 		
 		return false;
@@ -275,40 +288,61 @@ function UpdatePosition() {
 	
 }
 
+// randomize a new move to attackers and change the coordinates
 function moveAttackers(){
    ghostArray.forEach(ghost => {
       
       dir = Math.floor(Math.random()*4+1)
       if (dir == 1) {
-         if (ghost.y > 0 && board[ghost.x][ghost.y - 1] != 4) {
+         if (ghost.y > 0 
+            && board[ghost.x][ghost.y - 1] != 4
+            && board[ghost.x][ghost.y - 1] != 7
+            && board[ghost.x][ghost.y - 1] <=20) {
             board[ghost.x][ghost.y] = board[ghost.x][ghost.y]/7;
             ghost.y--;
             board[ghost.x][ghost.y ] = board[ghost.x][ghost.y]*7;
          }
       }
       if (dir == 2) {
-         if (ghost.y < 9 && board[ghost.x][ghost.y + 1] != 4) {
+         if (ghost.y < 9 
+            && board[ghost.x][ghost.y + 1] != 4
+            && board[ghost.x][ghost.y + 1] != 7
+            && board[ghost.x][ghost.y + 1] <=20) {
             board[ghost.x][ghost.y]= board[ghost.x][ghost.y]/7;
             ghost.y++;
             board[ghost.x][ghost.y ]= board[ghost.x][ghost.y]*7;
          }
       }
       if (dir == 3) {
-         if (ghost.x > 0 && board[ghost.x - 1][ghost.y] != 4) {
+         if (ghost.x > 0 
+            && board[ghost.x - 1][ghost.y] != 4
+            && board[ghost.x - 1][ghost.y] != 7
+            && board[ghost.x - 1][ghost.y] <=20) {
             board[ghost.x][ghost.y]= board[ghost.x][ghost.y]/7;
             ghost.x--;
             board[ghost.x ][ghost.y]= board[ghost.x][ghost.y]*7;
          }
       }
       if (dir == 4) {
-         if (ghost.x < 9 && board[ghost.x + 1][ghost.y] != 4) {
+         if (ghost.x < 9 
+            && board[ghost.x + 1][ghost.y] != 4
+            && board[ghost.x + 1][ghost.y] != 7
+            && board[ghost.x + 1][ghost.y] <=20) {
             board[ghost.x][ghost.y]= board[ghost.x][ghost.y]/7;
             ghost.x++;
             board[ghost.x ][ghost.y]= board[ghost.x][ghost.y]*7;
          }
       }
    });
-   Draw(x)
+   //Draw(x)
+}
+
+//when eaten will find a new spot for either ghost or pacman
+function randomizeNewLocation(object){
+   var newLocation = findRandomEmptyCell(board);
+	//board[newLocation[0]][newLocation[1]] = num;
+	object.i = newLocation[0];
+	object.j = newLocation[1];
 }
 
 function start_game(){

@@ -5,17 +5,22 @@
 	<script src="./jquery-3.4.1.slim.min.js"></script>
 	<script type="text/javascript" src="./app.js"></script>
 	<script type="text/javascript" src="./gameHandler.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/additional-methods.js"></script>
 	<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+	<div>
+		<label id="loggedIn">Logged in</label>
+	</div>
 	<div class="header">
 		<img id="logo" src="images/logo.png" width="500" height="600">
 	</div>
 	<button class="tablink" onclick="openPage('Welcome', this, 'red')" id="defaultOpen">Welcome</button>
 	<button class="tablink" onclick="openPage('Register', this, '#008CBA')">Register</button>
 	<button id="login_tab" class="tablink" onclick="openPage('Login', this, '#4CAF50')">Login</button>
-	<button class="tablink" onclick="openPage('Game', this, 'grey')">Game</button>
+	<button id="game_btn" class="tablink">Game</button>
 	<button id="about" class="tablink" onclick="modalAbout('myModal')">About</button>
 
 	<div id="Welcome" class="tabcontent">
@@ -25,32 +30,111 @@
 
 
 	<div id="Register" class="tabcontent">
-		<form>
-			<div class="container">
+		<form id="register-form">
+			<!-- <div class="container"> -->
 				<h1>Register</h1>
 				<p>Please fill in this form to create an account.</p>
 				<hr>
 				<label for="rfullName"><b>Name</b></label>
 				<input type="text" placeholder="Enter Full Name" name="rfullName" id="rfullName">
 
+				</br>
 				<label for="Username"><b>Username</b></label>
 				<input type="text" placeholder="Enter Username" name="ruserName" id="ruserName">
 
+				</br>
 				<label for="email"><b>Email</b></label>
-				<input type="text" placeholder="Enter Email" name="email" id="remail">
+				<input type="email" placeholder="Enter email" name="email" id="remail">
+			</br>
+				<!-- <form name="date_form"> -->
+					<label ><b>Date of birth</b></label>
+					<select id="day_birth" name="date_of_birth_day" tabindex="7">
+                        <option disabled selected>Day</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="13">13</option>
+                        <option value="14">14</option>
+                        <option value="15">15</option>
+                        <option value="16">16</option>
+                        <option value="17">17</option>
+                        <option value="18">18</option>
+                        <option value="19">19</option>
+                        <option value="20">20</option>
+                        <option value="21">21</option>
+                        <option value="22">22</option>
+                        <option value="23">23</option>
+                        <option value="24">24</option>
+                        <option value="25">25</option>
+                        <option value="26">26</option>
+                        <option value="27">27</option>
+                        <option value="28">28</option>
+                        <option value="29">29</option>
+                        <option value="30">30</option>
+                        <option value="31">31</option>
+                    </select>
+                    <select id="month_birth" name="date_of_birth_mon" tabindex="8">
+                        <option disabled selected>Month</option>
+                        <option value="1">Jan</option>
+                        <option value="2">Feb</option>
+                        <option value="3">Mar</option>
+                        <option value="4">Apr</option>
+                        <option value="5">May</option>
+                        <option value="6">Jun</option>
+                        <option value="7">Jul</option>
+                        <option value="8">Aug</option>
+                        <option value="9">Sep</option>
+                        <option value="10">Oct</option>
+                        <option value="11">Nov</option>
+                        <option value="12">Dec</option>
+                    </select>
+                    <select id="year_birth" name="date_of_birth_year" tabindex="9">
+                        <option disabled selected>Year</option>
+                        <option value="1990">1990</option>
+                        <option value="1991">1991</option>
+                        <option value="1992">1992</option>
+                        <option value="1993">1993</option>
+                        <option value="1994">1994</option>
+                        <option value="1995">1995</option>
+                        <option value="1996">1996</option>
+                        <option value="1997">1997</option>
+                        <option value="1998">1998</option>
+                        <option value="1999">1999</option>
+                        <option value="2000">2000</option>
+						<option value="2000">2001</option>
+						<option value="2000">2002</option>
+						<option value="2000">2003</option>
+						<option value="2000">2004</option>
+						<option value="2000">2005</option>
+						<option value="2000">2006</option>
+						<option value="2000">2007</option>
+						<option value="2000">2008</option>
+						<option value="2000">2009</option>
+						<option value="2000">2010</option>
+                    </select>
+					</SELECT>
+				<!-- </form> -->
 
+			</br>
+			</br>
 				<label for="psw"><b>Password</b></label>
-				<input type="password" placeholder="Enter Password" name="psw" id="rpsw">
+				<input type="password" placeholder="Enter password" name="psw" id="rpsw">
 
-				<label for="psw-repeat"><b>Repeat Password</b></label>
-				<input type="password" placeholder="Repeat Password" name="psw-repeat" id="rpsw-repeat">
+				<label for="psw-repeat"><b>Confirm password</b></label>
+				<input type="password" placeholder="Confirm password" name="psw_repeat" id="rpsw-repeat">
 				<hr>
-				<button type="submit" class="registerbtn ">Register</button>
-			</div>
-
+				<button type="submit" class="registerbtn">Register</button>
+			<!-- </div> -->
 		</form>
-	</div>
-	<div id="Register" class="tabcontent">
 	</div>
 
 	<div id="Login" class="tabcontent">
@@ -116,48 +200,49 @@
 
 		<div class="modal-content">
 			<span class="close" onclick="modalClose('SettingModal')">&times;</span>
-			<label>Up
+			<h3>Settings:</h3>
+			<label>Up button
 				<input id="up" type="text" placeholder="W" value="up" name="Up">
 			</label>
-			<label>Down
+			<label>Down button
 				<input id="down" type="text" placeholder="X" value="down" name="Down">
 			</label>
-			<label>Right
+			<label>Right button
 				<input id="right" type="text" placeholder="D" value="right" name="Right">
 			</label>
-			<label>Left
+			<label>Left button
 				<input id="left" type="text" placeholder="A" value="left" name="Left">
 			</label>
-			<label>Number of balls
-				<input id="circleNum" type="text" value = "50" placeholder="50" name="Number of balls" min="50" max="90" required>
+			<label>Number of food
+				<input id="circleNum" type="text" placeholder="50" name="Number of balls" min="50" max="90" required>
 			</label>
-			<form action="" method="post" id="five_p">
-				<p>5 points</p>
+			<form action="" method="post" id="five_p" required>
+				<p>5 points food color</p>
 				<input type="radio" name="joke" value="red" />red
 				<input type="radio" name="joke" value="black" />black
 				<input type="radio" name="joke" value="random" />Random
 			</form>
-			<form action="" method="post" id="fifteen_p">
-				<p>15 points</p>
+			<form action="" method="post" id="fifteen_p" required>
+				<p>15 points food color</p>
 				<input type="radio" name="joke" value="blue" />blue
 				<input type="radio" name="joke" value="green" />green
 				<input type="radio" name="joke" value="random" />Random
 			</form>
-			<form action="" method="post" id="twentyf_p">
-				<p>25 points</p>
+			<form action="" method="post" id="twentyf_p" required>
+				<p>25 points food color</p>
 				<input type="radio" name="joke" value="gold" />gold
 				<input type="radio" name="joke" value="silver" />silver
 				<input type="radio" name="joke" value="random" />Random
 			</form>
-			<form action="" method="post" id="timer">
-				<p>Timer</p>
-				<input type="radio" name="joke" value="60" />1 minute
-				<input type="radio" name="joke" value="120" />2 minutes
-				<input type="radio" name="joke" value="180" />3 minutes
+			<form action="" method="post" id="timer" required>
+				<p>Countup timer</p>
+				<input type="radio" name="joke" value="1" />1 minute
+				<input type="radio" name="joke" value="2" />2 minutes
+				<input type="radio" name="joke" value="2" />3 minutes
 				<input type="radio" name="joke" value="random" />Random
 
 			</form>
-			<form action="" method="post" id="num_attack">
+			<form action="" method="post" id="num_attack" required>
 				<p>Number of attackers</p>
 				<input type="radio" name="joke" value="1" />1
 				<input type="radio" name="joke" value="2" />2
@@ -166,6 +251,19 @@
 				<input type="radio" name="joke" value="random" />Random
 			</form>
 			<button onclick="start_game()">Play game</button>
+		</div>
+
+	</div>
+
+	<div id="finished_game" class="modal">
+
+		<div class="modal-content">
+			<span class="close" onclick="modalClose('finished_game')">&times;</span>
+			<h3>Results</h3>
+			<label id="loser_case"></label hidden>
+			<label id="better_than"></label hidden>
+			<label id="winner"></label hidden>
+			<button onclick="play_again()">Play again</button>
 		</div>
 
 	</div>

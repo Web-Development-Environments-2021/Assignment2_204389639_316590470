@@ -8,16 +8,98 @@ var start_time;
 var time_elapsed;
 var interval;
 var users_passes = {"k":"k"};
+var logged_in = false;
 var up_btn, down_btn, right_btn, left_btn, number_of_balls, five_p_color, fifteen_p_color, twentyf_p_color, timer, num_attack;
 
 $(document).ready(function() {
 	openPage('Welcome', this, 'red');
-
-
 });
 
+function noSuchUser(name){
+	for(var user in users_passes){
+		if(name==user){
+			return false;
+		}
+	}
+	return true;
+}
 
+$(function(){
 
+	$.validator.addMethod('noDigitInName', function(value, element){
+		return this.optional(element)
+		|| /^[a-z\s]+$/i.test(value);
+	}, 'Full name must not contain numbers\.')
+
+	$.validator.addMethod('existUser', function(value, element){
+		return noSuchUser(value);
+	},'Username is already taken, please choose another one\.')
+
+	//checks password validity
+	$.validator.addMethod('strongPassword', function(value, element){
+		return this.optional(element)
+		|| value.length>=6
+		&& /\d/.test(value)
+		&& /[a-z]/i.test(value);
+	},'Password must contain at least 6 characters, both numbers and letters\.')
+
+	$("#register-form").validate({
+		errorClass: "my-error-class",
+		rules:{
+			rfullName:{
+				required: true,
+				noDigitInName: true
+			},
+			ruserName:{
+				required: true,
+				existUser: true
+			},
+			email:{
+				required: true,
+				email: true
+			},
+			psw:{
+				required: true,
+				strongPassword: true,
+				minlength: 6
+			},
+			psw_repeat:{
+				required: true,
+				minlength: 6,
+				equalTo: "#rpsw"
+			},
+			date_of_birth_day:{
+				required: true
+			},
+			date_of_birth_mon:{
+				required: true
+			},
+			date_of_birth_year:{
+				required: true
+			}
+		}
+		
+	});   
+    $("#register-form").on('submit', function(e) {
+        var isvalid = $("#register-form").valid();
+        if (isvalid) {
+            e.preventDefault();
+			var form=$("#register-form");
+			var username='';
+			var password = '';
+			$("input:not('input:submit')", form).each(function(i){
+				if($(this).prop('name')=="ruserName"){
+					username = $(this).val();
+				}
+				else if($(this).prop('name')=="psw"){
+					password = $(this).val();
+				}
+			});
+            users_passes[username]=password;
+			openPage('Login', this, '#4CAF50');
+		}
+	})
+})
 
 function openPage(pageName, elmnt, color) {
 	// Hide all elements with class="tabcontent" by default */
@@ -53,19 +135,40 @@ function Login(element){
 		}
 	}
 	if(flag==0){
-		window.alert("no such username. please Sign up");
+		window.alert("No such username. Please Sign up");
 		openPage('Register', element, 'green');
 	}
 	else if(users_passes[username]!=password){
-		window.alert("wrong password. Please try again");
+		window.alert("Wrong password. Please try again");
 		openPage('Login', element, 'blue');
 	}
 	else{
-		modalSettingGame();
+		// let inputs = document.getElementsByClassName("container").getElementsByTagName("input");
+		// for(var input_i in inputs){
+		// 	input_i.value="";
+		// }
 		openPage('Game', element, 'grey');
+		modalSettingGame();
+		logged_in = true;
+		document.getElementById("loggedIn").style.display="block";
 	}
 	return false;
 }
+
+$(function(){
+	$("#game_btn").click(function(e){
+		if(logged_in==false){
+			alert("You must login first. Please register or login.")
+			openPage('Welcome', this, 'red');
+			}
+		else{
+			modalSettingGame();
+			openPage('Game', this, 'grey');
+		}
+		return false;
+	})
+	return false;
+})
 
 function login_button(element){
 	 document.getElementById("login_button").style.backgroundColor = "white";
@@ -73,7 +176,6 @@ function login_button(element){
 	 openPage('Login', element, '#4CAF50');
 		return false;
 }
-
 
 function modalAbout(modal_name){
 	document.getElementById(modal_name).style.display="block";
@@ -103,9 +205,6 @@ function modalSettingGame(){
 	modalAbout("SettingModal");
 }
 
-
-
-
 function isNumeric(n) {
 	return !isNaN(parseFloat(n));
 }
@@ -117,45 +216,22 @@ function validateEmail(email) {
 
 
 // this function manages the registration process, validated all inputs and adds to the users dictionary.
-$(function(){
- $(".registerbtn").click(function(e){
+// $(function(){
+//  $(".registerbtn").click(function(e){
+// 	 	$("#register-form").validate();
+// 		let fullName = $("#rfullName").val();
+// 		let username = $("#ruserName").val();
+// 		let email = $("#remail").val();
+// 		let password = $("#rpsw").val();
+// 		// let confirm = $("#rpsw-repeat").val();
+// 		// let day_birth = $("#day_birth").val();
+// 		// let month_birth = $("#month_birth").val();
+// 		// let year_birth = $("#year_birth").val();
 		
-		 let fullName = $("#rfullName").val();
-			//let fullName = $(this).closest('div').find('.rfullName').text().value;
-		 let username = $("#ruserName").val();
-		let email = $("#remail").val();
-		let password = $("#rpsw").val();
-		let confirm = $("#rpsw-repeat").val();
-		let flag = 0;
-		
-		
-		//check for numeric values in the username
-		if(isNumeric(username)){
-			alert("username cannot include numeric values");
-		}
-		// check that username isnt already in use
-		for(var user in users_passes){
-			if (user==username){
-				flag=1;
-			}
-		}
-		if(flag==1){
-			alert("usermane already taken - please choose a different one");
-			return false;
-		}
-		// check email
-		if(validateEmail(email)==false){
-			alert("invalid email");
-			return false;
-		}
-		//check that password and confirmation is equal
-		if(password != confirm){
-			alert("password confirmation dosent match");
-			return false;
-		}
-		users_passes[username] = password;
-		console.log(users_passes);
-		
-	});
-return false;
-});
+// 		users_passes[username] = [password, fullName, email];
+// 		console.log(users_passes);
+// 		openPage('Login', this, '#4CAF50');
+// 		return false;
+// 	});
+// return false;
+// });

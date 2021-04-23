@@ -23,6 +23,7 @@ function Start() {
 	score = 0;
 	maxScore = 0;
 	pac_color = "yellow";
+	lifeCount = 5;
 	var cnt = 100;
 	var food_remain = number_of_balls;
 	let total = food_remain;
@@ -155,6 +156,7 @@ function Draw(dir) {
 	// canvas.style.border = "yellow"
 	lblScore.value = score;
 	lblTime.value = time_elapsed;
+	lblLife.value = lifeCount;
 	for (var i = 0; i < 10; i++) {
 		for (var j = 0; j < 10; j++) {
 			var center = new Object();
@@ -266,9 +268,18 @@ function UpdatePosition() {
 	time_elapsed = (currentTime - start_time) / 1000;
 
    if(time_elapsed >= timer){
-      window.clearInterval(interval);
-		window.alert("Out Of Time");
-      return false;
+		window.clearInterval(interval);
+		if(score<100){
+			document.getElementById("result_case").innerHTML = "You better than "+score+" points!";
+			document.getElementById("result_case").style.display="block";
+		}
+		else{
+			document.getElementById("result_case").innerHTML = "Winner!!!";
+			document.getElementById("result_case").style.display="block";
+		}
+		modalAbout("finished_game");
+		// window.alert("Out Of Time");
+		// return false;
    }
 
 	// if (time_elapsed >= timer-10) {
@@ -394,16 +405,16 @@ function start_game(){
 
 function buildMiniSetting(up_btn, down_btn, right_btn, left_btn, number_of_balls, five_p_color, fifteen_p_color, twentyf_p_color, timer, num_attack){
 	let mini_settings_list = document.getElementById("mini_settings").getElementsByTagName("p");
-	mini_settings_list[0].innerHTML+= up_btn;
-	mini_settings_list[1].innerHTML+= down_btn;
-	mini_settings_list[2].innerHTML+= right_btn;
-	mini_settings_list[3].innerHTML+= left_btn;
-	mini_settings_list[4].innerHTML+= number_of_balls;
-	mini_settings_list[5].innerHTML+= five_p_color;
-	mini_settings_list[6].innerHTML+= fifteen_p_color;
-	mini_settings_list[7].innerHTML+= twentyf_p_color;
-	mini_settings_list[8].innerHTML+= timer;
-	mini_settings_list[9].innerHTML+= num_attack;
+	mini_settings_list[0].innerHTML ="Up: "+ up_btn;
+	mini_settings_list[1].innerHTML= "Down: "+down_btn;
+	mini_settings_list[2].innerHTML= "Right: "+right_btn;
+	mini_settings_list[3].innerHTML= "Left: "+left_btn;
+	mini_settings_list[4].innerHTML= "Number of balls: "+number_of_balls;
+	mini_settings_list[5].innerHTML= "5 points color: "+five_p_color;
+	mini_settings_list[6].innerHTML= "15 points color: "+fifteen_p_color;
+	mini_settings_list[7].innerHTML= "25 points color: "+twentyf_p_color;
+	mini_settings_list[8].innerHTML= "Timer: "+timer;
+	mini_settings_list[9].innerHTML= "Number of attackers: "+num_attack;
 }
 
 function get_checked(tag_name){
@@ -428,5 +439,12 @@ function randomize(element_name){
 		let random_index = Math.floor(Math.random() * (inputs.length-1));
 		return inputs[random_index].value;
 	}
+}
+
+//after game is done, play again is pressed by client.
+function play_again(){
+	modalClose("finished_game");
+	modalSettingGame();
+	openPage('Game', this, 'grey');
 }
 

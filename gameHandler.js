@@ -7,6 +7,7 @@ var pac_color;
 var start_time;
 var time_elapsed;
 var interval;
+var interval2;
 var up_btn, down_btn, right_btn, left_btn, number_of_balls, five_p_color,
  fifteen_p_color, twentyf_p_color, timer, num_attack;
 var prevPress;
@@ -30,7 +31,8 @@ function Start() {
 	var food_remain = number_of_balls;
 	let total = food_remain;
 	let foodCounter = 0;
-	flag = 0;
+	let flag = 0;
+	//let food_eaten =0;
 	
 	var pacman_remain = 1;
 	start_time = new Date();
@@ -134,6 +136,7 @@ function Start() {
 		false
 	);
 	interval = setInterval(UpdatePosition, 250);
+	interval2 = setInterval(moveAttackers,500)
   
 }
 
@@ -187,8 +190,8 @@ function Draw(dir) {
                d1= 0; d2=0; e1=5; e2=-15;
             }
 				context.beginPath();
-				if (flag = 0){
-					context.arc(center.x, center.y, 30, 2 * Math.PI  , 0 * Math.PI); // half circle
+				if (flag == 0){
+					context.arc(center.x, center.y, 30, 2 * Math.PI  , 0 * Math.PI); // full circle
 					flag=1;
 				}else{
 					context.arc(center.x, center.y, 30, 0.15 * Math.PI + d1 , 1.85 * Math.PI+d2); // half circle
@@ -271,18 +274,23 @@ function UpdatePosition() {
    // check if there is an attacker or food in new position
 	if (board[shape.i][shape.j] == 8) {
 		score= score +5;
+		//foodCounter--;
 	}
 	else if (board[shape.i][shape.j] == 5) {
 		score= score+15;
+		//foodCounter--;
 	}
 	else if (board[shape.i][shape.j] == 6) {
 		score= score+25;
+		//foodCounter--;
 	}
 	else if (board[shape.i][shape.j] == 9) {
 		score= score+50;
 		monColor = "green";
+		eatable = true;
 		setTimeout(function(){
 			monColor = "black";
+			eatable = false;
 		}, 6000);
 	}
 	else if ( board[shape.i][shape.j] == 7 || board[shape.i][shape.j] > 20 ){
@@ -295,18 +303,21 @@ function UpdatePosition() {
    }  
    board[shape.i][shape.j] = 2;
 
-   moveAttackers();
+   //moveAttackers();
 
 	var currentTime = new Date();
-	time_elapsed = (currentTime - start_time) / 1000;
+	time_elapsed = Math.floor((currentTime - start_time) / 1000);
 
    if(time_elapsed >= timer){
-		window.clearInterval(interval);
+		window.clearInterval(interval);/////
+		window.clearInterval(interval2);
 		if(score<100){
 			document.getElementById("result_case").innerHTML = "You are better than "+score+" points!";
 			document.getElementById("result_case").style.display="block";
 		}
 		else{
+			window.clearInterval(interval);////
+			window.clearInterval(interval2);/////
 			document.getElementById("result_case").innerHTML = "Winner!!!";
 			document.getElementById("result_case").style.display="block";
 		}
@@ -320,17 +331,19 @@ function UpdatePosition() {
 	if (lifeCount <= 2 ) {
 		pac_color = "green";
 		if(lifeCount == 0){
-			window.clearInterval(interval);
+			window.clearInterval(interval);///
+			window.clearInterval(interval2);///
 			document.getElementById("result_case").innerHTML = "Loser!!";
 			document.getElementById("result_case").style.display="block";
 			modalAbout("finished_game")
 		}
 	}
 	if (score == maxScore) {
-		window.clearInterval(interval);
-		window.alert("Game completed");
-		
-		return false;
+		window.clearInterval(interval);/////
+		window.clearInterval(interval2);/////
+		document.getElementById("result_case").innerHTML = "Winner!!";
+		document.getElementById("result_case").style.display="block";
+		modalAbout("finished_game")
 	}
 
 	else {
@@ -342,11 +355,87 @@ function UpdatePosition() {
 	
 }
 
+// this function uses a very simple huristic to determine the best possible move for the attacker
+// by calculating the "manhatten distance" of the ghost to the pacman.
+// this method contains a flaw that will allow the user to lock the ghost in certin places gaining an advantage.
+// when ghosts are "eatable" they wiil run away from the pacman and will cahse him when not eatable.
+function bestMove(ghost,shape,eatable){
+	var best ;
+	let dist = (eatable == false) ? 10000 : -10000;
+	if(ghost.y > 0 
+		&& board[ghost.x][ghost.y - 1] != 4 //not a wall
+		&& board[ghost.x][ghost.y - 1] != 7 // not another ghost
+		&& board[ghost.x][ghost.y - 1] <=20){
+			if(!eatable){
+				if((Math.abs (ghost.x-shape.i) + Math.abs(ghost.y-1-shape.j)) < dist ){
+					dist = (Math.abs (ghost.x-shape.i) + Math.abs(ghost.y-1-shape.j));
+					best = 1;
+				}
+			}else{
+				if((Math.abs (ghost.x-shape.i) + Math.abs(ghost.y-1-shape.j)) > dist ){
+					dist = (Math.abs (ghost.x-shape.i) + Math.abs(ghost.y-1-shape.j));
+					best = 1;
+				}
+			}
+		}
+	if(ghost.y < 9 
+		&& board[ghost.x][ghost.y + 1] != 4
+		&& board[ghost.x][ghost.y + 1] != 7
+		&& board[ghost.x][ghost.y + 1] <=20){
+			if(!eatable){
+				if((Math.abs (ghost.x-shape.i) + Math.abs(ghost.y+1-shape.j)) < dist){
+					dist = (Math.abs (ghost.x-shape.i) + Math.abs(ghost.y+1-shape.j));
+					best = 2;
+				}
+			}else{
+				if((Math.abs (ghost.x-shape.i) + Math.abs(ghost.y+1-shape.j)) > dist){
+					dist = (Math.abs (ghost.x-shape.i) + Math.abs(ghost.y+1-shape.j));
+					best = 2;
+				}
+			}
+		}
+	if(ghost.x > 0 
+		&& board[ghost.x - 1][ghost.y ] != 4
+		&& board[ghost.x - 1][ghost.y ] != 7
+		&& board[ghost.x - 1][ghost.y ] <=20){
+			if(!eatable){
+				if((Math.abs (ghost.x-1-shape.i) + Math.abs(ghost.y-shape.j)) < dist){
+					dist = (Math.abs (ghost.x-1-shape.i) + Math.abs(ghost.y-shape.j));
+					best = 3;
+				}
+			}else{
+				if((Math.abs (ghost.x-1-shape.i) + Math.abs(ghost.y-shape.j)) > dist){
+					dist = (Math.abs (ghost.x-1-shape.i) + Math.abs(ghost.y-shape.j));
+					best = 3;
+				}
+			}
+		}
+	if(ghost.x < 9 
+		&& board[ghost.x + 1][ghost.y] != 4
+		&& board[ghost.x + 1][ghost.y] != 7
+		&& board[ghost.x + 1][ghost.y] <=20){
+			if(!eatable){
+				if((Math.abs (ghost.x+1-shape.i) + Math.abs(ghost.y-shape.j)) < dist){
+					dist =(Math.abs (ghost.x+1-shape.i) + Math.abs(ghost.y-shape.j));
+					best = 4;
+				}
+			}else{
+				if((Math.abs (ghost.x+1-shape.i) + Math.abs(ghost.y-shape.j)) > dist){
+					dist = (Math.abs (ghost.x+1-shape.i) + Math.abs(ghost.y-shape.j));
+					best = 4;
+				}
+			}
+	}
+	return best;
+}
+
+
 // randomize a new move to attackers and change the coordinates
 function moveAttackers(){
    ghostArray.forEach(ghost => {
      
-      dir = Math.floor(Math.random()*4+1)
+      //dir = Math.floor(Math.random()*4+1)
+		dir = bestMove(ghost,shape,eatable)
       if (dir == 1) {
          if (board[ghost.x][ghost.y-1] ==2){
             if(eatable == false){
@@ -447,7 +536,7 @@ function start_game(){
 	buildMiniSetting(up_btn, down_btn, right_btn, left_btn, number_of_balls, five_p_color, fifteen_p_color, twentyf_p_color, timer, num_attack);
 	context = canvas.getContext("2d");
 	let song = document.getElementById("game_song");
-	song.play();
+	//song.play();
 	Start();
 }
 

@@ -14,6 +14,8 @@ var prevPress;
 var ghostArray = new Array();
 var begin = true;
 var eatable = false;
+var lifeCount;
+var monColor = "black";
 
 
 
@@ -106,6 +108,15 @@ function Start() {
       ghostCount ++;
    }
 
+	// place strawberries
+	numBerri = 0;
+	while (numBerri <2){
+		berriLocation = findRandomEmptyCell(board);
+		board[berriLocation[0]][berriLocation[1]] = 9; //9 is strawberry
+		numBerri++;
+	}
+
+
 	keysDown = {};
 	addEventListener(
 		"keydown",
@@ -122,7 +133,7 @@ function Start() {
 		false
 	);
 	interval = setInterval(UpdatePosition, 250);
-   //intervalGhost = setInterval(moveAttackers, 250);
+  
 }
 
 function findRandomEmptyCell(board) {
@@ -206,7 +217,13 @@ function Draw(dir) {
 			}else if (board[i][j] > 20 || board[i][j] == 7) {
 				context.beginPath();
 				context.rect(center.x - 30, center.y - 30, 60, 60);
-				context.fillStyle = "black"; //wall color
+				context.fillStyle = monColor; //attacker
+				context.fill();
+         }
+			else if (board[i][j] == 9 ) {
+				context.beginPath();
+				context.rect(center.x - 30, center.y - 30, 60, 60);
+				context.fillStyle = "red"; //straberry
 				context.fill();
          }
 
@@ -243,7 +260,7 @@ function UpdatePosition() {
 			shape.i++;
 		}
 	}
-   // check if ther is an attacker or food in new position
+   // check if there is an attacker or food in new position
 	if (board[shape.i][shape.j] == 8) {
 		score= score +5;
 	}
@@ -253,10 +270,18 @@ function UpdatePosition() {
 	else if (board[shape.i][shape.j] == 6) {
 		score= score+25;
 	}
+	else if (board[shape.i][shape.j] == 9) {
+		score= score+50;
+		monColor = "green";
+		setTimeout(function(){
+			monColor = "black";
+		}, 6000);
+	}
 	else if ( board[shape.i][shape.j] == 7 || board[shape.i][shape.j] > 20 ){
       
       if(eatable == false){
          score -= 10;
+			lifeCount--;
          randomizeNewLocation(shape,2);
       }
    }  
@@ -282,16 +307,23 @@ function UpdatePosition() {
 		// return false;
    }
 
-	// if (time_elapsed >= timer-10) {
-	// 	pac_color = "green";
-      
-	// }
-	else if (score == maxScore) {
+	if (lifeCount < 2 ) {
+		pac_color = "green";
+		if(lifeCount == 0){
+			window.clearInterval(interval);
+			document.getElementById("result_case").innerHTML = "Loser!!";
+			document.getElementById("result_case").style.display="block";
+			modalAbout("finished_game")
+		}
+	}
+	if (score == maxScore) {
 		window.clearInterval(interval);
 		window.alert("Game completed");
 		
 		return false;
-	} else {
+	}
+
+	else {
       if (x == undefined && prevPress != undefined){
          x = prevPress;
       }else{prevPress=x;}
@@ -306,13 +338,14 @@ function moveAttackers(){
      
       dir = Math.floor(Math.random()*4+1)
       if (dir == 1) {
-         // if (board[ghost.x][ghost.y-4] ==2){
-         //    if(eatable == false){
-         //       score -= 10;
-         //       randomizeNewLocation(shape,2);
-         //       board[ghost.x][ghost.y-1] =1;
-         //    }
-         // }
+         if (board[ghost.x][ghost.y-1] ==2){
+            if(eatable == false){
+               score -= 10;
+					lifeCount--;
+               randomizeNewLocation(shape,2);
+               board[ghost.x][ghost.y-1] =1;
+            }
+         }
          if (ghost.y > 0 
             && board[ghost.x][ghost.y - 1] != 4
             && board[ghost.x][ghost.y - 1] != 7
@@ -323,13 +356,14 @@ function moveAttackers(){
          }
       }
       if (dir == 2) {
-         // if (board[ghost.x][ghost.y+1] ==2){
-         //    if(eatable == false){
-         //       score -= 10;
-         //       randomizeNewLocation(shape,2);
-         //       board[ghost.x][ghost.y+1]=1;
-         //    }
-         // }
+         if (board[ghost.x][ghost.y+1] ==2){
+            if(eatable == false){
+               score -= 10;
+					lifeCount--;
+               randomizeNewLocation(shape,2);
+               board[ghost.x][ghost.y+1]=1;
+            }
+         }
          if (ghost.y < 9 
             && board[ghost.x][ghost.y + 1] != 4
             && board[ghost.x][ghost.y + 1] != 7
@@ -340,13 +374,14 @@ function moveAttackers(){
          }
       }
       if (dir == 3) {
-         // if (board[ghost.x-1][ghost.y] ==2){
-         //    if(eatable == false){
-         //       score -= 10;
-         //       randomizeNewLocation(shape,2);
-         //       board[ghost.x-1][ghost.y]=1;
-         //    }
-         // }
+         if (board[ghost.x-1][ghost.y] ==2){
+            if(eatable == false){
+               score -= 10;
+					lifeCount--;
+               randomizeNewLocation(shape,2);
+               board[ghost.x-1][ghost.y]=1;
+            }
+         }
          if (ghost.x > 0 
             && board[ghost.x - 1][ghost.y] != 4
             && board[ghost.x - 1][ghost.y] != 7
@@ -357,13 +392,14 @@ function moveAttackers(){
          }
       }
       if (dir == 4) {
-         // if (board[ghost.x+1][ghost.y] == 2){
-         //    if(eatable == false){
-         //       score -= 10;
-         //       randomizeNewLocation(shape,2);
-         //       board[ghost.x+1][ghost.y]=1;
-         //    }
-         // }
+         if (board[ghost.x+1][ghost.y] == 2){
+            if(eatable == false){
+               score -= 10;
+					lifeCount--;
+               randomizeNewLocation(shape,2);
+               board[ghost.x+1][ghost.y]=1;
+            }
+         }
          if (ghost.x < 9 
             && board[ghost.x + 1][ghost.y] != 4
             && board[ghost.x + 1][ghost.y] != 7

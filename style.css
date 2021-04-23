@@ -26,12 +26,15 @@ body, html {
   }
 
   #loggedIn{
-    text-decoration: underline;
+    font-style: italic;
     color: wheat; 
-    float: right; 
+    float: left; 
     top: 5px; 
-    left: 10px; 
+    left: 10px;
+    margin:2px auto; 
     display: none;
+    border: 1px solid wheat;
+    font-size: 20px;
   }
 
   .registerbtn{
@@ -237,7 +240,7 @@ body, html {
     /* float: right; */
     color: black;
     /* width: fit-content; */
-    width: 20%;
+    width: 30%;
     border:2px wheat dotted;
   }
 

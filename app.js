@@ -44,6 +44,7 @@ $(function(){
 	},'Password must contain at least 6 characters, both numbers and letters\.')
 
 	$("#register-form").validate({
+		errorClass: "my-error-class",
 		rules:{
 			rfullName:{
 				required: true,
@@ -77,6 +78,7 @@ $(function(){
 				required: true
 			}
 		}
+		
 	});   
     $("#register-form").on('submit', function(e) {
         var isvalid = $("#register-form").valid();

@@ -16,6 +16,14 @@ body, html {
     background-color: #555;
   }
 
+ 
+  .my-error-class {
+    color:#FF0000;  /* red */
+  }
+  /* .my-valid-class {
+    color:#00CC00; /* green */
+  } */
+
   #loggedIn{
     text-decoration: underline;
     color: wheat; 

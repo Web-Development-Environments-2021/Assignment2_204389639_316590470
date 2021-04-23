@@ -235,13 +235,3 @@ function validateEmail(email) {
 // 	});
 // return false;
 // });
-
-
-//after game is done, play again is pressed by client.
-function play_again(){
-	modalSettingGame();
-	openPage('Game', this, 'grey');
-}
-
-//date of birth
-

@@ -23,6 +23,7 @@ function Start() {
 	score = 0;
 	maxScore = 0;
 	pac_color = "yellow";
+	lifeCount = 5;
 	var cnt = 100;
 	var food_remain = number_of_balls;
 	let total = food_remain;
@@ -155,6 +156,7 @@ function Draw(dir) {
 	// canvas.style.border = "yellow"
 	lblScore.value = score;
 	lblTime.value = time_elapsed;
+	lblLife.value = lifeCount;
 	for (var i = 0; i < 10; i++) {
 		for (var j = 0; j < 10; j++) {
 			var center = new Object();
@@ -266,9 +268,18 @@ function UpdatePosition() {
 	time_elapsed = (currentTime - start_time) / 1000;
 
    if(time_elapsed >= timer){
-      window.clearInterval(interval);
-		window.alert("Out Of Time");
-      return false;
+		window.clearInterval(interval);
+		if(score<100){
+			document.getElementById("result_case").innerHTML = "You better than "+score+" points!";
+			document.getElementById("result_case").style.display="block";
+		}
+		else{
+			document.getElementById("result_case").innerHTML = "Winner!!!";
+			document.getElementById("result_case").style.display="block";
+		}
+		modalAbout("finished_game");
+		// window.alert("Out Of Time");
+		// return false;
    }
 
 	// if (time_elapsed >= timer-10) {
@@ -432,7 +443,8 @@ function randomize(element_name){
 
 //after game is done, play again is pressed by client.
 function play_again(){
-	openPage('Game', this, 'grey');
+	modalClose("finished_game");
 	modalSettingGame();
+	openPage('Game', this, 'grey');
 }
 

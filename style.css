@@ -21,6 +21,11 @@ body, html {
     color:#FF0000;  /* red */
   }
 
+  #result_case{
+    display: none;
+    font-size: 20px;
+  }
+
   #loggedIn{
     text-decoration: underline;
     color: wheat; 

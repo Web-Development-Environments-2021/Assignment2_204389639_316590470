@@ -162,6 +162,10 @@
 				<label for="lblTime">TIME:</label>
 				<input id="lblTime" type="text" />
 			</div>
+			<div id="life">
+				<label for="lblLife">LIFE:</label>
+				<input id="lblLife" type="text" />
+			</div>
 			<div id="game">
 				<div id="gameCanvas">
 					<canvas id="canvas" height="600" width="600"></canvas>
@@ -260,9 +264,7 @@
 		<div class="modal-content">
 			<span class="close" onclick="modalClose('finished_game')">&times;</span>
 			<h3>Results</h3>
-			<label id="loser_case"></label hidden>
-			<label id="better_than"></label hidden>
-			<label id="winner"></label hidden>
+			<label id="result_case"></label>
 			<button onclick="play_again()">Play again</button>
 		</div>
 

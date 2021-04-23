@@ -13,7 +13,7 @@ var prevPress;
 // keep trac of gosts 
 var ghostArray = new Array();
 var begin = true;
-var eatable = true;
+var eatable = false;
 
 
 
@@ -252,9 +252,10 @@ function UpdatePosition() {
 		score= score+25;
 	}
 	else if ( board[shape.i][shape.j] == 7 || board[shape.i][shape.j] > 20 ){
-      score -= 10;
+      
       if(eatable == false){
-         randomizeNewLocation(shape);
+         score -= 10;
+         randomizeNewLocation(shape,2);
       }
    }  
    board[shape.i][shape.j] = 2;
@@ -291,9 +292,16 @@ function UpdatePosition() {
 // randomize a new move to attackers and change the coordinates
 function moveAttackers(){
    ghostArray.forEach(ghost => {
-      
+     
       dir = Math.floor(Math.random()*4+1)
       if (dir == 1) {
+         // if (board[ghost.x][ghost.y-4] ==2){
+         //    if(eatable == false){
+         //       score -= 10;
+         //       randomizeNewLocation(shape,2);
+         //       board[ghost.x][ghost.y-1] =1;
+         //    }
+         // }
          if (ghost.y > 0 
             && board[ghost.x][ghost.y - 1] != 4
             && board[ghost.x][ghost.y - 1] != 7
@@ -304,6 +312,13 @@ function moveAttackers(){
          }
       }
       if (dir == 2) {
+         // if (board[ghost.x][ghost.y+1] ==2){
+         //    if(eatable == false){
+         //       score -= 10;
+         //       randomizeNewLocation(shape,2);
+         //       board[ghost.x][ghost.y+1]=1;
+         //    }
+         // }
          if (ghost.y < 9 
             && board[ghost.x][ghost.y + 1] != 4
             && board[ghost.x][ghost.y + 1] != 7
@@ -314,6 +329,13 @@ function moveAttackers(){
          }
       }
       if (dir == 3) {
+         // if (board[ghost.x-1][ghost.y] ==2){
+         //    if(eatable == false){
+         //       score -= 10;
+         //       randomizeNewLocation(shape,2);
+         //       board[ghost.x-1][ghost.y]=1;
+         //    }
+         // }
          if (ghost.x > 0 
             && board[ghost.x - 1][ghost.y] != 4
             && board[ghost.x - 1][ghost.y] != 7
@@ -324,6 +346,13 @@ function moveAttackers(){
          }
       }
       if (dir == 4) {
+         // if (board[ghost.x+1][ghost.y] == 2){
+         //    if(eatable == false){
+         //       score -= 10;
+         //       randomizeNewLocation(shape,2);
+         //       board[ghost.x+1][ghost.y]=1;
+         //    }
+         // }
          if (ghost.x < 9 
             && board[ghost.x + 1][ghost.y] != 4
             && board[ghost.x + 1][ghost.y] != 7
@@ -338,9 +367,9 @@ function moveAttackers(){
 }
 
 //when eaten will find a new spot for either ghost or pacman
-function randomizeNewLocation(object){
+function randomizeNewLocation(object,num){
    var newLocation = findRandomEmptyCell(board);
-	//board[newLocation[0]][newLocation[1]] = num;
+	board[newLocation[0]][newLocation[1]] = num;
 	object.i = newLocation[0];
 	object.j = newLocation[1];
 }

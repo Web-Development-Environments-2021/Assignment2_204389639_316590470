@@ -15,6 +15,14 @@ $(document).ready(function() {
 	openPage('Welcome', this, 'red');
 });
 
+
+//preventing key arrows from pageDown or pageUp
+window.addEventListener("keydown", function(e) {
+    if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(e.code) > -1) {
+        e.preventDefault();
+    }
+}, false);
+
 function noSuchUser(name){
 	for(var user in users_passes){
 		if(name==user){
@@ -150,6 +158,7 @@ function Login(element){
 		openPage('Game', element, 'grey');
 		modalSettingGame();
 		logged_in = true;
+		document.getElementById("loggedIn").innerHTML = "Logged in: "+username;
 		document.getElementById("loggedIn").style.display="block";
 	}
 	return false;

@@ -7,13 +7,44 @@ body, html {
   #logo{
     margin: 0 auto;
     display: block;
-    width:10%;
-    height: 7%;
+    width:7%;
     border: 2px wheat dotted;
   }
 
   .header{
     background-color: #555;
+  }
+
+ 
+  .my-error-class {
+    color:#FF0000;  /* red */
+  }
+
+  #result_case{
+    display: none;
+    font-size: 20px;
+  }
+
+  #loggedIn{
+    text-decoration: underline;
+    color: wheat; 
+    float: right; 
+    top: 5px; 
+    left: 10px; 
+    display: none;
+  }
+
+  .registerbtn{
+    margin: 0 auto;
+    display: block;
+    background-color: white;
+    color: black;
+    border: 2px solid #4CAF50;
+  }
+
+  .registerbtn:hover{
+    background-color: #4CAF50;
+    color: white;
   }
 
   .menu{
@@ -33,16 +64,23 @@ body, html {
     form {   
         border: 3px solid #f1f1f1; 
         width: 40%;
-        margin: 0 auto;  
+        margin: 0 auto;
+        background-color: lightblue;  
     }   
-    input[type=text], input[type=password] {   
+    input[type=text],input[type=email], input[type=password] {   
         width: 100%;   
         margin: 8px 0;  
         padding: 12px 20px;   
         display: inline-block;   
         border: 2px solid green;   
         box-sizing: border-box;   
-    }  
+    }
+    
+    select{
+      border: 2px solid green;   
+        box-sizing: border-box;  
+    }
+    
     .container button:hover {   
         opacity: 0.7;   
     }   
@@ -235,3 +273,28 @@ body, html {
     display: block;
   }
 
+  .container{
+    padding: 15px;
+  }
+  SELECT{
+    padding: 5px;
+  }
+  input.date{
+    width:50px;
+    padding: 5px;
+  }
+
+  /* play again modal */
+  h3{
+    text-align: center;
+  }
+
+  #play_again{
+    background-color: white;
+    color: black;
+    border: 2px solid lightblue;
+  }
+
+  #play_again:hover{
+    background-color: lightblue;
+  }

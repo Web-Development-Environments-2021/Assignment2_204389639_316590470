@@ -270,7 +270,7 @@ function UpdatePosition() {
    if(time_elapsed >= timer){
 		window.clearInterval(interval);
 		if(score<100){
-			document.getElementById("result_case").innerHTML = "You better than "+score+" points!";
+			document.getElementById("result_case").innerHTML = "You are better than "+score+" points!";
 			document.getElementById("result_case").style.display="block";
 		}
 		else{

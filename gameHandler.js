@@ -12,7 +12,7 @@ var up_btn, down_btn, right_btn, left_btn, number_of_balls, five_p_color,
  fifteen_p_color, twentyf_p_color, timer, num_attack;
 var prevPress;
 // keep trac of gosts 
-var ghostArray = new Array();
+var ghostArray;
 var begin = true;
 var eatable = false;
 var lifeCount;
@@ -32,6 +32,7 @@ function Start() {
 	let total = food_remain;
 	let foodCounter = 0;
 	let flag = 0;
+	ghostArray = new Array();
 	//let food_eaten =0;
 	
 	var pacman_remain = 1;

@@ -299,8 +299,10 @@ function Draw(dir) {
 			}else if (board[i][j] > 20 || board[i][j] == 7) {
 				context.beginPath();
 				context.rect(center.x - 30, center.y - 30, 60, 60);
-				context.fillStyle = monColor; //attacker
-				context.fill();
+				let img = new Image();
+				img.src = "images/blue_ghost.png";
+				// context.fillStyle = monColor; //attacker
+				context.drawImage(img,center.x - 30, center.y - 30,60,60);
          }
 			else if (board[i][j] == 9 ) {
 				context.beginPath();
@@ -681,3 +683,6 @@ function play_again(){
 	openPage('Game', this, 'grey');
 }
 
+function displayImage(image){
+	
+}

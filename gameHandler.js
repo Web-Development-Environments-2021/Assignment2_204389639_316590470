@@ -36,35 +36,61 @@ function Start() {
 	
 	var pacman_remain = 1;
 	start_time = new Date();
-	for (var i = 0; i < 10; i++) {
+	for (var i = 0; i < 17; i++) {
 		board[i] = new Array();
 		//build all walls according to what we desire
-		for (var j = 0; j < 10; j++) {
+		for (var j = 0; j < 17; j++) {
 			if (
-				(i == 0 && j == 7)||
-				(i == 1 && j == 2)||
-				(i == 1 && j == 3)||
-				(i == 1 && j == 4)||
-				(i == 3 && j == 0)||
-				(i == 3 && j == 3)||
-				(i == 3 && j == 4)||
-				(i == 3 && j == 8)||
-				(i == 3 && j == 9)||
-				(i == 4 && j == 4)||
-				(i == 5 && j == 2)||
-				(i == 5 && j == 3)||
-				(i == 5 && j == 4)||
-				(i == 5 && j == 5)||
-				(i == 5 && j == 6)||
-				(i == 6 && j == 2)||
-				(i == 6 && j == 8)||
-				(i == 7 && j == 8)||
-				(i == 8 && j == 0)||
-				(i == 8 && j == 1)||
-				(i == 8 && j == 4)||
-				(i == 8 && j == 7)||
-				(i == 8 && j == 8)||
-				(i == 9 && j == 4)
+				i == 0 || i == 16 || j == 0 || j ==16
+				|| (j == 1 && i == 3)
+				|| (j == 1 && i == 8)
+				|| (j == 1 && i == 13) // i==1
+				|| (j == 2 && i == 3)
+				|| (j == 2 && i == 8)
+				|| (j == 2 && i == 13) // i==2
+				|| (j == 3 && i == 6)
+				|| (j == 3 && i == 7)
+				|| (j == 3 && i == 8) 
+				|| (j == 3 && i == 9)
+				|| (j == 3 && i == 10)  // i==3
+				|| (j == 6 && i == 1)
+				|| (j == 6 && i == 2)
+				|| (j == 6 && i == 5)
+				|| (j == 6 && i == 6)
+				|| (j == 6 && i == 10)
+				|| (j == 6 && i == 11)
+				|| (j == 6 && i == 14)
+				|| (j == 6 && i == 15)  // i ==6
+				|| (j == 7 && i == 5)
+				|| (j == 7 && i == 11)  // i == 7
+				|| (j == 8 && i == 1)
+				|| (j == 8 && i == 2)
+				|| (j == 8 && i == 5)
+				|| (j == 8 && i == 11)
+				|| (j == 8 && i == 14)
+				|| (j == 8 && i == 15) // i == 8
+				|| (j == 9 && i == 2)
+				|| (j == 9 && i == 5)
+				|| (j == 9 && i == 6)
+				|| (j == 9 && i == 7)
+				|| (j == 9 && i == 9)
+				|| (j == 9 && i == 10)
+				|| (j == 9 && i == 11)
+				|| (j == 9 && i == 14)  // i == 9
+				|| (j == 12 &&i  == 4)
+				|| (j == 12 &&i  == 12)  // i ==12
+				|| (j == 13 &&i  == 1)
+				|| (j == 13 &&i  == 2)
+				|| (j == 13 &&i  == 3)
+				|| (j == 13 &&i  == 4)
+				|| (j == 13 &&i  == 7)
+				|| (j == 13 &&i  == 8)
+				|| (j == 13 &&i  == 9)
+				|| (j == 13 &&i  == 12)
+				|| (j == 13 &&i  == 13)
+				|| (j == 13 &&i  == 14)
+				|| (j == 13 &&i  == 15)  // i == 13
+				|| (j == 14 &&i  == 8)|| (j == 15 && i == 8)
 			) {
 				board[i][j] = 4; //4 is a wall
 			}else{
@@ -73,6 +99,12 @@ function Start() {
 			
 		}
 	}
+
+	// delete ghost of previous games and reseting positions
+	resetBoard();
+	placeAttackers();
+
+
 
    // placing all the food
 	while (food_remain > 0) {
@@ -99,17 +131,6 @@ function Start() {
 	shape.i = pacLocation[0];
 	shape.j = pacLocation[1];
 
-   // place the ghosts
-   ghostCount = 0
-   while ( ghostCount < num_attack){
-      ghostLocation =  findRandomEmptyCell(board);
-      ghostArray[ghostCount]= new Object();
-      ghostArray[ghostCount].x = ghostLocation[0];
-      ghostArray[ghostCount].y = ghostLocation[1];
-      ghostArray[ghostCount].isAlive = true;
-      board[ghostLocation[0]][ghostLocation[1]] = 7; // ghost
-      ghostCount ++;
-   }
 
 	// place strawberries
 	numBerri = 0;
@@ -136,16 +157,65 @@ function Start() {
 		false
 	);
 	interval = setInterval(UpdatePosition, 250);
-	interval2 = setInterval(moveAttackers,500)
+	interval2 = setInterval(moveAttackers,500) //attackers need to ba little bit slower that pacman
   
 }
 
+
+// this function places all attackers in their assigned spot at the corners. and reset when pacman is eaten.
+function placeAttackers(){
+	ghostCount = 0
+	while ( ghostCount < num_attack){
+		ghostArray[ghostCount]= new Object();	
+		if(ghostCount == 0 ){
+			ghostArray[ghostCount].x = 1;
+			ghostArray[ghostCount].y = 1;
+			board[1][1] = 7;
+		}else if(ghostCount == 1){
+			ghostArray[ghostCount].x = 1;
+			ghostArray[ghostCount].y = 15;
+			board[1][15] = 7;
+		}else if(ghostCount == 2){
+			ghostArray[ghostCount].x = 15;
+			ghostArray[ghostCount].y = 1;
+			board[15][1] = 7;
+		}else{
+			ghostArray[ghostCount].x = 15;
+			ghostArray[ghostCount].y = 15;
+			board[15][15] = 7;
+		}
+		ghostCount ++;
+	}
+}
+
+function resetBoard(){
+	
+	for (var i = 0; i < 17; i++) {
+		for (var j = 0; j < 17; j++) {
+			if (board[i][j] == 7 || board[i][j] > 20 || board [i][j] == 2){
+				board[i][j] = 1;
+			}
+		}
+	}
+}
+
+// function resetPacman(){
+// 	for (var i = 0; i < 17; i++) {
+// 		for (var j = 0; j < 17; j++) {
+// 			if (board[i][j] ==2){
+// 				board[i][j] = 1;
+// 			}
+// 		}
+// 	}
+// }
+
+
 function findRandomEmptyCell(board) {
-	var i = Math.floor(Math.random() * 9 + 1);
-	var j = Math.floor(Math.random() * 9 + 1);
+	var i = Math.floor(Math.random() * 15 + 1);
+	var j = Math.floor(Math.random() * 15 + 1);
 	while (board[i][j] != 1) {
-		i = Math.floor(Math.random() * 9 + 1);
-		j = Math.floor(Math.random() * 9 + 1);
+		i = Math.floor(Math.random() * 15 + 1);
+		j = Math.floor(Math.random() * 15 + 1);
 	}
 	return [i, j];
 }
@@ -172,8 +242,8 @@ function Draw(dir) {
 	lblScore.value = score;
 	lblTime.value = time_elapsed;
 	lblLife.value = lifeCount;
-	for (var i = 0; i < 10; i++) {
-		for (var j = 0; j < 10; j++) {
+	for (var i = 0; i < 17; i++) {
+		for (var j = 0; j < 17; j++) {
 			var center = new Object();
 			center.x = i * 60 + 30;
 			center.y = j * 60 + 30;
@@ -252,22 +322,22 @@ function UpdatePosition() {
       x= 4;
    }
 	if (x == 1) {
-		if (shape.j > 0 && board[shape.i][shape.j - 1] != 4) {
+		if (shape.j > 1 && board[shape.i][shape.j - 1] != 4) {
 			shape.j--;
 		}
 	}
 	if (x == 2) {
-		if (shape.j < 9 && board[shape.i][shape.j + 1] != 4) {
+		if (shape.j < 15 && board[shape.i][shape.j + 1] != 4) {
 			shape.j++;
 		}
 	}
 	if (x == 3) {
-		if (shape.i > 0 && board[shape.i - 1][shape.j] != 4) {
+		if (shape.i > 1 && board[shape.i - 1][shape.j] != 4) {
 			shape.i--;
 		}
 	}
 	if (x == 4) {
-		if (shape.i < 9 && board[shape.i + 1][shape.j] != 4) {
+		if (shape.i < 15 && board[shape.i + 1][shape.j] != 4) {
 			shape.i++;
 		}
 	}
@@ -298,12 +368,13 @@ function UpdatePosition() {
       if(eatable == false){
          score -= 10;
 			lifeCount--;
+			board[shape.i][shape.j] = 1 ;
+			resetBoard();
          randomizeNewLocation(shape,2);
+			placeAttackers();
       }
    }  
    board[shape.i][shape.j] = 2;
-
-   //moveAttackers();
 
 	var currentTime = new Date();
 	time_elapsed = Math.floor((currentTime - start_time) / 1000);
@@ -362,7 +433,7 @@ function UpdatePosition() {
 function bestMove(ghost,shape,eatable){
 	var best ;
 	let dist = (eatable == false) ? 10000 : -10000;
-	if(ghost.y > 0 
+	if(ghost.y > 1 
 		&& board[ghost.x][ghost.y - 1] != 4 //not a wall
 		&& board[ghost.x][ghost.y - 1] != 7 // not another ghost
 		&& board[ghost.x][ghost.y - 1] <=20){
@@ -378,7 +449,7 @@ function bestMove(ghost,shape,eatable){
 				}
 			}
 		}
-	if(ghost.y < 9 
+	if(ghost.y < 15 
 		&& board[ghost.x][ghost.y + 1] != 4
 		&& board[ghost.x][ghost.y + 1] != 7
 		&& board[ghost.x][ghost.y + 1] <=20){
@@ -394,7 +465,7 @@ function bestMove(ghost,shape,eatable){
 				}
 			}
 		}
-	if(ghost.x > 0 
+	if(ghost.x > 1 
 		&& board[ghost.x - 1][ghost.y ] != 4
 		&& board[ghost.x - 1][ghost.y ] != 7
 		&& board[ghost.x - 1][ghost.y ] <=20){
@@ -410,7 +481,7 @@ function bestMove(ghost,shape,eatable){
 				}
 			}
 		}
-	if(ghost.x < 9 
+	if(ghost.x < 15 
 		&& board[ghost.x + 1][ghost.y] != 4
 		&& board[ghost.x + 1][ghost.y] != 7
 		&& board[ghost.x + 1][ghost.y] <=20){
@@ -437,79 +508,103 @@ function moveAttackers(){
       //dir = Math.floor(Math.random()*4+1)
 		dir = bestMove(ghost,shape,eatable)
       if (dir == 1) {
-         if (board[ghost.x][ghost.y-1] ==2){
+         if (board[ghost.x][ghost.y-1] == 2){
             if(eatable == false){
                score -= 10;
 					lifeCount--;
+					resetBoard();
                randomizeNewLocation(shape,2);
-               board[ghost.x][ghost.y-1] =1;
+					placeAttackers();
+               board[ghost.x][ghost.y] = 1;
+					board[shape.i][shape.j] = 1;
             }
          }
-         if (ghost.y > 0 
-            && board[ghost.x][ghost.y - 1] != 4
-            && board[ghost.x][ghost.y - 1] != 7
-            && board[ghost.x][ghost.y - 1] <=20) {
-            board[ghost.x][ghost.y] = board[ghost.x][ghost.y]/7;
-            ghost.y--;
-            board[ghost.x][ghost.y ] = board[ghost.x][ghost.y]*7;
-         }
+			///////////// /////////// /////////// /////////// 
+			board[ghost.x][ghost.y] = board[ghost.x][ghost.y]/7;
+			ghost.y--;
+			board[ghost.x][ghost.y ] = board[ghost.x][ghost.y]*7;
+         // if (ghost.y > 0 
+         //    && board[ghost.x][ghost.y - 1] != 4
+         //    && board[ghost.x][ghost.y - 1] != 7
+         //    && board[ghost.x][ghost.y - 1] <=20) {
+         //    board[ghost.x][ghost.y] = board[ghost.x][ghost.y]/7;
+         //    ghost.y--;
+         //    board[ghost.x][ghost.y ] = board[ghost.x][ghost.y]*7;
+         // }
       }
       if (dir == 2) {
          if (board[ghost.x][ghost.y+1] ==2){
             if(eatable == false){
                score -= 10;
 					lifeCount--;
+               resetBoard();
                randomizeNewLocation(shape,2);
-               board[ghost.x][ghost.y+1]=1;
+					placeAttackers();;
+               board[ghost.x][ghost.y]=1;
+					board[shape.i][shape.j] = 1;
             }
          }
-         if (ghost.y < 9 
-            && board[ghost.x][ghost.y + 1] != 4
-            && board[ghost.x][ghost.y + 1] != 7
-            && board[ghost.x][ghost.y + 1] <=20) {
-            board[ghost.x][ghost.y]= board[ghost.x][ghost.y]/7;
-            ghost.y++;
-            board[ghost.x][ghost.y ]= board[ghost.x][ghost.y]*7;
-         }
+			board[ghost.x][ghost.y]= board[ghost.x][ghost.y]/7;
+			ghost.y++;
+			board[ghost.x][ghost.y ]= board[ghost.x][ghost.y]*7;
+         // if (ghost.y < 9 
+         //    && board[ghost.x][ghost.y + 1] != 4
+         //    && board[ghost.x][ghost.y + 1] != 7
+         //    && board[ghost.x][ghost.y + 1] <=20) {
+         //    board[ghost.x][ghost.y]= board[ghost.x][ghost.y]/7;
+         //    ghost.y++;
+         //    board[ghost.x][ghost.y ]= board[ghost.x][ghost.y]*7;
+         // }
       }
       if (dir == 3) {
          if (board[ghost.x-1][ghost.y] ==2){
             if(eatable == false){
                score -= 10;
 					lifeCount--;
+               resetBoard();
                randomizeNewLocation(shape,2);
-               board[ghost.x-1][ghost.y]=1;
+					placeAttackers();
+               board[ghost.x][ghost.y]=1;
+					board[shape.i][shape.j] = 1;
             }
          }
-         if (ghost.x > 0 
-            && board[ghost.x - 1][ghost.y] != 4
-            && board[ghost.x - 1][ghost.y] != 7
-            && board[ghost.x - 1][ghost.y] <=20) {
-            board[ghost.x][ghost.y]= board[ghost.x][ghost.y]/7;
-            ghost.x--;
-            board[ghost.x ][ghost.y]= board[ghost.x][ghost.y]*7;
-         }
+			board[ghost.x][ghost.y]= board[ghost.x][ghost.y]/7;
+			ghost.x--;
+			board[ghost.x ][ghost.y]= board[ghost.x][ghost.y]*7;
+         // if (ghost.x > 0 
+         //    && board[ghost.x - 1][ghost.y] != 4
+         //    && board[ghost.x - 1][ghost.y] != 7
+         //    && board[ghost.x - 1][ghost.y] <=20) {
+         //    board[ghost.x][ghost.y]= board[ghost.x][ghost.y]/7;
+         //    ghost.x--;
+         //    board[ghost.x ][ghost.y]= board[ghost.x][ghost.y]*7;
+         // }
       }
       if (dir == 4) {
          if (board[ghost.x+1][ghost.y] == 2){
             if(eatable == false){
                score -= 10;
 					lifeCount--;
+               resetBoard();
                randomizeNewLocation(shape,2);
-               board[ghost.x+1][ghost.y]=1;
+					placeAttackers();
+               board[ghost.x][ghost.y]=1;
+					board[shape.i][shape.j] = 1;
             }
          }
-         if (ghost.x < 9 
-            && board[ghost.x + 1][ghost.y] != 4
-            && board[ghost.x + 1][ghost.y] != 7
-            && board[ghost.x + 1][ghost.y] <=20) {
-            board[ghost.x][ghost.y]= board[ghost.x][ghost.y]/7;
-            ghost.x++;
-            board[ghost.x ][ghost.y]= board[ghost.x][ghost.y]*7;
-         }
+			board[ghost.x][ghost.y]= board[ghost.x][ghost.y]/7;
+			ghost.x++;
+			board[ghost.x ][ghost.y]= board[ghost.x][ghost.y]*7;
+         // if (ghost.x < 9 
+         //    && board[ghost.x + 1][ghost.y] != 4
+         //    && board[ghost.x + 1][ghost.y] != 7
+         //    && board[ghost.x + 1][ghost.y] <=20) {
+         //    board[ghost.x][ghost.y]= board[ghost.x][ghost.y]/7;
+         //    ghost.x++;
+         //    board[ghost.x ][ghost.y]= board[ghost.x][ghost.y]*7;
+         // }
       }
    });
-   //Draw(x)
 }
 
 //when eaten will find a new spot for either ghost or pacman

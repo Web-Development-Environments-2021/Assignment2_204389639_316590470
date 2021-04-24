@@ -192,23 +192,14 @@ function resetBoard(){
 	
 	for (var i = 0; i < 17; i++) {
 		for (var j = 0; j < 17; j++) {
-			if (board[i][j] == 7 || board[i][j] > 20 || board [i][j] == 2){
+			if (board[i][j] != 4 && board[i][j] != 5 && board[i][j] != 6 &&
+				 board[i][j] != 8 && board [i][j] != 9 ){
+
 				board[i][j] = 1;
 			}
 		}
 	}
 }
-
-// function resetPacman(){
-// 	for (var i = 0; i < 17; i++) {
-// 		for (var j = 0; j < 17; j++) {
-// 			if (board[i][j] ==2){
-// 				board[i][j] = 1;
-// 			}
-// 		}
-// 	}
-// }
-
 
 function findRandomEmptyCell(board) {
 	var i = Math.floor(Math.random() * 15 + 1);
@@ -311,7 +302,6 @@ function Draw(dir) {
 		}
 	}
 }
-
 
 function UpdatePosition() {
 	board[shape.i][shape.j] = 1;
@@ -500,11 +490,9 @@ function bestMove(ghost,shape,eatable){
 	return best;
 }
 
-
 // randomize a new move to attackers and change the coordinates
 function moveAttackers(){
-   ghostArray.forEach(ghost => {
-     
+   ghostArray.forEach(ghost => {     
       //dir = Math.floor(Math.random()*4+1)
 		dir = bestMove(ghost,shape,eatable)
       if (dir == 1) {
@@ -512,97 +500,65 @@ function moveAttackers(){
             if(eatable == false){
                score -= 10;
 					lifeCount--;
+					board[ghost.x][ghost.y] = 1;
 					resetBoard();
                randomizeNewLocation(shape,2);
 					placeAttackers();
-               board[ghost.x][ghost.y] = 1;
-					board[shape.i][shape.j] = 1;
+               
             }
-         }
-			///////////// /////////// /////////// /////////// 
-			board[ghost.x][ghost.y] = board[ghost.x][ghost.y]/7;
-			ghost.y--;
-			board[ghost.x][ghost.y ] = board[ghost.x][ghost.y]*7;
-         // if (ghost.y > 0 
-         //    && board[ghost.x][ghost.y - 1] != 4
-         //    && board[ghost.x][ghost.y - 1] != 7
-         //    && board[ghost.x][ghost.y - 1] <=20) {
-         //    board[ghost.x][ghost.y] = board[ghost.x][ghost.y]/7;
-         //    ghost.y--;
-         //    board[ghost.x][ghost.y ] = board[ghost.x][ghost.y]*7;
-         // }
+         }else{
+				board[ghost.x][ghost.y] = Math.ceil(board[ghost.x][ghost.y]/7) ;
+				ghost.y--;
+				board[ghost.x][ghost.y ] = board[ghost.x][ghost.y]*7;
+			}      
       }
       if (dir == 2) {
          if (board[ghost.x][ghost.y+1] ==2){
             if(eatable == false){
                score -= 10;
 					lifeCount--;
+					board[ghost.x][ghost.y]=1;
                resetBoard();
                randomizeNewLocation(shape,2);
-					placeAttackers();;
-               board[ghost.x][ghost.y]=1;
-					board[shape.i][shape.j] = 1;
+					placeAttackers();;               
             }
-         }
-			board[ghost.x][ghost.y]= board[ghost.x][ghost.y]/7;
-			ghost.y++;
-			board[ghost.x][ghost.y ]= board[ghost.x][ghost.y]*7;
-         // if (ghost.y < 9 
-         //    && board[ghost.x][ghost.y + 1] != 4
-         //    && board[ghost.x][ghost.y + 1] != 7
-         //    && board[ghost.x][ghost.y + 1] <=20) {
-         //    board[ghost.x][ghost.y]= board[ghost.x][ghost.y]/7;
-         //    ghost.y++;
-         //    board[ghost.x][ghost.y ]= board[ghost.x][ghost.y]*7;
-         // }
+         }else{
+				board[ghost.x][ghost.y] = Math.ceil(board[ghost.x][ghost.y]/7) ;
+				ghost.y++;
+				board[ghost.x ][ghost.y]= board[ghost.x][ghost.y]*7;
+			}       
       }
       if (dir == 3) {
          if (board[ghost.x-1][ghost.y] ==2){
             if(eatable == false){
                score -= 10;
 					lifeCount--;
+					board[ghost.x][ghost.y]=1;
                resetBoard();
                randomizeNewLocation(shape,2);
-					placeAttackers();
-               board[ghost.x][ghost.y]=1;
-					board[shape.i][shape.j] = 1;
+					placeAttackers();               
             }
-         }
-			board[ghost.x][ghost.y]= board[ghost.x][ghost.y]/7;
-			ghost.x--;
-			board[ghost.x ][ghost.y]= board[ghost.x][ghost.y]*7;
-         // if (ghost.x > 0 
-         //    && board[ghost.x - 1][ghost.y] != 4
-         //    && board[ghost.x - 1][ghost.y] != 7
-         //    && board[ghost.x - 1][ghost.y] <=20) {
-         //    board[ghost.x][ghost.y]= board[ghost.x][ghost.y]/7;
-         //    ghost.x--;
-         //    board[ghost.x ][ghost.y]= board[ghost.x][ghost.y]*7;
-         // }
+         }else{
+				board[ghost.x][ghost.y] = Math.ceil(board[ghost.x][ghost.y]/7) ;
+				ghost.x--;
+				board[ghost.x ][ghost.y]= board[ghost.x][ghost.y]*7;
+			} 
       }
       if (dir == 4) {
          if (board[ghost.x+1][ghost.y] == 2){
             if(eatable == false){
                score -= 10;
 					lifeCount--;
+					board[ghost.x][ghost.y]=1;
                resetBoard();
                randomizeNewLocation(shape,2);
-					placeAttackers();
-               board[ghost.x][ghost.y]=1;
-					board[shape.i][shape.j] = 1;
+					placeAttackers();            
             }
-         }
-			board[ghost.x][ghost.y]= board[ghost.x][ghost.y]/7;
-			ghost.x++;
-			board[ghost.x ][ghost.y]= board[ghost.x][ghost.y]*7;
-         // if (ghost.x < 9 
-         //    && board[ghost.x + 1][ghost.y] != 4
-         //    && board[ghost.x + 1][ghost.y] != 7
-         //    && board[ghost.x + 1][ghost.y] <=20) {
-         //    board[ghost.x][ghost.y]= board[ghost.x][ghost.y]/7;
-         //    ghost.x++;
-         //    board[ghost.x ][ghost.y]= board[ghost.x][ghost.y]*7;
-         // }
+         }else{
+				board[ghost.x][ghost.y] = Math.ceil(board[ghost.x][ghost.y]/7) ;
+				ghost.x++;
+				board[ghost.x ][ghost.y]= board[ghost.x][ghost.y]*7;
+			}
       }
    });
 }

@@ -76,13 +76,7 @@ $(function(){
 				minlength: 6,
 				equalTo: "#rpsw"
 			},
-			date_of_birth_day:{
-				required: true
-			},
-			date_of_birth_mon:{
-				required: true
-			},
-			date_of_birth_year:{
+			datepicker1:{
 				required: true
 			}
 		}
@@ -104,7 +98,13 @@ $(function(){
 				}
 			});
             users_passes[username]=password;
-			openPage('Login', this, '#4CAF50');
+			rfullName.value = null;
+			ruserName.value = null;
+			remail.value = null;
+			datepicker.value = null;
+			rpsw.value = null;
+			(rpsw_repeat).value = null;
+			openPage('Login', window, '#4CAF50');
 		}
 	})
 })

@@ -8,8 +8,12 @@ var start_time;
 var time_elapsed;
 var interval;
 var interval2;
-var up_btn, down_btn, right_btn, left_btn, number_of_balls, five_p_color,
- fifteen_p_color, twentyf_p_color, timer, num_attack;
+var up_btn = 38;
+var down_btn = 40;
+var right_btn = 39;
+var left_btn = 37;
+var number_of_balls, five_p_color,
+ fifteen_p_color, twentyf_p_color, timer, num_attack, up_desc, down_desc, right_desc, left_desc;
 var prevPress;
 // keep trac of gosts 
 var ghostArray;
@@ -213,16 +217,16 @@ function findRandomEmptyCell(board) {
 }
 
 function GetKeyPressed() {
-	if (keysDown[38]) {
+	if (keysDown[up_btn]) {
 		return 1;
 	}
-	if (keysDown[40]) {
+	if (keysDown[down_btn]) {
 		return 2;
 	}
-	if (keysDown[37]) {
+	if (keysDown[left_btn]) {
 		return 3;
 	}
-	if (keysDown[39]) {
+	if (keysDown[right_btn]) {
 		return 4;
 	}
 }
@@ -574,11 +578,35 @@ function randomizeNewLocation(object,num){
 	object.j = newLocation[1];
 }
 
+$(function(){
+	$("#up").keydown(function(e){
+		up_btn = e.keyCode;
+		up_desc = e.key;
+		up.placeholder = up_desc;
+	})
+	$("#down").keydown(function(e){
+		down_btn = e.keyCode;
+		down_desc = e.key;
+		down.placeholder = up_desc;
+	})
+	$("#right").keydown(function(e){
+		right_btn = e.keyCode;
+		right_desc = e.key;
+		right.placeholder = up_desc;
+	})
+	$("#left").keydown(function(e){
+		left_btn = e.keyCode;
+		left_desc = e.key;
+		left.placeholder = up_desc;
+	})
+	return false;
+})
+
 function start_game(){
-	up_btn = document.getElementById("up").value;
-	down_btn = document.getElementById("down").value;
-	right_btn = document.getElementById("right").value;
-	left_btn = document.getElementById("left").value;
+	// up_btn = document.getElementById("up").value;
+	// down_btn = document.getElementById("down").value;
+	// right_btn = document.getElementById("right").value;
+	// left_btn = document.getElementById("left").value;
 	number_of_balls = document.getElementById("circleNum").value;
 	five_p_color = randomize("five_p");
 	fifteen_p_color = randomize("fifteen_p");
@@ -587,7 +615,7 @@ function start_game(){
 	num_attack = randomize("num_attack");
 	
 	modalClose("SettingModal");
-	buildMiniSetting(up_btn, down_btn, right_btn, left_btn, number_of_balls, five_p_color, fifteen_p_color, twentyf_p_color, timer, num_attack);
+	buildMiniSetting(up_desc, down_desc, right_desc, left_desc, number_of_balls, five_p_color, fifteen_p_color, twentyf_p_color, timer, num_attack);
 	context = canvas.getContext("2d");
 	let song = document.getElementById("game_song");
 	//song.play();

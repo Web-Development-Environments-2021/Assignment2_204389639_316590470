@@ -157,7 +157,7 @@ function Start() {
 		},
 		false
 	);
-	interval = setInterval(UpdatePosition, 250);
+	interval = setInterval(UpdatePosition, 100);
 	interval2 = setInterval(moveAttackers,500) //attackers need to ba little bit slower that pacman
   
 }
@@ -642,3 +642,17 @@ function play_again(){
 function displayImage(image){
 	
 }
+
+$(function(){
+	$("#plus_resize").click(function(e){
+		context.canvas.width += 100;
+		context.canvas.height += 100;
+		return false;
+	})
+	$("#minus_resize").click(function(e){
+		context.canvas.width -= 100;
+		context.canvas.height -= 100;
+		return false;
+	})
+	return false;
+})

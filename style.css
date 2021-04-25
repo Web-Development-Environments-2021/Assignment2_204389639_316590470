@@ -179,14 +179,21 @@ body, html {
 
 
   .footer{
+    flex-direction: row;
     position: fixed;
-    left: 0;
+    /* left: 0; */
     bottom: 0;
     width: 100%;
     background-color: gainsboro;
     color: black;
     text-align: center;
     opacity: 0.7;
+  }
+
+  .footer li{
+    display: inline-block;
+    margin-bottom: unset;
+    margin: 0 5px 0 5px
   }
 
   .contact_links{
@@ -324,3 +331,44 @@ body, html {
     cursor: pointer;
     font-family: 'ArcadeR';
   }
+
+  .resize{
+    border: 2px solid lightgrey;
+	background-color: #fff;
+	font-size: 16px;
+	height: 2.5em;
+	width: 2.5em;
+	border-radius: 999px;
+	position: relative;
+  }
+	
+	#plus_resize:after,
+	#plus_resize:before {
+		content: "";
+		display: block;
+		background-color: grey;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
+
+  #minus_resize:after, #minus_resize:before{
+    content: "";
+		display: block;
+		background-color: grey;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+  }
+	
+	#plus_resize:before {
+		height: 1em;
+		width: 0.2em;
+	}
+
+	#plus_resize:after, #minus_resize:after {
+		height: 0.2em;
+		width: 1em;
+	}

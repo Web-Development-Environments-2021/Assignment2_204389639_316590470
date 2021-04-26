@@ -18,7 +18,7 @@ var eatable = false;
 var lifeCount;
 var monColor = "black";
 var flag ;
-
+var temp_color = 0;
 
 // setting of the initial board' place food, ghosts and pacman
 function Start() {
@@ -30,10 +30,11 @@ function Start() {
 	var cnt = 100;
 	var food_remain = number_of_balls;
 	let total = food_remain;
-	let foodCounter = 0;
+	//let foodCounter = $;
 	let flag = 0;
 	ghostArray = new Array();
-	//let food_eaten =0;
+	 
+	
 	
 	var pacman_remain = 1;
 	start_time = new Date();
@@ -70,14 +71,14 @@ function Start() {
 				|| (j == 8 && i == 11)
 				|| (j == 8 && i == 14)
 				|| (j == 8 && i == 15) // i == 8
-				|| (j == 9 && i == 2)
+				//|| (j == 9 && i == 2)
 				|| (j == 9 && i == 5)
 				|| (j == 9 && i == 6)
 				|| (j == 9 && i == 7)
 				|| (j == 9 && i == 9)
 				|| (j == 9 && i == 10)
 				|| (j == 9 && i == 11)
-				|| (j == 9 && i == 14)  // i == 9
+				//|| (j == 9 && i == 14)  // i == 9
 				|| (j == 12 &&i  == 4)
 				|| (j == 12 &&i  == 12)  // i ==12
 				|| (j == 13 &&i  == 1)
@@ -98,8 +99,11 @@ function Start() {
 				board[i][j] = 1; // nothing
 			}
 			
+			
 		}
 	}
+	board[0][7] = 1;
+	board[16][7]= 1;
 
 	// delete ghost of previous games and reseting positions
 	resetBoard();
@@ -278,28 +282,40 @@ function Draw(dir) {
 				context.fill();
 			} else if (board[i][j] == 5) {
 				context.beginPath();
-				context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
+				context.arc(center.x, center.y, 20, 0, 2 * Math.PI); // circle
 				context.fillStyle = fifteen_p_color; //disk color
 				context.fill();
 			}
 			else if (board[i][j] == 6) {
 				context.beginPath();
-				context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
+				context.arc(center.x, center.y, 25, 0, 2 * Math.PI); // circle
 				context.fillStyle = twentyf_p_color; //disk color
 				context.fill();
 			}else if (board[i][j] > 20 || board[i][j] == 7) {
 				context.beginPath();
 				context.rect(center.x - 30, center.y - 30, 60, 60);
+				var source;
+				
+				// if(temp_color == 0){
+				// 	source = "images/red_ghost.png";
+				// 	temp_color = 1;
+				// }else{
+				// 	source = "images/blue_ghost.png";
+				// 	temp_color = 0;
+				// }
 				let img = new Image();
-				img.src = "images/blue_ghost.png";
+				img.src = (eatable == true) ? "images/blue_ghost.png" : "images/yellow_ghost.png";
 				// context.fillStyle = monColor; //attacker
 				context.drawImage(img,center.x - 30, center.y - 30,60,60);
          }
 			else if (board[i][j] == 9 ) {
 				context.beginPath();
 				context.rect(center.x - 30, center.y - 30, 60, 60);
-				context.fillStyle = "red"; //straberry
-				context.fill();
+				let img = new Image();
+				img.src =  "images/cherry.png";
+				//context.fillStyle = "red"; //straberry
+				//context.fill();
+				context.drawImage(img,center.x - 30, center.y - 30,60,60);
          }
 
 		}
@@ -312,7 +328,7 @@ function UpdatePosition() {
 	var x = GetKeyPressed();
    if(begin == true){
       begin = false;
-      x= 4;
+      x= 3;
    }
 	if (x == 1) {
 		if (shape.j > 1 && board[shape.i][shape.j - 1] != 4) {
@@ -325,12 +341,19 @@ function UpdatePosition() {
 		}
 	}
 	if (x == 3) {
-		if (shape.i > 1 && board[shape.i - 1][shape.j] != 4) {
+		if( shape.i == 1 && shape.j == 7){
+			shape.i = 15;
+			
+		}
+		else if (shape.i > 1 && board[shape.i - 1][shape.j] != 4) {
 			shape.i--;
 		}
 	}
 	if (x == 4) {
-		if (shape.i < 15 && board[shape.i + 1][shape.j] != 4) {
+		if(shape.i == 15 && shape.j == 7){
+			shape.i = 1
+		}
+		else if (shape.i < 15 && board[shape.i + 1][shape.j] != 4) {
 			shape.i++;
 		}
 	}
@@ -365,7 +388,10 @@ function UpdatePosition() {
 			resetBoard();
          randomizeNewLocation(shape,2);
 			placeAttackers();
-      }
+      }else{
+			score += 50;
+			board[shape.i][shape.j] = 1;
+		}
    }  
    board[shape.i][shape.j] = 2;
 
@@ -508,7 +534,10 @@ function moveAttackers(){
                randomizeNewLocation(shape,2);
 					placeAttackers();
                
-            }
+            }else{
+					score += 50;
+					board[shape.i][shape.j] = 1;
+				}
          }else{
 				board[ghost.x][ghost.y] = Math.ceil(board[ghost.x][ghost.y]/7) ;
 				ghost.y--;
@@ -524,7 +553,10 @@ function moveAttackers(){
                resetBoard();
                randomizeNewLocation(shape,2);
 					placeAttackers();;               
-            }
+            }else{
+					score += 50;
+					board[shape.i][shape.j] = 1;
+				}
          }else{
 				board[ghost.x][ghost.y] = Math.ceil(board[ghost.x][ghost.y]/7) ;
 				ghost.y++;
@@ -540,7 +572,10 @@ function moveAttackers(){
                resetBoard();
                randomizeNewLocation(shape,2);
 					placeAttackers();               
-            }
+            }else{
+					score += 50;
+					board[shape.i][shape.j] = 1;
+				}
          }else{
 				board[ghost.x][ghost.y] = Math.ceil(board[ghost.x][ghost.y]/7) ;
 				ghost.x--;
@@ -556,7 +591,10 @@ function moveAttackers(){
                resetBoard();
                randomizeNewLocation(shape,2);
 					placeAttackers();            
-            }
+            }else{
+					score += 50;
+					board[shape.i][shape.j] = 1;
+				}
          }else{
 				board[ghost.x][ghost.y] = Math.ceil(board[ghost.x][ghost.y]/7) ;
 				ghost.x++;

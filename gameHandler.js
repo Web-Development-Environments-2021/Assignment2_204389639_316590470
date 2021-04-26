@@ -625,11 +625,16 @@ $(function(){
 })
 
 function start_game(){
-	// up_btn = document.getElementById("up").value;
-	// down_btn = document.getElementById("down").value;
-	// right_btn = document.getElementById("right").value;
-	// left_btn = document.getElementById("left").value;
 	number_of_balls = document.getElementById("circleNum").value;
+	if(number_of_balls<50 || number_of_balls>90){
+		circleNum.value = "Must be greater equal than 50 and lower equal than 90.";
+		circleNum.style.color = "red";
+		modalSettingGame();
+		return false;
+	}
+	else{
+		circleNum.style.color = "black";
+	}
 	five_p_color = randomize("five_p");
 	fifteen_p_color = randomize("fifteen_p");
 	twentyf_p_color = randomize("twentyf_p");
@@ -707,3 +712,29 @@ $(function(){
 	})
 	return false;
 })
+
+// $(function(){
+// 	$("#setting-form").validate({
+// 		errorClass: "my-error-class",
+// 		rules:{
+// 			Number_of_balls:{
+
+// 			}
+// 		}
+		
+// 	});
+// 	$("#play_game").click(function(e) {
+//         var isvalid = $("#setting-form").valid();
+//         if (isvalid) {
+//             // e.preventDefault();
+// 			number_of_balls = document.getElementById("circleNum").value;
+// 			five_p_color = randomize("five_p");
+// 			alert(five_p_color);
+// 			fifteen_p_color = randomize("fifteen_p");
+// 			twentyf_p_color = randomize("twentyf_p");
+// 			timer = randomize("timer");
+// 			num_attack = randomize("num_attack");
+//             start_game();
+// 		}
+// 	})   
+// })

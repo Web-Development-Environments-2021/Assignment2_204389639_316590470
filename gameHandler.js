@@ -712,29 +712,3 @@ $(function(){
 	})
 	return false;
 })
-
-// $(function(){
-// 	$("#setting-form").validate({
-// 		errorClass: "my-error-class",
-// 		rules:{
-// 			Number_of_balls:{
-
-// 			}
-// 		}
-		
-// 	});
-// 	$("#play_game").click(function(e) {
-//         var isvalid = $("#setting-form").valid();
-//         if (isvalid) {
-//             // e.preventDefault();
-// 			number_of_balls = document.getElementById("circleNum").value;
-// 			five_p_color = randomize("five_p");
-// 			alert(five_p_color);
-// 			fifteen_p_color = randomize("fifteen_p");
-// 			twentyf_p_color = randomize("twentyf_p");
-// 			timer = randomize("timer");
-// 			num_attack = randomize("num_attack");
-//             start_game();
-// 		}
-// 	})   
-// })

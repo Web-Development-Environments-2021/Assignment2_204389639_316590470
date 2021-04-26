@@ -30,10 +30,9 @@ function Start() {
 	var cnt = 100;
 	var food_remain = number_of_balls;
 	let total = food_remain;
-	//let foodCounter = $;
+	let foodCounter = 0;
 	let flag = 0;
 	ghostArray = new Array();
-	 
 	
 	
 	var pacman_remain = 1;

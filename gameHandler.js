@@ -22,7 +22,19 @@ var eatable = false;
 var lifeCount;
 var monColor = "black";
 var flag ;
+var gameBegin = false;
 
+$(function(){
+	$(".tablink").click(function(e){
+		if(gameBegin){
+			window.clearInterval(interval);/////
+			window.clearInterval(interval2);
+			document.getElementById("game").style.display="none";
+		}
+		return false;
+	})
+	return false;
+})
 
 // setting of the initial board' place food, ghosts and pacman
 function Start() {
@@ -37,6 +49,7 @@ function Start() {
 	let foodCounter = 0;
 	let flag = 0;
 	ghostArray = new Array();
+	gameBegin = true;
 	//let food_eaten =0;
 	
 	var pacman_remain = 1;
@@ -382,16 +395,19 @@ function UpdatePosition() {
 		if(score<100){
 			document.getElementById("result_case").innerHTML = "You are better than "+score+" points!";
 			document.getElementById("result_case").style.display="block";
+			document.getElementById("better").style.display="block";
 		}
 		else{
 			window.clearInterval(interval);////
 			window.clearInterval(interval2);/////
 			document.getElementById("result_case").innerHTML = "Winner!!!";
 			document.getElementById("result_case").style.display="block";
+			document.getElementById("fireworks").style.display="block";
 		}
 		let song = document.getElementById("game_song");
 		song.pause();
 		modalAbout("finished_game");
+		gameBegin=false;
 		// window.alert("Out Of Time");
 		// return false;
    }
@@ -403,7 +419,9 @@ function UpdatePosition() {
 			window.clearInterval(interval2);///
 			document.getElementById("result_case").innerHTML = "Loser!!";
 			document.getElementById("result_case").style.display="block";
+			document.getElementById("loser").style.display="block";
 			modalAbout("finished_game")
+			gameBegin=false;
 		}
 	}
 	if (score == maxScore) {
@@ -411,7 +429,9 @@ function UpdatePosition() {
 		window.clearInterval(interval2);/////
 		document.getElementById("result_case").innerHTML = "Winner!!";
 		document.getElementById("result_case").style.display="block";
-		modalAbout("finished_game")
+		document.getElementById("fireworks").style.display="block";
+		modalAbout("finished_game");
+		gameBegin=false;
 	}
 
 	else {
@@ -616,6 +636,7 @@ function start_game(){
 	
 	modalClose("SettingModal");
 	buildMiniSetting(up_desc, down_desc, right_desc, left_desc, number_of_balls, five_p_color, fifteen_p_color, twentyf_p_color, timer, num_attack);
+	document.getElementById("game").style.display="flex";
 	context = canvas.getContext("2d");
 	let song = document.getElementById("game_song");
 	//song.play();
@@ -664,7 +685,7 @@ function randomize(element_name){
 function play_again(){
 	modalClose("finished_game");
 	modalSettingGame();
-	openPage('Game', this, 'grey');
+	openPage('Game', window, 'grey');
 }
 
 function displayImage(image){

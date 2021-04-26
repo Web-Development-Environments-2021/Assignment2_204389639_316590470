@@ -12,7 +12,7 @@ var logged_in = false;
 var up_btn, down_btn, right_btn, left_btn, number_of_balls, five_p_color, fifteen_p_color, twentyf_p_color, timer, num_attack;
 
 $(document).ready(function() {
-	openPage('Welcome', this, 'red');
+	openPage('Welcome', window, 'red');
 });
 
 
@@ -168,11 +168,11 @@ $(function(){
 	$("#game_btn").click(function(e){
 		if(logged_in==false){
 			alert("You must login first. Please register or login.")
-			openPage('Welcome', this, 'red');
+			openPage('Welcome', window, 'red');
 			}
 		else{
 			modalSettingGame();
-			openPage('Game', this, 'grey');
+			openPage('Game', window, 'grey');
 		}
 		return false;
 	})
@@ -192,6 +192,9 @@ function modalAbout(modal_name){
 
 function modalClose(modal_name){
 	document.getElementById(modal_name).style.display="none";
+	document.getElementById("better").style.display="none";
+	document.getElementById("fireworks").style.display="none";
+	document.getElementById("loser").style.display="none";
 }
 
 window.onclick = function(event) {
@@ -222,25 +225,3 @@ function validateEmail(email) {
 	const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 	return re.test(String(email).toLowerCase());
 }
-
-
-// this function manages the registration process, validated all inputs and adds to the users dictionary.
-// $(function(){
-//  $(".registerbtn").click(function(e){
-// 	 	$("#register-form").validate();
-// 		let fullName = $("#rfullName").val();
-// 		let username = $("#ruserName").val();
-// 		let email = $("#remail").val();
-// 		let password = $("#rpsw").val();
-// 		// let confirm = $("#rpsw-repeat").val();
-// 		// let day_birth = $("#day_birth").val();
-// 		// let month_birth = $("#month_birth").val();
-// 		// let year_birth = $("#year_birth").val();
-		
-// 		users_passes[username] = [password, fullName, email];
-// 		console.log(users_passes);
-// 		openPage('Login', this, '#4CAF50');
-// 		return false;
-// 	});
-// return false;
-// });

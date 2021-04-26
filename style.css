@@ -202,7 +202,22 @@ body, html {
     font-size: 12px;
   }
 
-  .modal {
+  #myModal{
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    margin-top: 60px;
+    width: fit-content;
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(209, 191, 191); /* Fallback color */
+    background-color: rgba(255, 255, 255, 0.8); /* Black w/ opacity */
+    color: black;
+    border-color: transparent;
+  }
+
+  .modal[id=finished_game], .modal[id=SettingModal] {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */

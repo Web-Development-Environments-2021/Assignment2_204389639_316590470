@@ -121,32 +121,26 @@
 		</div>
 	</div>
 
-
-	<div id="myModal" class="modal">
-
-		<!-- Modal content -->
-		<div class="modal-content">
-			<span class="close" onclick="modalClose('myModal')">&times;</span>
-			<h1>Hand in: Guy Globus and Shiri Tabach</h1>
-			<p>We used Jquery Plugin for checking valid inputs from user in Register form:
-				<p style="text-indent: 25px;">Full name: without numbers - only letters,</p>
-				<p style="text-indent: 25px;">Username: taken or not,</p>
-				<p style="text-indent: 25px;">E-Mail: valid or not,</p>
-				<p style="text-indent: 25px;">Birthday: picked or not,</p>
-				<p style="text-indent: 25px;">Password: at least 6 letters - at least one number and one letter,</p>
-				<p style="text-indent: 25px;">Confirm Password: equal to previous given password or not.</p>
-			</p>
-			<p>We have used templates:
-				<p style="text-indent: 25px;">jquery.validate.min.js</p>
-				<p style="text-indent: 25px;">additional-methods.js</p>
-			</p>
-			<p>
-				We have lots of work to hand in around the same dates, so we would say time was a factor this time.
-				Also given the requirements we felt like details is everything in this one.
-			</p>
-		</div>
-
-	</div>
+	<dialog id="myModal" class="modal" open>
+		<span class="close" onclick="modalClose('myModal')">&times;</span>
+		<h1>Hand in: Guy Globus and Shiri Tabach</h1>
+		<p>We used Jquery Plugin for checking valid inputs from user in Register form:
+			<p style="text-indent: 25px;">Full name: without numbers - only letters,</p>
+			<p style="text-indent: 25px;">Username: taken or not,</p>
+			<p style="text-indent: 25px;">E-Mail: valid or not,</p>
+			<p style="text-indent: 25px;">Birthday: picked or not,</p>
+			<p style="text-indent: 25px;">Password: at least 6 letters - at least one number and one letter,</p>
+			<p style="text-indent: 25px;">Confirm Password: equal to previous given password or not.</p>
+		</p>
+		<p>We have used templates:
+			<p style="text-indent: 25px;">jquery.validate.min.js</p>
+			<p style="text-indent: 25px;">additional-methods.js</p>
+		</p>
+		<p>
+			We have lots of work to hand in around the same dates, so we would say time was a factor this time.
+			Also given the requirements we felt like details is everything in this one.
+		</p>
+	</dialog>
 
 	<div id="SettingModal" class="modal">
 

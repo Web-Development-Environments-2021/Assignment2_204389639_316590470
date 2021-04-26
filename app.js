@@ -198,7 +198,7 @@ function modalClose(modal_name){
 }
 
 window.onclick = function(event) {
-	if (event.target == document.getElementById("myModal")) {
+	if (myModal.style.display=="block") {
 		modalClose("myModal");
 	}
 	else if(event.target == document.getElementById("SettingModal")){

@@ -251,70 +251,72 @@ function Draw(dir) {
 	lblScore.value = score;
 	lblTime.value = time_elapsed;
 	lblLife.value = lifeCount;
+	let sizeCell = Math.floor(canvas.width/17);//size of cell is default by 60. 
+
 	for (var i = 0; i < 17; i++) {
 		for (var j = 0; j < 17; j++) {
 			var center = new Object();
-			center.x = i * 60 + 30;
-			center.y = j * 60 + 30;
+			center.x = i * sizeCell + 30;
+			center.y = j * sizeCell + 30;
 			if (board[i][j] == 2) {
             var d1,d2,e1,e2;
-				
-            if(dir==1){
-               d1= -0.5*(Math.PI); d2=-0.5*(Math.PI); e1=-15; e2=-5;
-            }else if(dir==2){
-               d1=0.5*(Math.PI); d2=0.5*(Math.PI); e1=15; e2=-5;
-            }else if(dir==3){
-               d1= (Math.PI); d2=(Math.PI); e1=5; e2=-15;
-            }else if(dir==4){
-               d1= 0; d2=0; e1=5; e2=-15;
-            }
+
+			if(dir==1){
+				d1= -0.5*(Math.PI); d2=-0.5*(Math.PI); e1=-sizeCell/4; e2=-sizeCell/12;
+			 }else if(dir==2){
+				d1=0.5*(Math.PI); d2=0.5*(Math.PI); e1=sizeCell/4; e2=-sizeCell/12;
+			 }else if(dir==3){
+				d1= (Math.PI); d2=(Math.PI); e1=sizeCell/12; e2=-sizeCell/4;
+			 }else if(dir==4){
+				d1= 0; d2=0; e1=sizeCell/12; e2=-sizeCell/4;
+			 }
 				context.beginPath();
 				if (flag == 0){
-					context.arc(center.x, center.y, 30, 2 * Math.PI  , 0 * Math.PI); // full circle
+					context.arc(center.x, center.y, sizeCell/2, 2 * Math.PI  , 0 * Math.PI); // full circle
 					flag=1;
 				}else{
-					context.arc(center.x, center.y, 30, 0.15 * Math.PI + d1 , 1.85 * Math.PI+d2); // half circle
+					context.arc(center.x, center.y, sizeCell/2, 0.15 * Math.PI + d1 , 1.85 * Math.PI+d2); // half circle
 					flag=0;
 				}
 				context.lineTo(center.x, center.y);
 				context.fillStyle = pac_color; //pacman body color
 				context.fill();
 				context.beginPath();
-				context.arc(center.x + e1, center.y +e2, 5, 0, 2 * Math.PI); // circle
+				context.arc(center.x + e1, center.y +e2, sizeCell/12, 0, 2 * Math.PI); // circle
 				context.fillStyle = "black"; //pacman eye color
 				context.fill();
 			} else if (board[i][j] == 8) {
 				context.beginPath();
-				context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
+				context.arc(center.x, center.y, sizeCell/4, 0, 2 * Math.PI); // circle
 				context.fillStyle = five_p_color; //regular disk color
 				context.fill();
 			} else if (board[i][j] == 4) {
 				context.beginPath();
-				context.rect(center.x - 30, center.y - 30, 60, 60);
+				context.rect(center.x - 30, center.y - 30, sizeCell, sizeCell);
 				context.fillStyle = "yellow"; //wall color
 				context.fill();
 			} else if (board[i][j] == 5) {
 				context.beginPath();
-				context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
+				context.arc(center.x, center.y, sizeCell/4, 0, 2 * Math.PI); // circle
 				context.fillStyle = fifteen_p_color; //disk color
 				context.fill();
 			}
 			else if (board[i][j] == 6) {
 				context.beginPath();
-				context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
+				context.arc(center.x, center.y, sizeCell/4, 0, 2 * Math.PI); // circle
 				context.fillStyle = twentyf_p_color; //disk color
 				context.fill();
 			}else if (board[i][j] > 20 || board[i][j] == 7) {
 				context.beginPath();
-				context.rect(center.x - 30, center.y - 30, 60, 60);
+				context.rect(center.x - 30, center.y - 30, sizeCell, sizeCell);
 				let img = new Image();
 				img.src = "images/blue_ghost.png";
 				// context.fillStyle = monColor; //attacker
-				context.drawImage(img,center.x - 30, center.y - 30,60,60);
+				context.drawImage(img,center.x - 30, center.y - 30,sizeCell,sizeCell);
          }
 			else if (board[i][j] == 9 ) {
 				context.beginPath();
-				context.rect(center.x - 30, center.y - 30, 60, 60);
+				context.rect(center.x - 30, center.y - 30, sizeCell, sizeCell);
 				context.fillStyle = "red"; //straberry
 				context.fill();
          }

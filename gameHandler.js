@@ -311,31 +311,20 @@ function Draw(dir) {
 				context.arc(center.x, center.y, Math.floor(sizeCell/2.4), 0, 2 * Math.PI); // circle
 				context.fillStyle = twentyf_p_color; //disk color
 				context.fill();
-			}else if (board[i][j] > 20 || board[i][j] == 7) {
+			}else if (board[i][j] > 20 || board[i][j] == 7) { //ghosts
 				context.beginPath();
 				context.rect(center.x - sizeCell/2, center.y - sizeCell/2, sizeCell, sizeCell);
 				var source;
-				
-				// if(temp_color == 0){
-				// 	source = "images/red_ghost.png";
-				// 	temp_color = 1;
-				// }else{
-				// 	source = "images/blue_ghost.png";
-				// 	temp_color = 0;
-				// }
 				let img = new Image();
 				img.src = (eatable == true) ? "images/blue_ghost.png" : "images/yellow_ghost.png";
-				// context.fillStyle = monColor; //attacker
 				context.drawImage(img,center.x - sizeCell/2, center.y - sizeCell/2,sizeCell,sizeCell);
          }
-			else if (board[i][j] == 9 ) {
+			else if (board[i][j] == 9 ) { //cherries
 				context.beginPath();
 				context.rect(center.x - sizeCell/2, center.y - sizeCell/2, sizeCell, sizeCell);
 				let img = new Image();
 				img.src =  "images/cherry.png";
-				//context.fillStyle = "red"; //straberry
-				//context.fill();
-				context.drawImage(img,center.x - 30, center.y - 30,60,60);
+				context.drawImage(img,center.x - sizeCell/2, center.y - sizeCell/2,sizeCell,sizeCell);
          }
 
 		}

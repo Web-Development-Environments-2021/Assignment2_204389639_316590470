@@ -666,17 +666,29 @@ $(function(){
 	$("#down").keydown(function(e){
 		down_btn = e.keyCode;
 		down_desc = e.key;
-		down.placeholder = up_desc;
+		down.placeholder = down_desc;
 	})
 	$("#right").keydown(function(e){
 		right_btn = e.keyCode;
 		right_desc = e.key;
-		right.placeholder = up_desc;
+		right.placeholder = right_desc;
 	})
 	$("#left").keydown(function(e){
 		left_btn = e.keyCode;
 		left_desc = e.key;
-		left.placeholder = up_desc;
+		left.placeholder = left_desc;
+	})
+	$("#up").blur(function(){
+		up.value="";
+	})
+	$("#down").blur(function(){
+		down.value="";
+	})
+	$("#right").blur(function(){
+		right.value="";
+	})
+	$("#left").blur(function(){
+		left.value="";
 	})
 	return false;
 })

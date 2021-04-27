@@ -435,6 +435,7 @@ function UpdatePosition() {
 		}
 		let song = document.getElementById("game_song");
 		songPlays =false;
+		input_slider.checked = false;
 		song.pause();
 		modalAbout("finished_game");
 		gameBegin=false;
@@ -645,10 +646,12 @@ $(function(){
 	$("#input_slider").click(function(){
 		if(songPlays){
 			song.pause();
+			input_slider.checked = false;
 			songPlays=false;
 		}
 		else{
 			song.play();
+			input_slider.checked = true;
 			songPlays=true;
 		}
 	})
@@ -701,6 +704,7 @@ function start_game(){
 	context = canvas.getContext("2d");
 	let song = document.getElementById("game_song");
 	songPlays=true;
+	input_slider.checked = true;
 	song.play();
 	Start();
 }

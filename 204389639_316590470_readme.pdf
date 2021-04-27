@@ -17,7 +17,8 @@ Functionalities:
          the ghosts are eatable, and therefore will try to get as far as possible from the PacMan.
          you will also notice that for as long as the ghost are in "defence mode" their color will change to blue
          since they are very very scared. 
-         eating a  blue ghost will gain the PacMan a 50 point bonus.
-         
+         eating a  blue ghost will gain the PacMan a 50 point bonus. the player may eat a blue ghost as many time 
+         as he wishes, but must be fast and get to a safe place before the ghost turns yellow again.         
+
 *  added some fun colorful gifs to the finished game pop-up.
 *  

@@ -21,4 +21,6 @@ Functionalities:
          as he wishes, but must be fast and get to a safe place before the ghost turns yellow again.         
 
 *  added some fun colorful gifs to the finished game pop-up.
-*  
+
+*  similar to the original PacMan, our board contains a portal that will launch the PacMan to the other side
+   of the borad - the ghosts cannot chase you there, use it wisely!

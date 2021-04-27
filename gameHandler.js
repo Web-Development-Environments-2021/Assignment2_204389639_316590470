@@ -13,7 +13,7 @@ var down_btn = 40;
 var right_btn = 39;
 var left_btn = 37;
 var number_of_balls, five_p_color,
- fifteen_p_color, twentyf_p_color, timer, num_attack, up_desc, down_desc, right_desc, left_desc;
+ fifteen_p_color, twentyf_p_color, timer, num_attack, up_desc="ArrowUp", down_desc="ArrowDown", right_desc="ArrowRight", left_desc="ArrowLeft";
 var prevPress;
 // keep trac of gosts 
 var ghostArray;
@@ -23,6 +23,7 @@ var lifeCount;
 var monColor = "black";
 var flag ;
 var gameBegin = false;
+var songPlays = false;
 
 $(function(){
 	$(".tablink").click(function(e){
@@ -256,8 +257,8 @@ function Draw(dir) {
 	for (var i = 0; i < 17; i++) {
 		for (var j = 0; j < 17; j++) {
 			var center = new Object();
-			center.x = i * sizeCell + 30;
-			center.y = j * sizeCell + 30;
+			center.x = i * sizeCell + sizeCell/2;
+			center.y = j * sizeCell + sizeCell/2;
 			if (board[i][j] == 2) {
             var d1,d2,e1,e2;
 
@@ -292,7 +293,7 @@ function Draw(dir) {
 				context.fill();
 			} else if (board[i][j] == 4) {
 				context.beginPath();
-				context.rect(center.x - 30, center.y - 30, sizeCell, sizeCell);
+				context.rect(center.x - sizeCell/2, center.y - sizeCell/2, sizeCell, sizeCell);
 				context.fillStyle = "yellow"; //wall color
 				context.fill();
 			} else if (board[i][j] == 5) {
@@ -308,15 +309,15 @@ function Draw(dir) {
 				context.fill();
 			}else if (board[i][j] > 20 || board[i][j] == 7) {
 				context.beginPath();
-				context.rect(center.x - 30, center.y - 30, sizeCell, sizeCell);
+				context.rect(center.x - sizeCell/2, center.y - sizeCell/2, sizeCell, sizeCell);
 				let img = new Image();
 				img.src = "images/blue_ghost.png";
 				// context.fillStyle = monColor; //attacker
-				context.drawImage(img,center.x - 30, center.y - 30,sizeCell,sizeCell);
+				context.drawImage(img,center.x - sizeCell/2, center.y - sizeCell/2,sizeCell,sizeCell);
          }
 			else if (board[i][j] == 9 ) {
 				context.beginPath();
-				context.rect(center.x - 30, center.y - 30, sizeCell, sizeCell);
+				context.rect(center.x - sizeCell/2, center.y - sizeCell/2, sizeCell, sizeCell);
 				context.fillStyle = "red"; //straberry
 				context.fill();
          }
@@ -407,6 +408,7 @@ function UpdatePosition() {
 			document.getElementById("fireworks").style.display="block";
 		}
 		let song = document.getElementById("game_song");
+		songPlays =false;
 		song.pause();
 		modalAbout("finished_game");
 		gameBegin=false;
@@ -601,6 +603,20 @@ function randomizeNewLocation(object,num){
 }
 
 $(function(){
+	let song = document.getElementById("game_song");
+	$("#input_slider").click(function(){
+		if(songPlays){
+			song.pause();
+			songPlays=false;
+		}
+		else{
+			song.play();
+			songPlays=true;
+		}
+	})
+})
+
+$(function(){
 	$("#up").keydown(function(e){
 		up_btn = e.keyCode;
 		up_desc = e.key;
@@ -646,7 +662,8 @@ function start_game(){
 	document.getElementById("game").style.display="flex";
 	context = canvas.getContext("2d");
 	let song = document.getElementById("game_song");
-	//song.play();
+	songPlays=true;
+	song.play();
 	Start();
 }
 

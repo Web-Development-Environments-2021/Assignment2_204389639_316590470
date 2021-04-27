@@ -1,3 +1,23 @@
 Hand in: Shiri Tabach 316590470, Guy Globus 204389639
 Site URL: https://web-development-environments-2021.github.io/Assignment2_204389639_316590470/
 Functionalities:
+*  added our own board design, more complex that will allow the player a fun and challenging experience.
+
+*  board is of an adjustable size - ensuring complatability to all screen sizes.
+
+*  music on/off toggle - in case the player wants to stop the music during the game.
+
+*  when a player is down to his last two lives, the PacMan's color will change to green , thus indicating
+   that his PacMan is "sick" and he needs to be extra carefull
+
+*  the ghosts in our pacman game serve a dual role :
+      1. when the ghost are yellow they are on "attack mode" and will try to catch the PacMan using a heuristic 
+         "manhatten distance" to try and get to the PacMan as quickly as possible/
+      2. if the player ate a cherry, the ghosts will enter a "defence mode" - for the next 6 seconds 
+         the ghosts are eatable, and therefore will try to get as far as possible from the PacMan.
+         you will also notice that for as long as the ghost are in "defence mode" their color will change to blue
+         since they are very very scared. 
+         eating a  blue ghost will gain the PacMan a 50 point bonus.
+         
+*  added some fun colorful gifs to the finished game pop-up.
+*  
